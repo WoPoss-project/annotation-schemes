@@ -1,0 +1,22 @@
+import webanno.custom.Modalrelation as Relation;
+import webanno.custom.Modalunit as Unit;
+
+Relation {
+	Typeofmodality="dynamic" ->  Dynamicsubtypemeaning="necessity" | Dynamicsubtypemeaning="possibility" |  Dynamicsubtypeparticipantcontrol="participant-imposed" | 
+ Dynamicsubtypeparticipantcontrol="participant-inherent" | Dynamicsubtypeparticipantcontrol="situational";
+	Dynamicsubtypeparticipantcontrol="situational" ->  Situationaladditionalsubtypes="inevitability" |  Situationaladditionalsubtypes="prospective" ;
+	Typeofmodality="deontic" -> Deonticsubtype="acceptability" | Deonticsubtype="authority" | Deonticsubtype="volition" | Deonticsubtype="intention" |  Commonground="true" |  Commonground="false";
+	Deonticsubtype="acceptability" ->  Degreeofacceptability="absolutely necessary" | Degreeofacceptability="desirable" | Degreeofacceptability="acceptable" | Degreeofacceptability="not very desirable" | Degreeofacceptability="unacceptable" ;
+	Deonticsubtype="authority" ->  Speakerauthority="obligation" | Speakerauthority="permission" |  Speakerauthority="recommendation" |  Context="non-official" | Context="official" | Typeofsourceauthority="moral/ethical norms"| Typeofsourceauthority="religious norms" | Typeofsourceauthority="unspecified norms"; 
+	Typeofmodality="epistemic" ->  Degreeofcertaintyprobability="absolutely certain" | Degreeofcertaintyprobability="possible" | Degreeofcertaintyprobability="probable" | Degreeofcertaintyprobability="improbable" | Degreeofcertaintyprobability="impossible"  |  Commonground="true" |  Commonground="false" ;
+ }
+
+
+Unit {
+
+	Typeofmodalunit="(potential) marker" -> Pertinence="pertinent" | Pertinence="not pertinent -  modal" | Pertinence="not pertinent - not modal";
+	Pertinence="not pertinent - not modal" -> Diachrony="post-modal" | Diachrony="pre-modal";
+	Pertinence="pertinent" -> Typeofutterance="interrogative" | Typeofutterance="non-interrogative" | Polarity="affirmative" | Polarity="negative";
+	Typeofmodalunit="scope unit" -> Typeofutterance="interrogative" | Typeofutterance="non-interrogative" | Polarity="affirmative" | Polarity="negative" | SoAcontrol="+ control" | SoAcontrol="- control" | SoAcontrol="+/- control" | SoAcontrol="no SoA" |  SoAdynamicity ="+ dynamic" |  SoAdynamicity ="- dynamic" |  SoAdynamicity ="+/- dynamic" | SoAdynamicity ="no SoA";
+	
+}
