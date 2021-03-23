@@ -8,7 +8,7 @@ Relation {
 	Typeofmodality="deontic" -> Deonticsubtype="acceptability" | Deonticsubtype="authority" | Deonticsubtype="volition" | Deonticsubtype="intention" |  Commonground="true" |  Commonground="false";
 	Deonticsubtype="acceptability" ->  Degreeofacceptability="absolutely necessary" | Degreeofacceptability="desirable" | Degreeofacceptability="acceptable" | Degreeofacceptability="not very desirable" | Degreeofacceptability="unacceptable" ;
 	Deonticsubtype="authority" ->  Speakerauthority="obligation" | Speakerauthority="permission" |  Speakerauthority="recommendation" |  Context="non-official" | Context="official" | Typeofsourceauthority="moral/ethical norms"| Typeofsourceauthority="religious norms" | Typeofsourceauthority="unspecified norms"; 
-	Typeofmodality="epistemic" ->  Degreeofcertaintyprobability="absolutely certain" | Degreeofcertaintyprobability="possible" | Degreeofcertaintyprobability="probable" | Degreeofcertaintyprobability="improbable" | Degreeofcertaintyprobability="impossible"  |  Commonground="true" |  Commonground="false" ;
+	Typeofmodality="epistemic" ->  Degreeofcertaintyprobability="absolutely certain" | Degreeofcertaintyprobability="probable" | Degreeofcertaintyprobability="possible" |  Degreeofcertaintyprobability="improbable" | Degreeofcertaintyprobability="impossible"  |  Commonground="true" |  Commonground="false" ;
  }
 
 

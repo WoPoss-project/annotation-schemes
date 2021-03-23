@@ -1,41 +1,6 @@
 [ {
   "name" : "webanno.custom.Modalunit",
   "features" : [ {
-    "name" : "Diachrony",
-    "tag_set" : {
-      "name" : "Diachronic assessment",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "post-modal",
-        "tag_description" : null
-      }, {
-        "tag_name" : "pre-modal",
-        "tag_description" : null
-      } ],
-      "create_tag" : true
-    },
-    "uiName" : "Diachrony",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
     "name" : "Hasnostateofaffairs",
     "tag_set" : null,
     "uiName" : "Has no state of affairs",
@@ -74,215 +39,6 @@
     "link_type_target_feature_name" : null,
     "traits" : null
   }, {
-    "name" : "Note",
-    "tag_set" : null,
-    "uiName" : "Note",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : false,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : false,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "Pertinence",
-    "tag_set" : {
-      "name" : "Pertinence values",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "not pertinent -  modal",
-        "tag_description" : null
-      }, {
-        "tag_name" : "not pertinent - not modal",
-        "tag_description" : null
-      }, {
-        "tag_name" : "pertinent",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "Pertinence",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "Polarity",
-    "tag_set" : {
-      "name" : "Polarity values",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "affirmative",
-        "tag_description" : null
-      }, {
-        "tag_name" : "negative",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "Polarity",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "Typeofutterance",
-    "tag_set" : {
-      "name" : "Utterance types",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "interrogative",
-        "tag_description" : null
-      }, {
-        "tag_name" : "non-interrogative",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "Sentence function",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "SoAcontrol",
-    "tag_set" : {
-      "name" : "Control",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "+ control",
-        "tag_description" : null
-      }, {
-        "tag_name" : "+/- control",
-        "tag_description" : null
-      }, {
-        "tag_name" : "- control",
-        "tag_description" : null
-      }, {
-        "tag_name" : "no SoA",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "SoA control",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "SoAdynamicity",
-    "tag_set" : {
-      "name" : "Dynamicity",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "+ dynamic",
-        "tag_description" : null
-      }, {
-        "tag_name" : "+/- dynamic",
-        "tag_description" : null
-      }, {
-        "tag_name" : "- dynamic",
-        "tag_description" : null
-      }, {
-        "tag_name" : "no SoA",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "SoA dynamicity",
-    "type" : "uima.cas.String",
-    "enabled" : true,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
     "name" : "Tokenisnotmodal",
     "tag_set" : null,
     "uiName" : "Token is not modal",
@@ -307,41 +63,6 @@
     "uiName" : "Token is not pertinent",
     "type" : "uima.cas.Boolean",
     "enabled" : false,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : false,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "Typeofmodalunit",
-    "tag_set" : {
-      "name" : "Type of unit",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "(potential) marker",
-        "tag_description" : null
-      }, {
-        "tag_name" : "scope unit",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "Type of modal unit",
-    "type" : "uima.cas.String",
-    "enabled" : true,
     "visible" : true,
     "include_in_hover" : false,
     "required" : false,
@@ -396,6 +117,304 @@
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
     "traits" : null
+  }, {
+    "name" : "Typeofmodalunit",
+    "tag_set" : {
+      "name" : "Type of unit",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "(potential) marker",
+        "tag_description" : null
+      }, {
+        "tag_name" : "scope unit",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "a) Type of modal unit",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : false,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "Pertinence",
+    "tag_set" : {
+      "name" : "Pertinence values",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "not pertinent -  modal",
+        "tag_description" : null
+      }, {
+        "tag_name" : "not pertinent - not modal",
+        "tag_description" : null
+      }, {
+        "tag_name" : "pertinent",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "b) Pertinence",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "Typeofutterance",
+    "tag_set" : {
+      "name" : "Utterance types",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "interrogative",
+        "tag_description" : null
+      }, {
+        "tag_name" : "non-interrogative",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "b) Sentence function",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "Diachrony",
+    "tag_set" : {
+      "name" : "Diachronic assessment",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "post-modal",
+        "tag_description" : null
+      }, {
+        "tag_name" : "pre-modal",
+        "tag_description" : null
+      } ],
+      "create_tag" : true
+    },
+    "uiName" : "c) Diachrony",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "Polarity",
+    "tag_set" : {
+      "name" : "Polarity values",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "affirmative",
+        "tag_description" : null
+      }, {
+        "tag_name" : "negative",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "c) Polarity",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "SoAcontrol",
+    "tag_set" : {
+      "name" : "Control",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "+ control",
+        "tag_description" : null
+      }, {
+        "tag_name" : "+/- control",
+        "tag_description" : null
+      }, {
+        "tag_name" : "- control",
+        "tag_description" : null
+      }, {
+        "tag_name" : "no SoA",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "d) SoA control",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "SoAdynamicity",
+    "tag_set" : {
+      "name" : "Dynamicity",
+      "typeUiName" : null,
+      "description" : null,
+      "language" : null,
+      "type" : null,
+      "type_name" : null,
+      "type_description" : null,
+      "tags" : [ {
+        "tag_name" : "+ dynamic",
+        "tag_description" : null
+      }, {
+        "tag_name" : "+/- dynamic",
+        "tag_description" : null
+      }, {
+        "tag_name" : "- dynamic",
+        "tag_description" : null
+      }, {
+        "tag_name" : "no SoA",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "d) SoA dynamicity",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "Locus",
+    "tag_set" : null,
+    "uiName" : "x) Locus",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : false,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+  }, {
+    "name" : "Note",
+    "tag_set" : null,
+    "uiName" : "x) Note",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : false,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : false,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
   } ],
   "uiName" : "Modal unit",
   "type" : "span",
@@ -406,7 +425,7 @@
   "attach_type" : null,
   "attach_feature" : null,
   "allow_stacking" : true,
-  "cross_sentence" : false,
+  "cross_sentence" : true,
   "show_hover" : true,
   "anchoring_mode" : "CHARACTERS",
   "overlap_mode" : "ANY_OVERLAP",

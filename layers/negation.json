@@ -20,7 +20,7 @@
     "link_type_target_feature_name" : "target",
     "traits" : null
   } ],
-  "uiName" : "Negation (marker)",
+  "uiName" : "Negation",
   "type" : "span",
   "description" : null,
   "enabled" : true,
@@ -31,11 +31,11 @@
   "allow_stacking" : true,
   "cross_sentence" : true,
   "show_hover" : true,
-  "anchoring_mode" : "TOKENS",
+  "anchoring_mode" : "CHARACTERS",
   "overlap_mode" : "ANY_OVERLAP",
   "validation_mode" : "ALWAYS",
   "lock_to_token_offset" : false,
-  "multiple_tokens" : true,
+  "multiple_tokens" : false,
   "project_name" : "WoPoss",
   "linked_list_behavior" : false,
   "on_click_javascript_action" : null
