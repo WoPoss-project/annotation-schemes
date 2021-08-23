@@ -32,10 +32,10 @@
                         false()">Unnecessary nested segs</sch:report>
             <sch:assert test="
                     if (@type eq 'participant') then
-                        @subtype = $types
+                        @subtype = $part_types
                     else
                         true()">Attribute subtype is mandatary with one of these values:
-                    <sch:value-of select="$types"/></sch:assert>
+                    <sch:value-of select="$part_types"/></sch:assert>
             <sch:assert test="
                     if (@type = ('participant', 'negation')) then
                         every $x in tokenize(@ana, '\s+')
