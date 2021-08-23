@@ -19,7 +19,8 @@
                 structures</sch:assert>
             <sch:assert test="
                     if (@part) then
-                        @part = //tei:fs[@type eq $type]/@xml:id
+                        every $x in tokenize(@part, '\s+')
+                            satisfies $x = //tei:fs[@type eq $type]/@xml:id
                     else
                         true()">@part does not have a corresponding ID in feature
                 structures</sch:assert>
@@ -44,14 +45,14 @@
                         true()">Attribute @ana is missing or no corresponding ID was
                 found in feature structures</sch:assert>
             <sch:assert test="
-                if (@type eq 'negation') then
-                every $x in tokenize(@ana, '\s+')
-                satisfies $x = //tei:fs[@type = ('marker','scope')]/@xml:id
-                else
-                true()">Attribute @ana is missing or no corresponding ID was
+                    if (@type eq 'negation') then
+                        every $x in tokenize(@ana, '\s+')
+                            satisfies $x = //tei:fs[@type = ('marker', 'scope')]/@xml:id
+                    else
+                        true()">Attribute @ana is missing or no corresponding ID was
                 found in feature structures</sch:assert>
         </sch:rule>
-        
+
         <sch:rule context="tei:fs[@type eq 'scope']">
             <sch:assert test="tei:f[@name eq 'SoA'] or tei:f[@name eq 'dynamicity']">SoA description
                 missing</sch:assert>
