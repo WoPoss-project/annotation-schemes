@@ -77,8 +77,10 @@
                     else
                         true()">No corresponding ID found in feature
                 structures</sch:assert>
-            <!--<sch:assert test="if (ancestor::tei:seg[not(ancestor::tei:supplied)]) then @rend or @msd else
-                true()">Morphological analysis missing</sch:assert>-->
+            <sch:assert test="if (ancestor::tei:seg[not(ancestor::tei:supplied)]) then @rend or @msd else
+                true()">Morphological analysis missing</sch:assert>
+                <sch:assert test="if (descendant::tei:seg[not(ancestor::tei:supplied)]) then @rend or @msd else
+                true()">Morphological analysis missing</sch:assert>
         </sch:rule>        
         <sch:rule context="tei:note">
             <sch:report test="string-length(.) eq 0">Empty note</sch:report>
