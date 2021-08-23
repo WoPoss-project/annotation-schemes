@@ -36,6 +36,7 @@
                     else
                         true()">@part does not have a corresponding ID in feature
                 structures</sch:assert>
+            <sch:report test="tei:w/following-sibling::text()[matches(., '\S')]">Segmentation issue</sch:report>
 
         </sch:rule>
         <sch:rule context="tei:fs[@type eq 'scope']">
