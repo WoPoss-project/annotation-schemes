@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication Information</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+      <encodingDesc>
+         <fsdDecl>
+            <fsDecl type="marker">
+               <fDecl name="pertinence" optional="false">
+                  <vRange>
+                     <vAlt>
+                        <binary value="true"/>
+                        <binary value="false"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="modal" optional="false">
+                  <vRange>
+                     <vAlt>
+                        <binary value="true"/>
+                        <binary value="false"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="diachrony">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="post-modal"/>
+                        <symbol value="pre-modal"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="utterance">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="non-interrogative"/>
+                        <symbol value="interrogative"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="polarity">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="affirmative"/>
+                        <symbol value="negative"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fsConstraints>
+                  <cond>
+                     <fs>
+                        <f name="pertinence">
+                           <binary value="true"/>
+                        </f>
+                     </fs>
+                     <then/>
+                     <fs>
+                        <f name="utterance"/>
+                        <f name="polarity"/>
+                     </fs>
+                  </cond>
+               </fsConstraints>
+            </fsDecl>
+            <fsDecl type="scope">
+               <fDecl name="utterance" optional="false">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="non-interrogative"/>
+                        <symbol value="interrogative"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="polarity" optional="false">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="affirmative"/>
+                        <symbol value="negative"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="control">
+                  <vRange>
+                     <vAlt>
+                        <binary value="false"/>
+                        <binary value="true"/>
+                        <symbol value="+-control"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="dynamicity">
+                  <vRange>
+                     <vAlt>
+                        <binary value="false"/>
+                        <binary value="true"/>
+                        <symbol value="+-dynamic"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="SoA">
+                  <vRange>
+                     <symbol value="false"/>
+                  </vRange>
+               </fDecl>
+               <fsConstraints>
+                  <cond>
+                     <fs>
+                        <f name="dynamicity"/>
+                     </fs>
+                     <then/>
+                     <fs><f name="control"/></fs>
+                  </cond>
+                  <cond>
+                     <fs>
+                        <f name="control"/>
+                     </fs>
+                     <then/>
+                     <fs><f name="dynamicity"/></fs>
+                  </cond>
+               </fsConstraints>
+            </fsDecl>
+            <fsDecl type="relation">
+               <fDecl name="modality" optional="false">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="deontic"/>
+                        <symbol value="dynamic"/>
+                        <symbol value="epistemic"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+<!--               <fDecl name="type">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="possibility"/>
+                        <symbol value="necessity"/>
+                        <symbol value="authority"/>
+                        <symbol value="acceptability"/>
+                        <symbol value="volition"/>
+                        <symbol value="intention"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>-->
+               <fDecl name="subtype">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="obligation"/>
+                        <symbol value="recommendation"/>
+                        <symbol value="permission"/>
+                        <symbol value="prospective"/>
+                        <symbol value="inevitability"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+<!--               <fDecl name="degree">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="absolutely_necessary"/>
+                        <symbol value="desirable"/>
+                        <symbol value="acceptable"/>
+                        <symbol value="undesirable"/>
+                        <symbol value="unacceptable"/>
+                        <symbol value="absolutely_certain"/>
+                        <symbol value="probable"/>
+                        <symbol value="possible"/>
+                        <symbol value="improbable"/>
+                        <symbol value="impossible"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>-->
+               <fDecl name="participant_control">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="participant-imposed"/>
+                        <symbol value="participant-inherent"/>
+                        <symbol value="situational"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="function">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="rhetoric"/>
+                        <symbol value="pragmatic"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="context">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="non-official"/>
+                        <symbol value="official"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fDecl name="source">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="moral/ethical_norms"/>
+                        <symbol value="religious_norms"/>
+                        <symbol value="unspecified_norms"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
+               <fsConstraints>
+                  <cond>
+                     <fs>
+                        <f name="modality">
+                           <symbol value="dynamic"/>
+                        </f>
+                     </fs>
+                     <then/>
+                     <fs><f name="type">
+                        <vAlt>
+                           <symbol value="possibility"/>
+                           <symbol value="necessity"/>
+                        </vAlt></f>
+                        <f name="participant_control"/>
+                     </fs>                     
+                  </cond>   
+                  <cond>
+                     <fs>
+                        <f name="modality">
+                           <symbol value="deontic"/>
+                        </f>
+                     </fs>
+                     <then/>
+                     <fs><f name="type">
+                        <vAlt>
+                           <symbol value="authority"/>
+                           <symbol value="acceptability"/>
+                           <symbol value="volition"/>
+                           <symbol value="intention"/>
+                        </vAlt></f>
+                     </fs>                     
+                  </cond>
+                  <cond>
+                     <fs>
+                        <f name="type">
+                           <symbol value="authority"/>
+                        </f>
+                     </fs>
+                     <then/>
+                     <fs><f name="subtype">
+                        <vAlt>
+                           <symbol value="obligation"/>
+                           <symbol value="recommendation"/>
+                           <symbol value="permission"/>
+                        </vAlt></f>
+                     </fs>                     
+                  </cond>
+                  <cond>
+                     <fs>
+                        <f name="type">
+                           <symbol value="acceptability"/>
+                        </f>
+                     </fs>
+                     <then/>
+                     <fs><f name="degree">
+                        <vAlt>
+                           <symbol value="absolutely_necessary"/>
+                           <symbol value="desirable"/>
+                           <symbol value="acceptable"/>
+                           <symbol value="undesirable"/>
+                           <symbol value="unacceptable"/>
+                        </vAlt></f>
+                     </fs>                     
+                  </cond>
+                  <cond>
+                     <fs>
+                        <f name="modality">
+                           <symbol value="epistemic"/>
+                        </f>
+                     </fs>
+                     <then/>
+                     <fs><f name="degree">
+                        <vAlt>
+                           <symbol value="absolutely_certain"/>
+                           <symbol value="probable"/>
+                           <symbol value="possible"/>
+                           <symbol value="improbable"/>
+                           <symbol value="impossible"/>
+                        </vAlt></f>
+                     </fs>                     
+                  </cond>
+               </fsConstraints>
+            </fsDecl>
+         </fsdDecl>
+      </encodingDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <p>Some text here.</p>
+      </body>
+   </text>
+</TEI>
