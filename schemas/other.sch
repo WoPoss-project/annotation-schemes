@@ -37,13 +37,21 @@
                         true()">Attribute subtype is mandatary with one of these values:
                     <sch:value-of select="$part_types"/></sch:assert>
             <sch:assert test="
-                    if (@type = ('participant', 'negation')) then
+                    if (@type eq 'participant') then
                         every $x in tokenize(@ana, '\s+')
                             satisfies $x = //tei:fs[@type eq 'scope']/@xml:id
                     else
                         true()">Attribute @ana is missing or no corresponding ID was
                 found in feature structures</sch:assert>
+            <sch:assert test="
+                if (@type eq 'negation') then
+                every $x in tokenize(@ana, '\s+')
+                satisfies $x = //tei:fs[@type = ('marker','scope')]/@xml:id
+                else
+                true()">Attribute @ana is missing or no corresponding ID was
+                found in feature structures</sch:assert>
         </sch:rule>
+        
         <sch:rule context="tei:fs[@type eq 'scope']">
             <sch:assert test="tei:f[@name eq 'SoA'] or tei:f[@name eq 'dynamicity']">SoA description
                 missing</sch:assert>
