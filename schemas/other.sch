@@ -100,12 +100,12 @@
                         true()">No corresponding ID found in feature
                 structures</sch:assert>
             <sch:assert test="
-                    if (ancestor::tei:seg[not(ancestor::tei:supplied)]) then
+                    if (ancestor::tei:seg and not(ancestor::tei:supplied)) then
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
             <sch:assert test="
-                    if (descendant::tei:seg[not(ancestor::tei:supplied)]) then
+                    if (descendant::tei:seg and not(ancestor::tei:supplied)) then
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
