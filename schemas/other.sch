@@ -55,7 +55,7 @@
                     if (@type = ('scope', 'marker')) then
                         @part or @corresp
                     else
-                        ()">Either attributes @part or @corresp are missing</sch:assert>
+                        true()">Either attributes @part or @corresp are missing</sch:assert>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
