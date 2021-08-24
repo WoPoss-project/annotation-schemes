@@ -51,6 +51,11 @@
                     else
                         true()">Attribute @ana is missing or no corresponding ID was
                 found in feature structures</sch:assert>
+            <sch:assert test="
+                    if (@type = ('scope', 'marker')) then
+                        @part or @corresp
+                    else
+                        ()">Either attributes @part or @corresp are missing</sch:assert>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
