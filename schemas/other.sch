@@ -55,7 +55,16 @@
                     if (@type = ('scope', 'marker')) then
                         @part or @corresp
                     else
-                        true()">Either attribute @part or @corresp is missing</sch:assert>
+                        true()">Either attribute @part or @corresp is
+                missing</sch:assert>
+            <sch:let name="corresp" value="
+                    for $x in tokenize(@corresp, '\s+')
+                    return
+                        substring($x, 2)"/>
+            <sch:report
+                test="if (@corresp and not(@part)) then (following::tei:seg[some $x in tokenize(@part, '\s+') 
+                satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+') satisfies $x = $corresp]) else false() "
+            >@part attribute missing</sch:report>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
@@ -105,15 +114,11 @@
                         true()">No corresponding ID found in feature
                 structures</sch:assert>
             <sch:assert test="
-                    if (ancestor::tei:seg and not(ancestor::tei:supplied)) then
+                    if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)) then
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
-            <sch:assert test="
-                    if (descendant::tei:seg and not(ancestor::tei:supplied)) then
-                        @rend or @msd
-                    else
-                        true()">Morphological analysis missing</sch:assert>
+
         </sch:rule>
         <sch:rule context="tei:note">
             <sch:report test="string-length(.) eq 0">Empty note</sch:report>
