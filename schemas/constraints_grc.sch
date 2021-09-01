@@ -31,6 +31,11 @@
                         descendant::tei:seg[substring(@corresp, 2) eq current()/@part]
                     else
                         false()">Unnecessary nested segs</sch:report>
+            <sch:report test="
+                    if (@type eq 'marker') then
+                        descendant::tei:seg[@type eq 'marker']
+                    else
+                        false()">Unnecessary nested segs</sch:report>
             <sch:assert test="
                     if (@type eq 'participant') then
                         @subtype = $part_types
@@ -61,10 +66,13 @@
                     for $x in tokenize(@corresp, '\s+')
                     return
                         substring($x, 2)"/>
-            <sch:report
-                test="if (@corresp and not(@part)) then (following::tei:seg[some $x in tokenize(@part, '\s+') 
-                satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+') satisfies $x = $corresp]) else false() "
-            >@part attribute missing</sch:report>
+            <sch:report test="
+                    if (@corresp and not(@part)) then
+                        (following::tei:seg[some $x in tokenize(@part, '\s+')
+                            satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+')
+                            satisfies $x = $corresp])
+                    else
+                        false()">@part attribute missing</sch:report>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
@@ -113,11 +121,6 @@
                     else
                         true()">No corresponding ID found in feature
                 structures</sch:assert>
-            <sch:assert test="
-                    if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)) then
-                        @rend or @msd
-                    else
-                        true()">Morphological analysis missing</sch:assert>
 
         </sch:rule>
         <sch:rule context="tei:note">
