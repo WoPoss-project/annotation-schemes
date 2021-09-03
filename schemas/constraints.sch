@@ -2,9 +2,9 @@
 <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2"
     xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
     <sch:ns uri="http://www.tei-c.org/ns/1.0" prefix="tei"/>
-    <sch:let name="counterpart" value="collection('*')//tei:TEI[@source = current()//tei:TEI/@source]"/>
-    <sch:pattern>
-        <sch:rule context="tei:seg">
+    <sch:let name="docName" value="document-uri(current())"/>
+      <sch:pattern>
+        <sch:rule context="tei:seg">         
             <sch:let name="type" value="@type"/>
             <sch:let name="types" value="('participant', 'negation', 'scope', 'marker')"/>
             <sch:let name="part_types"
@@ -72,7 +72,6 @@
                 satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+') satisfies $x = $corresp]) else false() "
             >@part attribute missing</sch:report>            
             <sch:report test="if (@copyOf) then @copyOf = following::tei:seg/@copyOf else false()">Value of reference is not unique</sch:report>
-            <sch:report test="substring(@copyOf, 2) = $counterpart//tei:seg/@xml:id">This ID is not reference in parallel gospel</sch:report>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
