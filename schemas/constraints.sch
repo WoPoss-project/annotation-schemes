@@ -2,6 +2,7 @@
 <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2"
     xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
     <sch:ns uri="http://www.tei-c.org/ns/1.0" prefix="tei"/>
+    <sch:let name="counterpart" value="collection('*')//tei:TEI[@source = current()//tei:TEI/@source]"/>
     <sch:pattern>
         <sch:rule context="tei:seg">
             <sch:let name="type" value="@type"/>
@@ -69,7 +70,9 @@
             <sch:report
                 test="if (@corresp and not(@part)) then (following::tei:seg[some $x in tokenize(@part, '\s+') 
                 satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+') satisfies $x = $corresp]) else false() "
-            >@part attribute missing</sch:report>
+            >@part attribute missing</sch:report>            
+            <sch:report test="if (@copyOf) then @copyOf = following::tei:seg/@copyOf else false()">Value of reference is not unique</sch:report>
+            <sch:report test="substring(@copyOf, 2) = $counterpart//tei:seg/@xml:id">This ID is not reference in parallel gospel</sch:report>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
@@ -105,7 +108,7 @@
             <sch:assert test="tei:f[@name eq 'scope']/@fVal = //tei:fs[@type eq 'scope']/@xml:id"
                 >Scope ID not available</sch:assert>
             <sch:report test="$repeated_relation">Relation <sch:value-of
-                    select="$repeated_relation/@xml:id"/> is the identical to this one</sch:report>
+                    select="$repeated_relation/@xml:id"/> is identical to this one</sch:report>
         </sch:rule>
         <sch:rule context="tei:s">
             <sch:report test="text()[matches(., '\S')]">No text nodes allowed as children of
@@ -119,7 +122,7 @@
                         true()">No corresponding ID found in feature
                 structures</sch:assert>
             <sch:assert test="
-                    if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)) then
+                    if (ancestor::tei:TEI[@xml:lang eq 'la'] and (ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)) then
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
