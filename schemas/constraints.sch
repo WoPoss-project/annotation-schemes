@@ -122,7 +122,7 @@
                         true()">No corresponding ID found in feature
                 structures</sch:assert>
             <sch:assert test="
-                    if (ancestor::tei:TEI[@xml:lang eq 'la'] and (ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)) then
+                    if (ancestor::tei:TEI/@xml:lang eq 'la' and (ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)) then
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
