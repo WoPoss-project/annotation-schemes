@@ -73,6 +73,7 @@
                             satisfies $x = $corresp])
                     else
                         false()">@part attribute missing</sch:report>
+            <sch:report test="@copyOf = following::seg/@copyOf">Value of reference is not unique</sch:report>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
