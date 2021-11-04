@@ -2,9 +2,8 @@
 <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2"
     xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
     <sch:ns uri="http://www.tei-c.org/ns/1.0" prefix="tei"/>
-    <sch:let name="docName" value="document-uri(current())"/>
-      <sch:pattern>
-        <sch:rule context="tei:seg">         
+    <sch:pattern>
+        <sch:rule context="tei:seg">
             <sch:let name="type" value="@type"/>
             <sch:let name="types" value="('participant', 'negation', 'scope', 'marker')"/>
             <sch:let name="part_types"
@@ -33,10 +32,10 @@
                     else
                         false()">Unnecessary nested segs</sch:report>
             <sch:report test="
-                if (@type eq 'marker') then
-                descendant::tei:seg[@type eq 'marker']
-                else
-                false()">Unnecessary nested segs</sch:report>
+                    if (@type eq 'marker') then
+                        descendant::tei:seg[@type eq 'marker']
+                    else
+                        false()">Unnecessary nested segs</sch:report>
             <sch:assert test="
                     if (@type eq 'participant') then
                         @subtype = $part_types
@@ -67,11 +66,18 @@
                     for $x in tokenize(@corresp, '\s+')
                     return
                         substring($x, 2)"/>
-            <sch:report
-                test="if (@corresp and not(@part)) then (following::tei:seg[some $x in tokenize(@part, '\s+') 
-                satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+') satisfies $x = $corresp]) else false() "
-            >@part attribute missing</sch:report>            
-            <sch:report test="if (@copyOf) then @copyOf = following::tei:seg/@copyOf else false()">Value of reference is not unique</sch:report>
+            <sch:report test="
+                    if (@corresp and not(@part)) then
+                        (following::tei:seg[some $x in tokenize(@part, '\s+')
+                            satisfies $x = $corresp] or preceding::tei:seg[some $x in tokenize(@part, '\s+')
+                            satisfies $x = $corresp])
+                    else
+                        false()">@part attribute missing</sch:report>
+            <sch:report test="
+                    if (@copyOf) then
+                        @copyOf = following::tei:seg/@copyOf
+                    else
+                        false()">Value of reference is not unique</sch:report>
         </sch:rule>
 
         <sch:rule context="tei:fs[@type eq 'scope']">
@@ -125,10 +131,30 @@
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
+            <sch:assert test="if (not(ancestor::tei:supplied)) then
+                    @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
+                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()" >Pos tags: ADJ – ADP
+                – ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ – VERB – X ADJ –
+                ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
 
+            <!--          PoS relation with FS morphological features-->
+
+            <sch:assert test="
+                    if (@pos eq 'VERB' and @msd) then
+                        substring(@msd, 2) = //tei:fs[tei:f/@name eq 'VerbForm']/@xml:id
+                    else
+                        true()">Verbs must have a feature VerbForm</sch:assert>
+            <sch:assert test="
+                    if (@pos = ('NOUN', 'ADJ', 'PRON') and @msd) then
+                        substring(@msd, 2) = //tei:fs[tei:f/@name eq 'Gender']/@xml:id
+                    else
+                        true()">Nouns must have a feature Gender</sch:assert>
         </sch:rule>
         <sch:rule context="tei:note">
             <sch:report test="string-length(.) eq 0">Empty note</sch:report>
         </sch:rule>
+
+
+
     </sch:pattern>
 </sch:schema>
