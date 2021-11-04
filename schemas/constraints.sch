@@ -141,7 +141,7 @@
 
             <sch:assert test="
                     if (@pos = 'VERB' and @msd) then
-                        substring(@msd, 2) = //tei:fs[tei:f/@name eq 'VerbForm']/@xml:id
+                        substring(@msd, 2) = //tei:fs[tei:f[@name = 'VerbForm']]/@xml:id
                     else
                         true()">Verbs must have a feature VerbForm</sch:assert>
             <sch:assert test="
