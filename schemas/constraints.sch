@@ -146,7 +146,7 @@
                         true()">Verbs must have a feature VerbForm</sch:assert>
             <sch:assert test="
                     if (@pos = ('NOUN', 'ADJ', 'PRON') and @msd) then
-                        substring(@msd, 2) = //tei:fs[tei:f/@name eq 'Gender']/@xml:id
+                        substring(@msd, 2) = //tei:fs[tei:f[@name eq 'Gender']]/@xml:id
                     else
                         true()">Nouns must have a feature Gender</sch:assert>
         </sch:rule>
