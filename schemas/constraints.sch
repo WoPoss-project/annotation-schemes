@@ -131,7 +131,7 @@
                         @rend or @msd
                     else
                         true()">Morphological analysis missing</sch:assert>
-            <sch:assert test="if (not(ancestor::tei:supplied)) then
+            <sch:assert test="if (ancestor::tei:seg) then
                     @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()" >Pos tags: ADJ – ADP
                 – ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ – VERB – X ADJ –
