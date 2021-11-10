@@ -61,7 +61,7 @@
                                     true()">No corresponding ID
                                     found in feature structures</sch:assert>
                                 <sch:assert test="
-                                    if (ancestor::tei:TEI[@xml:lang eq 'la'] and (ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'CCONJ', 'SCONJ')) and not(@lemma eq 'necesse')) then
+                                    if (ancestor::tei:TEI[@xml:lang eq 'la'] and (ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ')) and not(@lemma eq 'necesse')) then
                                     @msd
                                     else
                                     true()">Morphological analysis
