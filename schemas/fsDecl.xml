@@ -108,6 +108,16 @@
                      </vAlt>
                   </vRange>
                </fDecl>
+               <fDecl name="participant">
+                  <vRange>
+                     <vAlt>
+                        <symbol value="animate"/>
+                        <symbol value="inanimate"/>
+                        <symbol value="animate_patient"/>
+                        <symbol value="inanimate_patient"/>
+                     </vAlt>
+                  </vRange>
+               </fDecl>
                <fDecl name="SoA">
                   <vRange>
                      <symbol value="false"/>
@@ -119,14 +129,18 @@
                         <f name="dynamicity"/>
                      </fs>
                      <then/>
-                     <fs><f name="control"/></fs>
+                     <fs>
+                        <f name="control"/>
+                     </fs>
                   </cond>
                   <cond>
                      <fs>
                         <f name="control"/>
                      </fs>
                      <then/>
-                     <fs><f name="dynamicity"/></fs>
+                     <fs>
+                        <f name="dynamicity"/>
+                     </fs>
                   </cond>
                </fsConstraints>
             </fsDecl>
@@ -193,14 +207,15 @@
                         </f>
                      </fs>
                      <then/>
-                     <fs><f name="type">
-                        <vAlt>
-                           <symbol value="possibility"/>
-                           <symbol value="necessity"/>
-                        </vAlt></f>
+                     <fs>
+                        <f name="type">
+                           <vAlt>
+                              <symbol value="possibility"/>
+                              <symbol value="necessity"/>
+                           </vAlt></f>
                         <f name="participant_control"/>
-                     </fs>                     
-                  </cond>   
+                     </fs>
+                  </cond>
                   <cond>
                      <fs>
                         <f name="modality">
@@ -208,14 +223,15 @@
                         </f>
                      </fs>
                      <then/>
-                     <fs><f name="type">
-                        <vAlt>
-                           <symbol value="authority"/>
-                           <symbol value="acceptability"/>
-                           <symbol value="volition"/>
-                           <symbol value="intention"/>
-                        </vAlt></f>
-                     </fs>                     
+                     <fs>
+                        <f name="type">
+                           <vAlt>
+                              <symbol value="authority"/>
+                              <symbol value="acceptability"/>
+                              <symbol value="volition"/>
+                              <symbol value="intention"/>
+                           </vAlt></f>
+                     </fs>
                   </cond>
                   <cond>
                      <fs>
@@ -224,13 +240,14 @@
                         </f>
                      </fs>
                      <then/>
-                     <fs><f name="subtype">
-                        <vAlt>
-                           <symbol value="obligation"/>
-                           <symbol value="recommendation"/>
-                           <symbol value="permission"/>
-                        </vAlt></f>
-                     </fs>                     
+                     <fs>
+                        <f name="subtype">
+                           <vAlt>
+                              <symbol value="obligation"/>
+                              <symbol value="recommendation"/>
+                              <symbol value="permission"/>
+                           </vAlt></f>
+                     </fs>
                   </cond>
                   <cond>
                      <fs>
@@ -239,15 +256,16 @@
                         </f>
                      </fs>
                      <then/>
-                     <fs><f name="degree">
-                        <vAlt>
-                           <symbol value="absolutely_necessary"/>
-                           <symbol value="desirable"/>
-                           <symbol value="acceptable"/>
-                           <symbol value="undesirable"/>
-                           <symbol value="unacceptable"/>
-                        </vAlt></f>
-                     </fs>                     
+                     <fs>
+                        <f name="degree">
+                           <vAlt>
+                              <symbol value="absolutely_necessary"/>
+                              <symbol value="desirable"/>
+                              <symbol value="acceptable"/>
+                              <symbol value="undesirable"/>
+                              <symbol value="unacceptable"/>
+                           </vAlt></f>
+                     </fs>
                   </cond>
                   <cond>
                      <fs>
@@ -256,15 +274,16 @@
                         </f>
                      </fs>
                      <then/>
-                     <fs><f name="degree">
-                        <vAlt>
-                           <symbol value="absolutely_certain"/>
-                           <symbol value="probable"/>
-                           <symbol value="possible"/>
-                           <symbol value="improbable"/>
-                           <symbol value="impossible"/>
-                        </vAlt></f>
-                     </fs>                     
+                     <fs>
+                        <f name="degree">
+                           <vAlt>
+                              <symbol value="absolutely_certain"/>
+                              <symbol value="probable"/>
+                              <symbol value="possible"/>
+                              <symbol value="improbable"/>
+                              <symbol value="impossible"/>
+                           </vAlt></f>
+                     </fs>
                   </cond>
                </fsConstraints>
             </fsDecl>
