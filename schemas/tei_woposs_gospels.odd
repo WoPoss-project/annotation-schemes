@@ -455,8 +455,8 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient')]">
-                                    Incorrect value. Possible values are: 'animate, inanimate, animate_patient, inanimate_patient'</sch:assert>
+                                <sch:assert test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient', 'none')]">
+                                    Incorrect value. Possible values are: 'animate, inanimate, animate_patient, inanimate_patient, none'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'modality'][parent::tei:fs[@type eq 'relation']]">

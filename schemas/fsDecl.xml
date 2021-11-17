@@ -115,6 +115,7 @@
                         <symbol value="inanimate"/>
                         <symbol value="animate_patient"/>
                         <symbol value="inanimate_patient"/>
+                        <symbol value="none"/>
                      </vAlt>
                   </vRange>
                </fDecl>
