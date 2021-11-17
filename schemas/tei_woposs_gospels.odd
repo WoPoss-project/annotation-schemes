@@ -268,6 +268,11 @@
                                     false()">Value of reference is
                                     not unique</sch:report>
                             </sch:rule>
+                            <sch:rule
+                                context="tei:seg[@function eq 'scope']">
+                                <sch:assert test="if(not(//tei:seg[@function eq 'participant'][@corresp eq current()/@ana])) then //tei:fs[@xml:id eq current()/substring(@ana, 2)]/tei:f[@name eq 'participant'] else true()">If the participant is not explicit, 
+                                    the analysis of the scope must include an implicit participant</sch:assert>
+                            </sch:rule>
                                               </constraint>
                     </constraintSpec>
                 </elementSpec>
