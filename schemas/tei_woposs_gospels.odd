@@ -268,17 +268,15 @@
                                     not unique</sch:report>
                             </sch:rule>
                             <sch:rule context="tei:seg[@function eq 'scope']">
-                                <sch:assert
-                                    test="if(not(//tei:seg[@function eq 'participant'][@corresp eq current()/@ana])) then //tei:fs[@xml:id eq current()/substring(@ana, 2)]/tei:f[@name eq 'participant'] else true()"
-                                    >If the participant is not explicit, the analysis of the scope
-                                    must include an implicit participant</sch:assert>
-                            </sch:rule>
-                            <sch:rule
-                                context="tei:seg[@function eq 'scope'][not(ancestor::tei:supplied)]">
-                                <sch:assert
-                                    test="if(//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'SoA'])) then ancestor::tei:w[@function] or descendant::tei:w[@function] else true()"
-                                    >Main verb of scope needs to be identified</sch:assert>
-                                <sch:report test="count(descendant::tei:w[@function]) gt 1">More than one main verb annotated in current scope</sch:report>
+                                <sch:let name="explicit_participants" value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')
+                                    return
+                                    $x"></sch:let>           
+                                <sch:assert test="
+                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA'])) then 
+                                    $explicit_participants = current()/@ana                         
+                                    else
+                                    true()">If the participant is not explicit, the analysis of the
+                                    scope must include an implicit participant</sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -287,17 +285,20 @@
                     <constraintSpec scheme="schematron" ident="seg_analysis">
                         <desc>Constraints to check the consistency of the semantic analysis</desc>
                         <constraint>
-                            <sch:rule context="tei:fs[@type eq 'scope']">
+                            <sch:rule context="tei:fs[@type eq 'scope']">                                
+                                <sch:let name="scope" value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"></sch:let>
                                 <sch:assert
                                     test="tei:f[@name eq 'SoA'] or tei:f[@name eq 'dynamicity']">SoA
                                     description missing</sch:assert>
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
-                                <sch:assert test="
-                                    some $x in //tei:body//tei:seg[@function eq 'scope']/tokenize(@ana, '\s+')
-                                    satisfies $x = '#' || current()/@xml:id"
+                                <sch:assert test="$scope"
                                     >ID not referenced in text</sch:assert>
+                                <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function]
+                                    or $scope/ancestor::tei:w[@function] else true()">Main verb of scope needs to be identified</sch:assert>
+                                <sch:report test="count($scope/descendant::tei:w[@function]) gt 1">More than one main verb
+                                    annotated in current scope</sch:report>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
                                 <sch:assert test="
