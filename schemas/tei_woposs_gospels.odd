@@ -278,7 +278,7 @@
                                 <sch:assert
                                     test="if(//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'SoA'])) then ancestor::tei:w[@function] or descendant::tei:w[@function] else true()"
                                     >Main verb of scope needs to be identified</sch:assert>
-                                <sch:report test="descendant::tei:w[@function] gt 1">More than one main verb annotated in current scope</sch:report>
+                                <sch:report test="count(descendant::tei:w[@function]) gt 1">More than one main verb annotated in current scope</sch:report>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
