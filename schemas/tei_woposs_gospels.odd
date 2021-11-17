@@ -435,23 +435,23 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'control'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('+-control')] or tei:binary">
+                                <sch:assert test="tei:symbol[@value = ('+-')] or tei:binary">
                                     Incorrect value. Possible values are: a binary element or a
                                     symbol element with one of the following @value attributes
-                                    '+-control'</sch:assert>
+                                    '+-'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'dynamicity'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('+-dynamic')] or tei:binary">
+                                <sch:assert test="tei:symbol[@value = ('+-')] or tei:binary">
                                     Incorrect value. Possible values are: a binary element or a
                                     symbol element with one of the following @value attributes
-                                    '+-dynamic'</sch:assert>
+                                    '+-'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
                                 <sch:assert test="tei:binary/@value eq 'false'">SoA value is
                                     expected to be false. If SoA is present, then control and
-                                    dinamicity must be expressed</sch:assert>
+                                    dynamicity must be expressed</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'modality'][parent::tei:fs[@type eq 'relation']]">

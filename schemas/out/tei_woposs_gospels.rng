@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2021-11-10T19:06:06Z. .
+Schema generated from ODD source 2021-11-17T10:32:26Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -15234,19 +15234,19 @@ Feature Value]</a:documentation>
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'control'][parent::tei:fs[@type eq 'scope']]">
-               <sch:assert test="tei:symbol[@value = ('+-control')] or tei:binary">
+               <sch:assert test="tei:symbol[@value = ('+-')] or tei:binary">
                                     Incorrect value. Possible values are: a binary element or a
                                     symbol element with one of the following @value attributes
-                                    '+-control'</sch:assert>
+                                    '+-'</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'dynamicity'][parent::tei:fs[@type eq 'scope']]">
-               <sch:assert test="tei:symbol[@value = ('+-dynamic')] or tei:binary">
+               <sch:assert test="tei:symbol[@value = ('+-')] or tei:binary">
                                     Incorrect value. Possible values are: a binary element or a
                                     symbol element with one of the following @value attributes
-                                    '+-dynamic'</sch:assert>
+                                    '+-'</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
@@ -15254,7 +15254,7 @@ Feature Value]</a:documentation>
                       context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
                <sch:assert test="tei:binary/@value eq 'false'">SoA value is
                                     expected to be false. If SoA is present, then control and
-                                    dinamicity must be expressed</sch:assert>
+                                    dynamicity must be expressed</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"

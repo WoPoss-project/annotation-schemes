@@ -95,7 +95,7 @@
                      <vAlt>
                         <binary value="false"/>
                         <binary value="true"/>
-                        <symbol value="+-control"/>
+                        <symbol value="+-"/>
                      </vAlt>
                   </vRange>
                </fDecl>
@@ -104,7 +104,7 @@
                      <vAlt>
                         <binary value="false"/>
                         <binary value="true"/>
-                        <symbol value="+-dynamic"/>
+                        <symbol value="+-"/>
                      </vAlt>
                   </vRange>
                </fDecl>
@@ -140,18 +140,6 @@
                      </vAlt>
                   </vRange>
                </fDecl>
-<!--               <fDecl name="type">
-                  <vRange>
-                     <vAlt>
-                        <symbol value="possibility"/>
-                        <symbol value="necessity"/>
-                        <symbol value="authority"/>
-                        <symbol value="acceptability"/>
-                        <symbol value="volition"/>
-                        <symbol value="intention"/>
-                     </vAlt>
-                  </vRange>
-               </fDecl>-->
                <fDecl name="subtype">
                   <vRange>
                      <vAlt>
@@ -163,22 +151,6 @@
                      </vAlt>
                   </vRange>
                </fDecl>
-<!--               <fDecl name="degree">
-                  <vRange>
-                     <vAlt>
-                        <symbol value="absolutely_necessary"/>
-                        <symbol value="desirable"/>
-                        <symbol value="acceptable"/>
-                        <symbol value="undesirable"/>
-                        <symbol value="unacceptable"/>
-                        <symbol value="absolutely_certain"/>
-                        <symbol value="probable"/>
-                        <symbol value="possible"/>
-                        <symbol value="improbable"/>
-                        <symbol value="impossible"/>
-                     </vAlt>
-                  </vRange>
-               </fDecl>-->
                <fDecl name="participant_control">
                   <vRange>
                      <vAlt>
