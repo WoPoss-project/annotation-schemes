@@ -187,8 +187,7 @@
                                     @xml:id = $ref">Reference not
                                     present in aligned Gospel.</sch:assert>
                             </sch:rule>
-                            
-<!--                            Other rules-->
+                            <!--                            Other rules-->
                             <sch:rule context="tei:seg">
                                 <sch:let name="function" value="@function"/>
                                 <sch:let name="functions"
@@ -268,12 +267,20 @@
                                     false()">Value of reference is
                                     not unique</sch:report>
                             </sch:rule>
-                            <sch:rule
-                                context="tei:seg[@function eq 'scope']">
-                                <sch:assert test="if(not(//tei:seg[@function eq 'participant'][@corresp eq current()/@ana])) then //tei:fs[@xml:id eq current()/substring(@ana, 2)]/tei:f[@name eq 'participant'] else true()">If the participant is not explicit, 
-                                    the analysis of the scope must include an implicit participant</sch:assert>
+                            <sch:rule context="tei:seg[@function eq 'scope']">
+                                <sch:assert
+                                    test="if(not(//tei:seg[@function eq 'participant'][@corresp eq current()/@ana])) then //tei:fs[@xml:id eq current()/substring(@ana, 2)]/tei:f[@name eq 'participant'] else true()"
+                                    >If the participant is not explicit, the analysis of the scope
+                                    must include an implicit participant</sch:assert>
                             </sch:rule>
-                                              </constraint>
+                            <sch:rule
+                                context="tei:seg[@function eq 'scope'][not(ancestor::tei:supplied)]">
+                                <sch:assert
+                                    test="if(//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'SoA'])) then ancestor::tei:w[@function] or descendant::tei:w[@function] else true()"
+                                    >Main verb of scope needs to be identified</sch:assert>
+                                <sch:report test="descendant::tei:w[@function] gt 1">More than one main verb annotated in current scope</sch:report>
+                            </sch:rule>
+                        </constraint>
                     </constraintSpec>
                 </elementSpec>
                 <elementSpec ident="fs" module="iso-fs" mode="change">
@@ -460,8 +467,10 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient', 'none')]">
-                                    Incorrect value. Possible values are: 'animate, inanimate, animate_patient, inanimate_patient, none'</sch:assert>
+                                <sch:assert
+                                    test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient', 'none')]"
+                                    > Incorrect value. Possible values are: 'animate, inanimate,
+                                    animate_patient, inanimate_patient, none'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'modality'][parent::tei:fs[@type eq 'relation']]">
@@ -573,7 +582,8 @@
                                     test="parent::tei:fs/tei:f[@name eq 'Number'] and parent::tei:fs/tei:f[@name eq 'Case']"
                                     >Number feature is mandatory</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Case']"> <sch:assert
+                            <sch:rule context="tei:f[@name eq 'Case']">
+                                <sch:assert
                                     test="tei:symbol/@value = ('Abl', 'Acc', 'Dat', 'Gen', 'Loc', 'Nom', 'Voc')"
                                     >Possible values: Abl, Acc, Dat, Gen, Loc, Nom,
                                     Voc.</sch:assert>
