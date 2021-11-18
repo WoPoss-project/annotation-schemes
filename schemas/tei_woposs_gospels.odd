@@ -295,7 +295,7 @@
                                     >This scope is not part of a modal relation</sch:assert>
                                 <sch:assert test="$scope"
                                     >ID not referenced in text</sch:assert>
-                                <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']
+                                <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']
                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
                                 <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb
                                     annotated in current scope</sch:report>
