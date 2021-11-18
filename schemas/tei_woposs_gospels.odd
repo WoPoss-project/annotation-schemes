@@ -67,8 +67,15 @@
                                     true()">Morphological analysis
                                     missing</sch:assert>
                                 <sch:assert
-                                    test="if (ancestor::tei:seg and not(ancestor::tei:supplied)) then
+                                    test="if (ancestor::tei:seg and not(ancestor::tei:supplied) and ancestor::tei:TEI/@xml:lang et 'la') then
                                     @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
+                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()"
+                                    >Pos tags: ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON –
+                                    PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
+                                <!--          PoS relation with FS morphological features-->
+                                <sch:assert
+                                    test="if (ancestor::tei:seg and not(ancestor::tei:supplied) and ancestor::tei:TEI/@xml:lang et 'grc') then
+                                    @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM',
                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()"
                                     >Pos tags: ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON –
                                     PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
