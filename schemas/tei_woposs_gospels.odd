@@ -88,7 +88,7 @@
                             </sch:rule>
                             <!-- Check whether all potential modal markers have been annotated-->
                             <sch:rule
-                                context="tei:w[not(@function)][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
+                                context="tei:w[not(@function eq 'no')][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
                                 <sch:let name="lemma_markers" value="
                                 ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
@@ -295,9 +295,9 @@
                                     >This scope is not part of a modal relation</sch:assert>
                                 <sch:assert test="$scope"
                                     >ID not referenced in text</sch:assert>
-                                <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function]
-                                    or $scope/ancestor::tei:w[@function] else true()">Main verb of scope needs to be identified</sch:assert>
-                                <sch:report test="count($scope/descendant::tei:w[@function]) gt 1">More than one main verb
+                                <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']
+                                    or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
+                                <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb
                                     annotated in current scope</sch:report>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">

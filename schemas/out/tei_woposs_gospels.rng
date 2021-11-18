@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2021-11-17T18:40:39Z. .
+Schema generated from ODD source 2021-11-18T08:40:32Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -9114,7 +9114,7 @@ Sample values include: 1] L (left); 2] R (right); 3] C (center)</a:documentation
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:w[not(@function)][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
+                      context="tei:w[not(@function eq 'no')][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
                <sch:let name="lemma_markers"
                         value="                                 ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitam',                                 'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                <sch:report test="@lemma = $lemma_markers">Potential modal
@@ -15060,8 +15060,8 @@ Feature Value]</a:documentation>
                                     description missing</sch:assert>
                <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
                <sch:assert test="$scope">ID not referenced in text</sch:assert>
-               <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function]                                     or $scope/ancestor::tei:w[@function] else true()">Main verb of scope needs to be identified</sch:assert>
-               <sch:report test="count($scope/descendant::tei:w[@function]) gt 1">More than one main verb
+               <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
+               <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb
                                     annotated in current scope</sch:report>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
