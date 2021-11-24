@@ -99,7 +99,7 @@
                                 <sch:let name="lemma_markers" value="
                                 ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitam',
+                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
                                 'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report test="@lemma = $lemma_markers">Potential modal
@@ -308,6 +308,12 @@
                                     annotated in current scope</sch:report>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
+                                <sch:let name="markers" value="
+                                    ('aequum_est', 'aequus' 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', '-bilis', '-turus', '-ndus','-bilis_sum', '-ndus_sum', 'est_inf'
+                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est', 'usus_est'
+                                    'forsitan', 'fortasse', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
+                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'ius_est', 'meum_est')"/>
                                 <sch:assert test="
                                     some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')
                                     satisfies $x = '#' || current()/@xml:id"
@@ -318,6 +324,7 @@
                                     else
                                     true()">This marker is not part
                                     of a modal relation</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'lemma']/@value = $markers">Either the citation form of the marker is missing or its value is not correct</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation']">
                                 <sch:assert
