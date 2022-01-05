@@ -8,4 +8,6 @@ In this repo you can find:
 
 - An example of the WoPoss annotation to play around with in INCEpTION ([see demo](https://github.com/WoPoss/annotation-schemes/tree/master/demo)). The instructions are available [here](http://woposs.unil.ch/db.php).
 
-- The TEI schemas (in progress).
+- The TEI schemas (in progress):
+    - [ODD file](https://github.com/WoPoss-project/annotation-schemes/blob/master/schemas/tei_woposs.odd)
+    - [RelaxNG files](https://github.com/WoPoss-project/annotation-schemes/tree/master/schemas/out)
