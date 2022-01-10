@@ -235,7 +235,7 @@
                                     @type = $part_types
                                     else
                                     true()">Attribute @type is
-                                    mandatary with one of these values: <sch:value-of
+                                    mandatory with one of these values: <sch:value-of
                                         select="$part_types"/></sch:assert>
                                 <sch:assert test="
                                     if (@function eq 'participant') then
@@ -279,7 +279,7 @@
                                     return
                                     $x"></sch:let>           
                                 <sch:assert test="
-                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then 
+                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant']/tei:symbol eq 'implicit' or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then 
                                     $explicit_participants = current()/@ana                         
                                     else
                                     true()">If the participant is not explicit, the analysis of the
@@ -481,11 +481,18 @@
                                     dynamicity must be expressed</sch:assert>
                             </sch:rule>
                             <sch:rule
-                                context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
+                                context="tei:f[@name eq 'participantType'][parent::tei:fs[@type eq 'scope']]">
                                 <sch:assert
-                                    test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient', 'none')]"
+                                    test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient')]"
                                     > Incorrect value. Possible values are: 'animate, inanimate,
                                     animate_patient, inanimate_patient, none'</sch:assert>
+                            </sch:rule>
+                            <sch:rule
+                                context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert
+                                    test="tei:symbol[@value = ('implicit', 'explicit', 'none')]"
+                                    > Incorrect value. Possible values are: 'implicit, explicit,
+                                     none'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'modality'][parent::tei:fs[@type eq 'relation']]">

@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-10T15:18:36Z. .
+Schema generated from ODD source 2022-01-10T15:48:52Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -14389,7 +14389,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                <sch:report test="                                     if (@function eq 'marker') then                                     descendant::tei:seg[@function eq 'marker']                                     else                                     false()">Unnecessary nested
                                     segs</sch:report>
                <sch:assert test="                                     if (@function eq 'participant') then                                     @type = $part_types                                     else                                     true()">Attribute @type is
-                                    mandatary with one of these values: <sch:value-of select="$part_types"/>
+                                    mandatory with one of these values: <sch:value-of select="$part_types"/>
                </sch:assert>
                <sch:assert test="                                     if (@function eq 'participant') then                                     every $x in tokenize(@corresp, '\s+')                                     satisfies substring($x, 2) = //tei:fs[@type eq 'scope']/@xml:id                                     else                                     true()">Attribute @corresp is
                                     missing or no corresponding ID was found in feature
@@ -14411,7 +14411,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                       context="tei:seg[@function eq 'scope']">
                <sch:let name="explicit_participants"
                         value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')                                     return                                     $x"/>
-               <sch:assert test="                                     if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then                                      $explicit_participants = current()/@ana                                                              else                                     true()">If the participant is not explicit, the analysis of the
+               <sch:assert test="                                     if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant']/tei:symbol eq 'implicit' or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then                                      $explicit_participants = current()/@ana                                                              else                                     true()">If the participant is not explicit, the analysis of the
                                     scope must include an implicit participant</sch:assert>
             </sch:rule>
          </pattern>
@@ -15278,9 +15278,16 @@ Feature Value]</a:documentation>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
-               <sch:assert test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient', 'none')]"> Incorrect value. Possible values are: 'animate, inanimate,
+                      context="tei:f[@name eq 'participantType'][parent::tei:fs[@type eq 'scope']]">
+               <sch:assert test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient')]"> Incorrect value. Possible values are: 'animate, inanimate,
                                     animate_patient, inanimate_patient, none'</sch:assert>
+            </sch:rule>
+            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                      xmlns="http://www.tei-c.org/ns/1.0"
+                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                      context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
+               <sch:assert test="tei:symbol[@value = ('implicit', 'explicit', 'none')]"> Incorrect value. Possible values are: 'implicit, explicit,
+                                     none'</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
