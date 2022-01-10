@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-10T08:17:22Z. .
+Schema generated from ODD source 2022-01-10T12:40:58Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -14411,7 +14411,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                       context="tei:seg[@function eq 'scope']">
                <sch:let name="explicit_participants"
                         value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')                                     return                                     $x"/>
-               <sch:assert test="                                     if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA'])) then                                      $explicit_participants = current()/@ana                                                              else                                     true()">If the participant is not explicit, the analysis of the
+               <sch:assert test="                                     if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then                                      $explicit_participants = current()/@ana                                                              else                                     true()">If the participant is not explicit, the analysis of the
                                     scope must include an implicit participant</sch:assert>
             </sch:rule>
          </pattern>
@@ -15058,11 +15058,11 @@ Feature Value]</a:documentation>
                       context="tei:fs[@type eq 'scope']">
                <sch:let name="scope"
                         value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
-               <sch:assert test="tei:f[@name eq 'SoA'] or tei:f[@name eq 'dynamicity']">SoA
+               <sch:assert test="tei:f[@name eq 'SoA']">SoA
                                     description missing</sch:assert>
                <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
                <sch:assert test="$scope">ID not referenced in text</sch:assert>
-               <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
+               <sch:assert test="if(not(tei:f[@name eq 'SoA']/tei:binary eq 'false')) and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
                <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb
                                     annotated in current scope</sch:report>
             </sch:rule>
@@ -15272,8 +15272,7 @@ Feature Value]</a:documentation>
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
-               <sch:assert test="tei:binary/@value eq 'false'">SoA value is
-                                    expected to be false. If SoA is present, then control and
+               <sch:assert test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity']">If SoA is present, then control and
                                     dynamicity must be expressed</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"

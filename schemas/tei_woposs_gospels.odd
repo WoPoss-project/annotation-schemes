@@ -279,7 +279,7 @@
                                     return
                                     $x"></sch:let>           
                                 <sch:assert test="
-                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA'])) then 
+                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant'] or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then 
                                     $explicit_participants = current()/@ana                         
                                     else
                                     true()">If the participant is not explicit, the analysis of the
@@ -295,14 +295,14 @@
                             <sch:rule context="tei:fs[@type eq 'scope']">                                
                                 <sch:let name="scope" value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"></sch:let>
                                 <sch:assert
-                                    test="tei:f[@name eq 'SoA'] or tei:f[@name eq 'dynamicity']">SoA
+                                    test="tei:f[@name eq 'SoA']">SoA
                                     description missing</sch:assert>
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
                                 <sch:assert test="$scope"
                                     >ID not referenced in text</sch:assert>
-                                <sch:assert test="if(not(tei:f[@name eq 'SoA']) and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']
+                                <sch:assert test="if(not(tei:f[@name eq 'SoA']/tei:binary eq 'false')) and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']
                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
                                 <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb
                                     annotated in current scope</sch:report>
@@ -477,8 +477,7 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:binary/@value eq 'false'">SoA value is
-                                    expected to be false. If SoA is present, then control and
+                                <sch:assert test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity']">If SoA is present, then control and
                                     dynamicity must be expressed</sch:assert>
                             </sch:rule>
                             <sch:rule
