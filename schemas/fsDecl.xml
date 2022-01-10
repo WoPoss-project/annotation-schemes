@@ -95,7 +95,7 @@
                      <vAlt>
                         <binary value="false"/>
                         <binary value="true"/>
-                        <symbol value="+-"/>
+                        <symbol value="ambiguous"/>
                      </vAlt>
                   </vRange>
                </fDecl>
@@ -104,7 +104,7 @@
                      <vAlt>
                         <binary value="false"/>
                         <binary value="true"/>
-                        <symbol value="+-"/>
+                        <symbol value="ambiguous"/>
                      </vAlt>
                   </vRange>
                </fDecl>

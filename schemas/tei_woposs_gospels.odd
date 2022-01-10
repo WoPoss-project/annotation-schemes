@@ -463,17 +463,17 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'control'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('+-')] or tei:binary">
+                                <sch:assert test="tei:symbol[@value eq 'ambiguous'] or tei:binary">
                                     Incorrect value. Possible values are: a binary element or a
                                     symbol element with one of the following @value attributes
-                                    '+-'</sch:assert>
+                                    'ambiguous'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'dynamicity'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('+-')] or tei:binary">
+                                <sch:assert test="tei:symbol[@value eq 'ambiguous'] or tei:binary">
                                     Incorrect value. Possible values are: a binary element or a
                                     symbol element with one of the following @value attributes
-                                    '+-'</sch:assert>
+                                    'ambiguous'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
