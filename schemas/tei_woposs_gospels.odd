@@ -477,7 +477,7 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity']">If SoA is present, then control and
+                                <sch:assert test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity'] else true()">If SoA is present, then control and
                                     dynamicity must be expressed</sch:assert>
                             </sch:rule>
                             <sch:rule

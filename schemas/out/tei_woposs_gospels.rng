@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-10T12:40:58Z. .
+Schema generated from ODD source 2022-01-10T13:46:46Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -15272,7 +15272,7 @@ Feature Value]</a:documentation>
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
-               <sch:assert test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity']">If SoA is present, then control and
+               <sch:assert test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity'] else true()">If SoA is present, then control and
                                     dynamicity must be expressed</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
