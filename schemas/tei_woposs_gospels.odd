@@ -75,9 +75,9 @@
                                 <!--          PoS relation with FS morphological features-->
                                 <sch:assert
                                     test="if (ancestor::tei:seg and not(ancestor::tei:supplied) and ancestor::tei:TEI/@xml:lang eq 'grc') then
-                                    @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM',
+                                    @pos = ('ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM',
                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()"
-                                    >Pos tags: ADJ – ADP – ADV – CCONJ – DET – INTJ – NOUN – NUM – PRON –
+                                    >Pos tags: ADJ – ADP – ADV – AUX – CCONJ – DET – INTJ – NOUN – NUM – PRON –
                                     PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
                                 <!--          PoS relation with FS morphological features-->
                                 <sch:assert test="
@@ -325,7 +325,7 @@
                                     else
                                     true()">This marker is not part
                                     of a modal relation</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'lemma']/tei:symbol[@value = $markers]">Either the citation form of the marker is missing or its value is not correct</sch:assert>
+                                <sch:assert test="tei:f[ancestor::tei:TEI/@xml:lang eq 'la'][@name eq 'lemma']/tei:symbol[@value = $markers]">Either the citation form of the marker is missing or its value is not correct</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation']">
                                 <sch:assert
