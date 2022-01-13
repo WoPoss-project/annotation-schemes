@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-13T16:00:59Z. .
+Schema generated from ODD source 2022-01-13T16:05:21Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -15376,8 +15376,8 @@ Feature Value]</a:documentation>
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'Voice']">
-               <sch:assert test="tei:symbol/@value = ('Act', 'Pass')">Possible
-                                    values: Act, Pass.</sch:assert>
+               <sch:assert test="if (ancestor::tei:TEI/@xml:lang eq 'grc') then tei:symbol/@value = ('Act', 'Pass', 'Mid') else tei:symbol/@value = ('Act', 'Pass')">Possible
+                                    values: Act, Pass (and Mid in Greek)</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"

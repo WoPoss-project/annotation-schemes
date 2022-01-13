@@ -585,8 +585,8 @@
                                     values: Plur, Sing.</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Voice']">
-                                <sch:assert test="tei:symbol/@value = ('Act', 'Pass')">Possible
-                                    values: Act, Pass.</sch:assert>
+                                <sch:assert test="if (ancestor::tei:TEI/@xml:lang eq 'grc') then tei:symbol/@value = ('Act', 'Pass', 'Mid') else tei:symbol/@value = ('Act', 'Pass')">Possible
+                                    values: Act, Pass (and Mid in Greek)</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Mood']">
                                 <sch:assert test="tei:symbol/@value = ('Imp', 'Ind', 'Sub')"
