@@ -559,7 +559,7 @@
                                     if (tei:symbol/@value = ('Inf', 'Part')) then
                                     parent::tei:fs/tei:f[@name eq 'Tense']
                                     else
-                                    true()">Voice feature is
+                                    true()">Tense feature is
                                     mandatory</sch:assert>
                                 <sch:assert test="
                                     if (tei:symbol/@value = 'Fin') then
