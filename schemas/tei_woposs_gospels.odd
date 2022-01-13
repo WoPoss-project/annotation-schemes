@@ -325,7 +325,7 @@
                                     else
                                     true()">This marker is not part
                                     of a modal relation</sch:assert>
-                                <sch:assert test="tei:f[ancestor::tei:TEI/@xml:lang eq 'la'][@name eq 'lemma']/tei:symbol[@value = $markers]">Either the citation form of the marker is missing or its value is not correct</sch:assert>
+                                <sch:assert test="if (ancestor::tei:TEI/@xml:lang eq 'la') then tei:f[@name eq 'lemma']/tei:symbol[@value = $markers] else true()">Either the citation form of the marker is missing or its value is not correct</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation']">
                                 <sch:assert
