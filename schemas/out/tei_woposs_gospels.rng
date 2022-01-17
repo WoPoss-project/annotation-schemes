@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-17T11:37:07Z. .
+Schema generated from ODD source 2022-01-17T15:09:00Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -14328,19 +14328,19 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:seg[@function eq 'marker'][@copyOf][ancestor::tei:TEI/@xml:lang eq 'grc']">
+                      context="tei:seg[@function eq 'marker'][@synch][ancestor::tei:TEI/@xml:lang eq 'grc']">
                <sch:let name="fileName" value="replace(base-uri(current()), '_grc', '_la')"/>
                <sch:let name="document" value="doc($fileName)"/>
-               <sch:assert test="substring(@copyOf, 2) = $document//tei:seg[@function eq 'marker']/@xml:id">Reference not present in aligned Gospel.</sch:assert>
+               <sch:assert test="substring(@synch, 2) = $document//tei:seg[@function eq 'marker']/@xml:id">Reference not present in aligned Gospel.</sch:assert>
             </sch:rule>
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:seg[@function eq 'marker'][@copyOf][ancestor::tei:TEI/@xml:lang eq 'la']">
+                      context="tei:seg[@function eq 'marker'][@synch][ancestor::tei:TEI/@xml:lang eq 'la']">
                <sch:let name="fileName" value="replace(base-uri(current()), '_la', '_grc')"/>
                <sch:let name="document" value="doc($fileName)"/>
-               <sch:assert test="substring(@copyOf, 2) = $document//tei:seg[@function eq 'marker']/@xml:id">Reference not present in aligned Gospel.</sch:assert>
+               <sch:assert test="substring(@synch, 2) = $document//tei:seg[@function eq 'marker']/@xml:id">Reference not present in aligned Gospel.</sch:assert>
             </sch:rule>
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14350,8 +14350,8 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                <sch:let name="fileName" value="replace(base-uri(current()), '_la', '_grc')"/>
                <sch:let name="document" value="doc($fileName)"/>
                <sch:let name="ref"
-                        value="                                     for $x in $document//tei:s/tokenize(@copyOf, '\s+')                                     return                                     substring($x, 2)"/>
-               <sch:assert test="                                     if (@xml:id = $document//tei:seg[@function eq 'marker']/substring(@copyOf, 2)) then                                     true()                                     else                                     @xml:id = $ref">Reference not
+                        value="                                     for $x in $document//tei:s/tokenize(@synch, '\s+')                                     return                                     substring($x, 2)"/>
+               <sch:assert test="                                     if (@xml:id = $document//tei:seg[@function eq 'marker']/substring(@synch, 2)) then                                     true()                                     else                                     @xml:id = $ref">Reference not
                                     present in aligned Gospel.</sch:assert>
             </sch:rule>
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -14362,8 +14362,8 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                <sch:let name="fileName" value="replace(base-uri(current()), '_grc', '_la')"/>
                <sch:let name="document" value="doc($fileName)"/>
                <sch:let name="ref"
-                        value="                                     for $x in $document//tei:s/tokenize(@copyOf, '\s+')                                     return                                     substring($x, 2)"/>
-               <sch:assert test="                                     if (@xml:id = $document//tei:seg[@function eq 'marker']/substring(@copyOf, 2)) then                                     true()                                     else                                     @xml:id = $ref">Reference not
+                        value="                                     for $x in $document//tei:s/tokenize(@synch, '\s+')                                     return                                     substring($x, 2)"/>
+               <sch:assert test="                                     if (@xml:id = $document//tei:seg[@function eq 'marker']/substring(@synch, 2)) then                                     true()                                     else                                     @xml:id = $ref">Reference not
                                     present in aligned Gospel.</sch:assert>
             </sch:rule>
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -14401,7 +14401,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                                     missing</sch:assert>
                <sch:report test="                                     if (@ana and not(@part)) then                                     (following::tei:seg[some $x in tokenize(@ana, '\s+')                                     satisfies $x = $ana] or preceding::tei:seg[some $x in tokenize(@ana, '\s+')                                     satisfies $x = $ana])                                     else                                     false()">@part attribute
                                     missing</sch:report>
-               <sch:report test="                                     if (@copyOf) then                                     @copyOf = following::tei:seg/@copyOf                                     else                                     false()">Value of reference is
+               <sch:report test="                                     if (@synch) then                                     @synch = following::tei:seg/@synch                                     else                                     false()">Value of reference is
                                     not unique</sch:report>
             </sch:rule>
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -15343,7 +15343,7 @@ Feature Value]</a:documentation>
                <sch:assert test="tei:symbol/@value = ('Fut', 'Past', 'Pqp', 'Pres')">Possible values: Fut, Past, Pqp, Pres</sch:assert>
                <sch:assert test="parent::tei:fs/tei:f[@name eq 'Voice']">Voice
                                     feature is mandatory</sch:assert>
-               <sch:assert test="                                     if (tei:symbol/@value eq 'Past') then                                     parent::tei:fs/tei:f[@name eq 'Aspect']                                     else                                     true()">Aspect feature is
+               <sch:assert test="                                     if (tei:symbol/@value eq 'Past' and ancestor::tei:TEI[@xml:lang eq 'la']) then                                     parent::tei:fs/tei:f[@name eq 'Aspect']                                     else                                     true()">Aspect feature is
                                     mandatory</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -15355,7 +15355,7 @@ Feature Value]</a:documentation>
                                     mandatory</sch:assert>
                <sch:assert test="                                     if (tei:symbol/@value = 'Fin') then                                     parent::tei:fs/tei:f[@name eq 'Person'] and parent::tei:fs/tei:f[@name eq 'Number']                                      and parent::tei:fs/tei:f[@name eq 'Mood'] and parent::tei:fs/tei:f[@name eq 'Tense']                                     else                                     true()">Person, Number, Mood and
                                     Tense features are mandatory</sch:assert>
-               <sch:assert test="                                     if (tei:symbol/@value = ('Gdv', 'Part')) then                                     parent::tei:fs/tei:f[@name eq 'Case'] and                                     parent::tei:fs/tei:f[@name eq 'Gender'] and parent::tei:fs/tei:f[@name eq 'Number']                                     else                                     true()">Case, Person and Number
+               <sch:assert test="                                     if (tei:symbol/@value = ('Gdv', 'Part')) then                                     parent::tei:fs/tei:f[@name eq 'Case'] and                                     parent::tei:fs/tei:f[@name eq 'Gender'] and parent::tei:fs/tei:f[@name eq 'Number']                                     else                                     true()">Case, Gender and Number
                                     features are mandatory</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -15383,7 +15383,7 @@ Feature Value]</a:documentation>
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'Mood']">
-               <sch:assert test="if (ancestor::tei:TEI/@xml:lang eq 'grc') then tei:symbol/@value = ('Imp', 'Ind', 'Sub', 'Opt') else tei:symbol/@value = ('Imp', 'Ind', 'Sub')">Possible values: Imp, Ind, Sub (and Opt in GRC)</sch:assert>
+               <sch:assert test="if (ancestor::tei:TEI/@xml:lang eq 'grc') then tei:symbol/@value = ('Imp', 'Ind', 'Sub', 'Opt') else tei:symbol/@value = ('Imp', 'Ind', 'Sub')">Possible values: Imp, Ind, Sub (and Opt in Greek)</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
