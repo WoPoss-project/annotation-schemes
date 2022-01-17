@@ -589,7 +589,7 @@
                                     values: Act, Pass (and Mid in Greek)</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Mood']">
-                                <sch:assert test="if (ancestor::TEI/@xml:lang eq 'grc') then tei:symbol/@value = ('Imp', 'Ind', 'Sub', 'Opt') else tei:symbol/@value = ('Imp', 'Ind', 'Sub')"
+                                <sch:assert test="if (ancestor::tei:TEI/@xml:lang eq 'grc') then tei:symbol/@value = ('Imp', 'Ind', 'Sub', 'Opt') else tei:symbol/@value = ('Imp', 'Ind', 'Sub')"
                                     >Possible values: Imp, Ind, Sub (and Opt in GRC)</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Person']">
