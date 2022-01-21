@@ -44,8 +44,8 @@
                         <constraint>
                             <sch:rule context="tei:bibl">
                                 <sch:let name="taxonomies" value="ancestor::tei:TEI/descendant::tei:taxonomy"></sch:let>
-                                <sch:assert test="count(index) eq count(taxonomy)">Missing index</sch:assert>
-                                <sch:assert test="index[@indexName = $taxonomies/@xml:id]">Index name does not belong to any known taxonomies</sch:assert>                                
+                                <sch:assert test="count(tei:index) eq count($taxonomies)">Missing index</sch:assert>
+                                <sch:assert test="tei:index[@indexName = $taxonomies/@xml:id]">Index name does not belong to any known taxonomies</sch:assert>                                
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
