@@ -6,15 +6,13 @@
             <titleStmt>
                 <title>TEI WoPoss</title>
                 <author>Helena Bermúdez Sabel</author>
+                <principal>WoPoss Project</principal>
             </titleStmt>
             <publicationStmt>
-                <publisher>A world of possibilities. Modal pathways over an extra-long period of
-                    time: the diachrony of modality in the Latin language (WoPoss)</publisher>
-                <availability>
-                    <licence>
-                        <ref target="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
-                            Commons Attribution-NonCommercial-ShareAlike 4.0 International</ref>
-                    </licence>
+                <authority>Swiss National Science Foundation</authority>
+                <availability status="free">
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
+                        BY-NC</licence>
                 </availability>
             </publicationStmt>
             <notesStmt>
