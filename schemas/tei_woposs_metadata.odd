@@ -45,7 +45,8 @@
                             <sch:rule context="tei:bibl">
                                 <sch:let name="taxonomies" value="ancestor::tei:TEI/descendant::tei:taxonomy"></sch:let>
                                 <sch:assert test="count(tei:index) eq count($taxonomies)">Missing index</sch:assert>
-                                <sch:assert test="tei:index[@indexName = $taxonomies/@xml:id]">Index name does not belong to any known taxonomies</sch:assert>                                
+                                <sch:assert test="tei:index[@indexName = $taxonomies/@xml:id]">Index name does not belong to any known taxonomies</sch:assert>        
+                                <sch:asset test="tei:date/@type eq 'century'">Each work must at least have a century</sch:asset>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -54,7 +55,7 @@
                     <constraintSpec scheme="schematron" ident="term_core">
                         <constraint>
                             <sch:rule context="tei:term">
-                                <sch:assert test="substring(@cRef, 2) = ancestor::tei:TEI/descendant::taxonomy[@xml:id eq current()/parent::tei:index/@indexName]/tei:category/@xml:id">URI does not correspond to a 
+                                <sch:assert test="substring(@cRef, 2) = ancestor::tei:TEI/descendant::tei:taxonomy[@xml:id eq current()/parent::tei:index/@indexName]/tei:category/@xml:id">URI does not correspond to a 
                                 category in the declared taxonomy</sch:assert>
                             </sch:rule>
                         </constraint>
