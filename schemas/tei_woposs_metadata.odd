@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>TEI WoPoss: schema for corpus metadata</title>
+                <author>Helena Bermúdez Sabel</author>
+                <principal>WoPoss Project</principal>
+            </titleStmt>
+            <publicationStmt>
+                <authority>Swiss National Science Foundation</authority>
+                <availability status="free">
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative
+                        Commons BY-NC</licence>
+                </availability>
+            </publicationStmt>
+            <notesStmt>
+                <note type="ns">https://woposs.unine.ch/</note>
+            </notesStmt>
+            <sourceDesc>
+                <p>Written from scratch.</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <head>TEI WoPoss</head>
+            <p>TEI schema for a linguistically annotated corpus.</p>
+            <schemaSpec ident="tei_woposs" start="TEI teiCorpus">
+                <moduleRef n="01" key="tei"/>
+                <moduleRef n="02" key="header"/>
+                <moduleRef n="03" key="core"/>
+                <moduleRef n="04" key="textstructure"/>
+                <moduleRef n="17" key="analysis"/>
+                <moduleRef n="10" key="msdescription"/>
+                <moduleRef n="13" key="namesdates"/>
+                <moduleRef n="16" key="linking"/>
+                <moduleRef n="18" key="iso-fs"/>
+                <moduleRef n="21" key="certainty"/>              
+                
+                <elementSpec ident="bibl" module="core" mode="change">
+                    <constraintSpec scheme="schematron" ident="bibl_core">
+                        <constraint>
+                            <sch:rule context="tei:bibl">
+                                <sch:let name="taxonomies" value="ancestor::tei:TEI/descendant::tei:taxonomy"></sch:let>
+                                <sch:assert test="count(index) eq count(taxonomy)">Missing index</sch:assert>
+                                <sch:assert test="index[@indexName = $taxonomies/@xml:id]">Index name does not belong to any known taxonomies</sch:assert>                                
+                            </sch:rule>
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>                                
+                <elementSpec ident="term" module="core" mode="change">
+                    <constraintSpec scheme="schematron" ident="term_core">
+                        <constraint>
+                            <sch:rule context="tei:term">
+                                <sch:assert test="substring(@cRef, 2) = ancestor::tei:TEI/descendant::taxonomy[@xml:id eq current()/parent::tei:index/@indexName]/tei:category/@xml:id">URI does not correspond to a 
+                                category in the declared taxonomy</sch:assert>
+                            </sch:rule>
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>
+            </schemaSpec>
+        </body>
+    </text>
+</TEI>
