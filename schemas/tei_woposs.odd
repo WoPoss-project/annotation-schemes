@@ -67,11 +67,11 @@
                     <constraintSpec ident="TEI_textstructure" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:TEI">
-                                <sch:let name="fileName"
+                               <!-- <sch:let name="fileName"
                                     value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), '/metadata.xml')"/>
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexWorks"
-                                    value="$document//tei:TEI/descendant::tei:bibl"/>
+                                    value="$document//tei:TEI/descendant::tei:bibl"/>-->
                                 <sch:assert test="@xml:id = 'test'">test <sch:value-of select="base-uri(current())"/></sch:assert>
                             </sch:rule>
                         </constraint>
