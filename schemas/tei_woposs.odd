@@ -11,8 +11,8 @@
             <publicationStmt>
                 <authority>Swiss National Science Foundation</authority>
                 <availability status="free">
-                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
-                        BY-NC</licence>
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative
+                        Commons BY-NC</licence>
                 </availability>
             </publicationStmt>
             <notesStmt>
@@ -46,6 +46,33 @@
                 <moduleRef n="19" key="nets"/>
                 <moduleRef n="21" key="certainty"/>
 
+                <!-- Metadata-->
+
+                <elementSpec ident="person" module="namesdates" mode="change">
+                    <constraintSpec ident="person_namesdates" scheme="schematron">
+                        <constraint>
+                            <sch:rule context="tei:person[@role eq 'author']">
+                                <sch:let name="indexAuthors"
+                                    value="doc('../aux/metadata.xml')//tei:TEI/descendant::tei:person"/>
+                                <sch:assert test="@xml:id = $indexAuthors/@xml:id">ID not found in
+                                    metadata master file</sch:assert>
+                            </sch:rule>
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>
+
+                <elementSpec ident="TEI" module="textstructure" mode="change">
+                    <constraintSpec ident="TEI_textstructure" scheme="schematron">
+                        <constraint>
+                            <sch:rule context="tei:TEI">
+                                <sch:let name="indexWorks"
+                                    value="doc('../aux/metadata.xml')//tei:TEI/descendant::tei:bibl"/>
+                                <sch:assert test="@xml:id = $indexWorks/@xml:id">ID not found in
+                                    metadata master file</sch:assert>
+                            </sch:rule>
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>
 
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
