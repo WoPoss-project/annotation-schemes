@@ -46,7 +46,7 @@
                                 <sch:let name="taxonomies" value="ancestor::tei:TEI/descendant::tei:taxonomy"></sch:let>
                                 <sch:assert test="count(tei:index) eq count($taxonomies)">Missing index</sch:assert>
                                 <sch:assert test="tei:index[@indexName = $taxonomies/@xml:id]">Index name does not belong to any known taxonomies</sch:assert>        
-                                <sch:asset test="tei:date/@type eq 'century'">Each work must at least have a century</sch:asset>
+                                <sch:assert test="tei:date/@type eq 'century'">Each work must at least have a century</sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
