@@ -47,13 +47,15 @@
                 <moduleRef n="21" key="certainty"/>
 
                 <!-- Metadata-->
-
                 <elementSpec ident="person" module="namesdates" mode="change">
                     <constraintSpec ident="person_namesdates" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:person[@role eq 'author']">
+                                <sch:let name="fileName"
+                                    value="replace(base-uri(current()), 'data', 'aux')"/>
+                                <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexAuthors"
-                                    value="doc('../aux/metadata.xml')//tei:TEI/descendant::tei:person"/>
+                                    value="$document//tei:TEI/descendant::tei:person"/>
                                 <sch:assert test="@xml:id = $indexAuthors/@xml:id">ID not found in
                                     metadata master file</sch:assert>
                             </sch:rule>
@@ -65,8 +67,11 @@
                     <constraintSpec ident="TEI_textstructure" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:TEI">
+                                <sch:let name="fileName"
+                                    value="replace(base-uri(current()), 'data', 'aux')"/>
+                                <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexWorks"
-                                    value="doc('../aux/metadata.xml')//tei:TEI/descendant::tei:bibl"/>
+                                    value="$document//tei:TEI/descendant::tei:bibl"/>
                                 <sch:assert test="@xml:id = $indexWorks/@xml:id">ID not found in
                                     metadata master file</sch:assert>
                             </sch:rule>
