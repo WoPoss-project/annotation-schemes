@@ -47,12 +47,12 @@
                 <moduleRef n="21" key="certainty"/>
 
                 <!-- Metadata-->
-<!--                <elementSpec ident="person" module="namesdates" mode="change">
+                <elementSpec ident="person" module="namesdates" mode="change">
                     <constraintSpec ident="person_namesdates" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:person[@role eq 'author']">                                
                                 <sch:let name="fileName"
-                                    value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), '/metadata.xml')"/>
+                                    value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexAuthors"
                                     value="$document//tei:TEI/descendant::tei:person"/>
@@ -61,17 +61,17 @@
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
-                </elementSpec>-->
+                </elementSpec>
 
                 <elementSpec ident="TEI" module="textstructure" mode="change">
                     <constraintSpec ident="TEI_textstructure" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:TEI">
-                               <!-- <sch:let name="fileName"
-                                    value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), '/metadata.xml')"/>
+                                <sch:let name="fileName"
+                                    value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexWorks"
-                                    value="$document//tei:TEI/descendant::tei:bibl"/>-->
+                                    value="$document//tei:TEI/descendant::tei:bibl"/>
                                 <sch:assert test="@xml:id = 'test'">test <sch:value-of select="base-uri(current())"/></sch:assert>
                             </sch:rule>
                         </constraint>

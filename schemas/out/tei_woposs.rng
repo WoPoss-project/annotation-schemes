@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-21T20:02:39Z. .
+Schema generated from ODD source 2022-01-21T20:20:45Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -7206,6 +7206,10 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:TEI">
+               <sch:let name="fileName"
+                        value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
+               <sch:let name="document" value="doc($fileName)"/>
+               <sch:let name="indexWorks" value="$document//tei:TEI/descendant::tei:bibl"/>
                <sch:assert test="@xml:id = 'test'">test <sch:value-of select="base-uri(current())"/>
                </sch:assert>
             </sch:rule>
@@ -12983,6 +12987,19 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
                </choice>
             </zeroOrMore>
          </choice>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="tei_woposs-person-person_namesdates-constraint-rule-19">
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                      context="tei:person[@role eq 'author']">
+               <sch:let name="fileName"
+                        value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
+               <sch:let name="document" value="doc($fileName)"/>
+               <sch:let name="indexAuthors" value="$document//tei:TEI/descendant::tei:person"/>
+               <sch:assert test="@xml:id = $indexAuthors/@xml:id">ID not found in
+                                    metadata master file</sch:assert>
+            </sch:rule>
+         </pattern>
          <ref name="att.global.attributes"/>
          <ref name="att.editLike.attributes"/>
          <ref name="att.sortable.attributes"/>
@@ -13223,7 +13240,7 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             <ref name="desc"/>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-relation-reforkeyorname-constraint-assert-28">
+                  id="tei_woposs-relation-reforkeyorname-constraint-assert-29">
             <rule context="tei:relation">
                <assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
@@ -14252,7 +14269,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements. [16.1. Links]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-link-linkTargets3-constraint-assert-29">
+                  id="tei_woposs-link-linkTargets3-constraint-assert-30">
             <rule context="tei:link">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14330,7 +14347,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(arbitrary segment) represents any segmentation of text below the chunk level. [16.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents]</a:documentation>
          <ref name="macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-seg-seg_analysis-constraint-rule-19">
+                  id="tei_woposs-seg-seg_analysis-constraint-rule-20">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
@@ -14518,7 +14535,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-join-joinTargets3-constraint-assert-38">
+                  id="tei_woposs-join-joinTargets3-constraint-assert-39">
             <rule context="tei:join">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14658,7 +14675,7 @@ You must supply at least two values for @target on <name/>
             <ref name="model.standOffPart"/>
          </oneOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-standOff-nested_standOff_should_be_typed-constraint-assert-39">
+                  id="tei_woposs-standOff-nested_standOff_should_be_typed-constraint-assert-40">
             <rule context="tei:standOff">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -15018,7 +15035,7 @@ Feature Value]</a:documentation>
             <ref name="f"/>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-fs-seg_analysis-constraint-rule-21">
+                  id="tei_woposs-fs-seg_analysis-constraint-rule-22">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'scope']">
@@ -15165,7 +15182,7 @@ Feature Value]</a:documentation>
             <ref name="model.featureVal"/>
          </choice>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-f-seg_analysis-constraint-rule-35">
+                  id="tei_woposs-f-seg_analysis-constraint-rule-36">
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
