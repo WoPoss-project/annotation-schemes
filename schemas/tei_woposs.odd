@@ -6,14 +6,13 @@
             <titleStmt>
                 <title>TEI WoPoss</title>
                 <author>Helena Bermúdez Sabel</author>
+                <principal>WoPoss Project</principal>
             </titleStmt>
             <publicationStmt>
-                <publisher>A world of possibilities. Modal pathways over an extra-long period of time: the diachrony of modality in the Latin language (WoPoss)</publisher>
-                <availability>
-                    <licence>
-                        <ref target="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
-                            Attribution-NonCommercial-ShareAlike 4.0 International</ref>
-                    </licence>
+                <authority>Swiss National Science Foundation</authority>
+                <availability status="free">
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
+                        BY-NC</licence>
                 </availability>
             </publicationStmt>
             <notesStmt>
@@ -47,6 +46,7 @@
                 <moduleRef n="19" key="nets"/>
                 <moduleRef n="21" key="certainty"/>
 
+
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
                         <desc/>
@@ -60,7 +60,7 @@
                                     true()">No corresponding ID
                                     found in feature structures</sch:assert>
                                 <sch:assert test="
-                                    if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'CCONJ', 'SCONJ')) and not(@lemma eq 'necesse')) then
+                                    if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ')) and not(@lemma eq 'necesse')) then
                                     @msd
                                     else
                                     true()">Morphological analysis
@@ -87,11 +87,11 @@
                             </sch:rule>
                             <!-- Check whether all potential modal markers have been annotated-->
                             <sch:rule
-                                context="tei:w[not(@function)][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
+                                context="tei:w[not(@function eq 'no')][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
                                 <sch:let name="lemma_markers" value="
                                 ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitam',
+                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
                                 'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report test="@lemma = $lemma_markers">Potential modal
@@ -107,14 +107,14 @@
                             </sch:rule></constraint>
                     </constraintSpec>
                 </elementSpec>
-                
+
                 <elementSpec ident="s" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="s">
                         <desc/>
                         <constraint>
                             <sch:rule context="tei:s">
-                                <sch:report test="text()[matches(., '\S')]">No text nodes allowed as children of
-                                    s</sch:report>
+                                <sch:report test="text()[matches(., '\S')]">No text nodes allowed as
+                                    children of s</sch:report>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -130,7 +130,7 @@
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
-                
+
                 <elementSpec ident="seg" module="linking" mode="change">
                     <constraintSpec scheme="schematron" ident="seg_analysis">
                         <desc>Constraints to check the consistency of the semantic analysis</desc>
@@ -175,7 +175,7 @@
                                     @type = $part_types
                                     else
                                     true()">Attribute @type is
-                                    mandatary with one of these values: <sch:value-of
+                                    mandatory with one of these values: <sch:value-of
                                         select="$part_types"/></sch:assert>
                                 <sch:assert test="
                                     if (@function eq 'participant') then
@@ -206,12 +206,26 @@
                                     satisfies $x = $ana])
                                     else
                                     false()">@part attribute
-                                    missing</sch:report><!--
+                                    missing</sch:report>
                                 <sch:report test="
-                                    if (@copyOf) then
-                                    @copyOf = following::tei:seg/@copyOf
+                                    if (@synch) then
+                                    @synch = following::tei:seg/@synch
                                     else
-                                    false()">Value of reference is not unique</sch:report>-->
+                                    false()">Value of reference is
+                                    not unique</sch:report>
+                            </sch:rule>
+                            <sch:rule context="tei:seg[@function eq 'scope']">
+                                <sch:let name="explicit_participants"
+                                    value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')
+                                    return
+                                    $x"/>
+                                <sch:assert test="
+                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant']/tei:symbol eq 'implicit' or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then 
+                                    $explicit_participants = current()/@ana                         
+                                    else
+                                    true()">If the participant is
+                                    not explicit, the analysis of the scope must include an implicit
+                                    participant</sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -221,99 +235,132 @@
                         <desc>Constraints to check the consistency of the semantic analysis</desc>
                         <constraint>
                             <sch:rule context="tei:fs[@type eq 'scope']">
-                                <sch:assert test="tei:f[@name eq 'SoA'] or tei:f[@name eq 'dynamicity']">SoA description
+                                <sch:let name="scope"
+                                    value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+                                <sch:assert test="tei:f[@name eq 'SoA']">SoA description
                                     missing</sch:assert>
-                                <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
+                                <sch:assert
+                                    test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
-                                <sch:assert test="
-                                    some $x in //tei:body//tei:seg[@function eq 'scope']/tokenize(@ana, '\s+')
-                                    satisfies $x = '#' || current()/@xml:id">ID not referenced in
-                                    text</sch:assert>
+                                <sch:assert test="$scope">ID not referenced in text</sch:assert>
+                                <sch:assert
+                                    test="if(tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']
+                                    or $scope/ancestor::tei:w[@function eq 'main'] else true()"
+                                    >Main verb of scope needs to be identified</sch:assert>
+                                <sch:report
+                                    test="count($scope/descendant::tei:w[@function eq 'main']) gt 1"
+                                    >More than one main verb annotated in current scope</sch:report>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
+                                <sch:let name="markers" value="
+                                    ('aequum_est', 'aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est', 
+                                'est_inf',
+                                'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
+                                'forsitan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',
+                                'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
                                 <sch:assert test="
                                     some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')
-                                    satisfies $x = '#' || current()/@xml:id">ID not referenced in
-                                    text</sch:assert>
+                                    satisfies $x = '#' || current()/@xml:id"
+                                    >ID not referenced in text</sch:assert>
                                 <sch:assert test="
                                     if (tei:f[@name eq 'pertinence']/tei:binary/@value eq 'true') then
                                     @xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'marker']/@fVal
                                     else
-                                    true()">This marker is not part of a modal relation</sch:assert>
+                                    true()">This marker is not part
+                                    of a modal relation</sch:assert>
+                                <sch:assert
+                                    test="tei:f[@name eq 'lemma']/tei:symbol[@value = $markers]"
+                                    >Either the citation form of the marker is missing or its value
+                                    is not correct</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation']">
-                                <sch:assert test="tei:f[@name eq 'marker']/@fVal = //tei:fs[@type eq 'marker']/@xml:id"
+                                <sch:assert
+                                    test="tei:f[@name eq 'marker']/@fVal = //tei:fs[@type eq 'marker']/@xml:id"
                                     >Marker ID not available</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'scope']/@fVal = //tei:fs[@type eq 'scope']/@xml:id"
+                                <sch:assert
+                                    test="tei:f[@name eq 'scope']/@fVal = //tei:fs[@type eq 'scope']/@xml:id"
                                     >Scope ID not available</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'marker'][tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]]">
-                                <sch:assert test="tei:f[@name eq 'utterance']">Missing tei:f[@name eq
-                                    'utterance']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'utterance']">Missing tei:f[@name
+                                    eq 'utterance']</sch:assert>
                                 <sch:assert test="tei:f[@name eq 'polarity']">Missing tei:f[@name eq
                                     'polarity']</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
-                                <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of the following features is
-                                    required: 'pertinence, modal'</sch:assert>
+                                <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of
+                                    the following features is required: 'pertinence,
+                                    modal'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:fs[@type eq 'scope'][tei:f[@name eq 'dynamicity']]">
-                                <sch:assert test="tei:f[@name eq 'control']">Missing tei:f[@name eq 'control']</sch:assert>
+                            <sch:rule
+                                context="tei:fs[@type eq 'scope'][tei:f[@name eq 'dynamicity']]">
+                                <sch:assert test="tei:f[@name eq 'control']">Missing tei:f[@name eq
+                                    'control']</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'scope'][tei:f[@name eq 'control']]">
-                                <sch:assert test="tei:f[@name eq 'dynamicity']">Missing tei:f[@name eq
-                                    'dynamicity']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'dynamicity']">Missing tei:f[@name
+                                    eq 'dynamicity']</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'scope']">
-                                <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> One of the following features
-                                    is required: 'utterance, polarity'</sch:assert>
+                                <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> One of
+                                    the following features is required: 'utterance,
+                                    polarity'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">
-                                <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq 'type']</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value = ('possibility', 'necessity')"
-                                    >Possible values of tei:f[@name eq 'type'] are 'possibility' 'necessity'</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'participant_control']">Missing tei:f[@name eq
-                                    'participant_control']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
+                                    'type']</sch:assert>
+                                <sch:assert
+                                    test="tei:f[@name eq 'type']/tei:symbol/@value = ('possibility', 'necessity')"
+                                    >Possible values of tei:f[@name eq 'type'] are 'possibility'
+                                    'necessity'</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'participant_control']">Missing
+                                    tei:f[@name eq 'participant_control']</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'deontic']]]">
-                                <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq 'type']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
+                                    'type']</sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'type']/tei:symbol/@value = ('authority', 'acceptability', 'volition', 'intention')"
-                                    >Possible values of tei:f[@name eq 'type'] are 'authority' 'acceptability' 'volition'
-                                    'intention'</sch:assert>
+                                    >Possible values of tei:f[@name eq 'type'] are 'authority'
+                                    'acceptability' 'volition' 'intention'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'authority']]]">
-                                <sch:assert test="tei:f[@name eq 'subtype']">Missing tei:f[@name eq 'subtype']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'subtype']">Missing tei:f[@name eq
+                                    'subtype']</sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'subtype']/tei:symbol/@value = ('obligation', 'recommendation', 'permission')"
-                                    >Possible values of tei:f[@name eq 'subtype'] are 'obligation' 'recommendation'
-                                    'permission'</sch:assert>
+                                    >Possible values of tei:f[@name eq 'subtype'] are 'obligation'
+                                    'recommendation' 'permission'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]]">
-                                <sch:assert test="tei:f[@name eq 'degree']">Missing tei:f[@name eq 'degree']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'degree']">Missing tei:f[@name eq
+                                    'degree']</sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_necessary', 'desirable', 'acceptable', 'undesirable', 'unacceptable')"
-                                    >Possible values of tei:f[@name eq 'degree'] are 'absolutely_necessary' 'desirable'
-                                    'acceptable' 'undesirable' 'unacceptable'</sch:assert>
+                                    >Possible values of tei:f[@name eq 'degree'] are
+                                    'absolutely_necessary' 'desirable' 'acceptable' 'undesirable'
+                                    'unacceptable'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'epistemic']]]">
-                                <sch:assert test="tei:f[@name eq 'degree']">Missing tei:f[@name eq 'degree']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'degree']">Missing tei:f[@name eq
+                                    'degree']</sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_certain', 'probable', 'possible', 'improbable', 'impossible')"
-                                    >Possible values of tei:f[@name eq 'degree'] are 'absolutely_certain' 'probable'
-                                    'possible' 'improbable' 'impossible'</sch:assert>
+                                    >Possible values of tei:f[@name eq 'degree'] are
+                                    'absolutely_certain' 'probable' 'possible' 'improbable'
+                                    'impossible'</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation']">
-                                <sch:assert test="tei:f[@name = ('modality')]"> One of the following features is required:
-                                    'modality'</sch:assert>
+                                <sch:assert test="tei:f[@name = ('modality')]"> One of the following
+                                    features is required: 'modality'</sch:assert>
                             </sch:rule>
-                            
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
@@ -321,147 +368,202 @@
                     <constraintSpec scheme="schematron" ident="seg_analysis">
                         <desc>Constraints to check the consistency of the semantic analysis</desc>
                         <constraint>
-                            <sch:rule context="tei:f[@name eq 'pertinence'][parent::tei:fs[@type eq 'marker']]">
+                            <sch:rule
+                                context="tei:f[@name eq 'pertinence'][parent::tei:fs[@type eq 'marker']]">
                                 <sch:assert test="tei:binary">Mandatory binary feature</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'modal'][parent::tei:fs[@type eq 'marker']]">
+                            <sch:rule
+                                context="tei:f[@name eq 'modal'][parent::tei:fs[@type eq 'marker']]">
                                 <sch:assert test="tei:binary">Mandatory binary feature</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'diachrony'][parent::tei:fs[@type eq 'marker']]">
-                                <sch:assert test="tei:symbol[@value = ('post-modal', 'pre-modal')]"> Incorrect value of
-                                    @value. Possible values are: 'post-modal, pre-modal'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'diachrony'][parent::tei:fs[@type eq 'marker']]">
+                                <sch:assert test="tei:symbol[@value = ('post-modal', 'pre-modal')]">
+                                    Incorrect value of @value. Possible values are: 'post-modal,
+                                    pre-modal'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'utterance'][parent::tei:fs[@type eq 'marker']]">
-                                <sch:assert test="tei:symbol[@value = ('non-interrogative', 'interrogative')]"> Incorrect
-                                    value of @value. Possible values are: 'non-interrogative, interrogative'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'utterance'][parent::tei:fs[@type eq 'marker']]">
+                                <sch:assert
+                                    test="tei:symbol[@value = ('non-interrogative', 'interrogative')]"
+                                    > Incorrect value of @value. Possible values are:
+                                    'non-interrogative, interrogative'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'polarity'][parent::tei:fs[@type eq 'marker']]">
-                                <sch:assert test="tei:symbol[@value = ('affirmative', 'negative')]"> Incorrect value of
-                                    @value. Possible values are: 'affirmative, negative'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'polarity'][parent::tei:fs[@type eq 'marker']]">
+                                <sch:assert test="tei:symbol[@value = ('affirmative', 'negative')]">
+                                    Incorrect value of @value. Possible values are: 'affirmative,
+                                    negative'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'utterance'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('non-interrogative', 'interrogative')]"> Incorrect
-                                    value of @value. Possible values are: 'non-interrogative, interrogative'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'utterance'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert
+                                    test="tei:symbol[@value = ('non-interrogative', 'interrogative')]"
+                                    > Incorrect value of @value. Possible values are:
+                                    'non-interrogative, interrogative'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'polarity'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('affirmative', 'negative')]"> Incorrect value of
-                                    @value. Possible values are: 'affirmative, negative'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'polarity'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert test="tei:symbol[@value = ('affirmative', 'negative')]">
+                                    Incorrect value of @value. Possible values are: 'affirmative,
+                                    negative'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'control'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('+-control')] or tei:binary"> Incorrect value.
-                                    Possible values are: a binary element or a symbol element with one of the following
-                                    @value attributes '+-control'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'control'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert test="tei:symbol[@value eq 'ambiguous'] or tei:binary">
+                                    Incorrect value. Possible values are: a binary element or a
+                                    symbol element with one of the following @value attributes
+                                    'ambiguous'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'dynamicity'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:symbol[@value = ('+-dynamic')] or tei:binary"> Incorrect value.
-                                    Possible values are: a binary element or a symbol element with one of the following
-                                    @value attributes '+-dynamic'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'dynamicity'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert test="tei:symbol[@value eq 'ambiguous'] or tei:binary">
+                                    Incorrect value. Possible values are: a binary element or a
+                                    symbol element with one of the following @value attributes
+                                    'ambiguous'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
-                                <sch:assert test="tei:binary/@value eq 'false'">SoA value is expected to be false. If SoA is present, then control and dinamicity must be expressed</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'SoA'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert
+                                    test="if (tei:binary/@value eq 'true') then following-sibling::tei:f[@name eq 'dynamicity'] else true()"
+                                    >If SoA is present, then control and dynamicity must be
+                                    expressed</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'modality'][parent::tei:fs[@type eq 'relation']]">
-                                <sch:assert test="tei:symbol[@value = ('deontic', 'dynamic', 'epistemic')]"> Incorrect
-                                    value of @value. Possible values are: 'deontic, dynamic, epistemic'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'participantType'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert
+                                    test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient')]"
+                                    > Incorrect value. Possible values are: 'animate, inanimate,
+                                    animate_patient, inanimate_patient, none'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'subtype'][parent::tei:fs[@type eq 'relation']]">
+                            <sch:rule
+                                context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
+                                <sch:assert
+                                    test="tei:symbol[@value = ('implicit', 'explicit', 'none')]">
+                                    Incorrect value. Possible values are: 'implicit, explicit,
+                                    none'</sch:assert>
+                            </sch:rule>
+                            <sch:rule
+                                context="tei:f[@name eq 'modality'][parent::tei:fs[@type eq 'relation']]">
+                                <sch:assert
+                                    test="tei:symbol[@value = ('deontic', 'dynamic', 'epistemic')]">
+                                    Incorrect value of @value. Possible values are: 'deontic,
+                                    dynamic, epistemic'</sch:assert>
+                            </sch:rule>
+                            <sch:rule
+                                context="tei:f[@name eq 'subtype'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert
                                     test="tei:symbol[@value = ('obligation', 'recommendation', 'permission', 'prospective', 'inevitability')]"
-                                    > Incorrect value of @value. Possible values are: 'obligation, recommendation,
-                                    permission, prospective, inevitability'</sch:assert>
+                                    > Incorrect value of @value. Possible values are: 'obligation,
+                                    recommendation, permission, prospective,
+                                    inevitability'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'participant_control'][parent::tei:fs[@type eq 'relation']]">
+                            <sch:rule
+                                context="tei:f[@name eq 'participant_control'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert
                                     test="tei:symbol[@value = ('participant-imposed', 'participant-inherent', 'situational')]"
-                                    > Incorrect value of @value. Possible values are: 'participant-imposed,
-                                    participant-inherent, situational'</sch:assert>
+                                    > Incorrect value of @value. Possible values are:
+                                    'participant-imposed, participant-inherent,
+                                    situational'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'function'][parent::tei:fs[@type eq 'relation']]">
-                                <sch:assert test="tei:symbol[@value = ('rhetoric', 'pragmatic')]"> Incorrect value of
-                                    @value. Possible values are: 'rhetoric, pragmatic'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'function'][parent::tei:fs[@type eq 'relation']]">
+                                <sch:assert test="tei:symbol[@value = ('rhetoric', 'pragmatic')]">
+                                    Incorrect value of @value. Possible values are: 'rhetoric,
+                                    pragmatic'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'context'][parent::tei:fs[@type eq 'relation']]">
-                                <sch:assert test="tei:symbol[@value = ('non-official', 'official')]"> Incorrect value of
-                                    @value. Possible values are: 'non-official, official'</sch:assert>
+                            <sch:rule
+                                context="tei:f[@name eq 'context'][parent::tei:fs[@type eq 'relation']]">
+                                <sch:assert test="tei:symbol[@value = ('non-official', 'official')]"
+                                    > Incorrect value of @value. Possible values are: 'non-official,
+                                    official'</sch:assert>
                             </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'source'][parent::tei:fs[@type eq 'relation']]">
+                            <sch:rule
+                                context="tei:f[@name eq 'source'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert
                                     test="tei:symbol[@value = ('moral/ethical_norms', 'religious_norms', 'unspecified_norms')]"
-                                    > Incorrect value of @value. Possible values are: 'moral/ethical_norms, religious_norms,
+                                    > Incorrect value of @value. Possible values are:
+                                    'moral/ethical_norms, religious_norms,
                                     unspecified_norms'</sch:assert>
                             </sch:rule>
                             <!--      Verb features-->
-                            
                             <sch:rule context="tei:f[@name eq 'Tense']">
-                                <sch:assert test="tei:symbol/@value = ('Fut', 'Past', 'Pqp', 'Pres')">Possible values: Fut,
-                                    Past, Pqp, Pres</sch:assert>    
-                                <sch:assert test="parent::tei:fs/tei:f[@name eq 'Voice']">Voice feature is mandatory</sch:assert>
+                                <sch:assert
+                                    test="tei:symbol/@value = ('Fut', 'Past', 'Pqp', 'Pres')"
+                                    >Possible values: Fut, Past, Pqp, Pres</sch:assert>
+                                <sch:assert test="parent::tei:fs/tei:f[@name eq 'Voice']">Voice
+                                    feature is mandatory</sch:assert>
                                 <sch:assert test="
                                     if (tei:symbol/@value eq 'Past') then
                                     parent::tei:fs/tei:f[@name eq 'Aspect']
                                     else
-                                    true()">Aspect feature is mandatory</sch:assert>
+                                    true()">Aspect feature is
+                                    mandatory</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'VerbForm']">
-                                <sch:assert test="tei:symbol/@value = ('Fin', 'Gdv', 'Ger', 'Inf', 'Part')">Possible
-                                    values: Fin, Gdv, Ger, Inf, Part.</sch:assert>
+                                <sch:assert
+                                    test="tei:symbol/@value = ('Fin', 'Gdv', 'Ger', 'Inf', 'Part')"
+                                    >Possible values: Fin, Gdv, Ger, Inf, Part.</sch:assert>
                                 <sch:assert test="
                                     if (tei:symbol/@value = ('Inf', 'Part')) then
                                     parent::tei:fs/tei:f[@name eq 'Tense']
                                     else
-                                    true()">Voice feature is mandatory</sch:assert>
+                                    true()">Tense feature is
+                                    mandatory</sch:assert>
                                 <sch:assert test="
                                     if (tei:symbol/@value = 'Fin') then
                                     parent::tei:fs/tei:f[@name eq 'Person'] and parent::tei:fs/tei:f[@name eq 'Number'] 
                                     and parent::tei:fs/tei:f[@name eq 'Mood'] and parent::tei:fs/tei:f[@name eq 'Tense']
                                     else
-                                    true()">Person, Number, Mood and Tense features are mandatory</sch:assert>
+                                    true()">Person, Number, Mood and
+                                    Tense features are mandatory</sch:assert>
                                 <sch:assert test="
                                     if (tei:symbol/@value = ('Gdv', 'Part')) then
                                     parent::tei:fs/tei:f[@name eq 'Case'] and
                                     parent::tei:fs/tei:f[@name eq 'Gender'] and parent::tei:fs/tei:f[@name eq 'Number']
                                     else
-                                    true()">Case, Person and Number features are mandatory</sch:assert>
+                                    true()">Case, Gender and Number
+                                    features are mandatory</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Aspect']">
-                                <sch:assert test="tei:symbol/@value = ('Imp', 'Perf')">Possible values: Imp,
-                                    Perf.</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('Imp', 'Perf')">Possible
+                                    values: Imp, Perf.</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Number']">
-                                <sch:assert test="tei:symbol/@value = ('Plur', 'Sing')">Possible values: Plur,
-                                    Sing.</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('Plur', 'Sing')">Possible
+                                    values: Plur, Sing.</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Voice']">
-                                <sch:assert test="tei:symbol/@value = ('Act', 'Pass')">Possible values: Act,
-                                    Pass.</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('Act', 'Pass')">Possible
+                                    values: Act, Pass</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Mood']">
-                                <sch:assert test="tei:symbol/@value = ('Imp', 'Ind', 'Sub')">Possible values: Imp, Ind,
-                                    Sub</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('Imp', 'Ind', 'Sub')"
+                                    >Possible values: Imp, Ind, Sub</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:f[@name eq 'Person']">
-                                <sch:assert test="tei:symbol/@value = ('1', '2', '3')">Possible values: 1, 2,
-                                    3.</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('1', '2', '3')">Possible
+                                    values: 1, 2, 3.</sch:assert>
                             </sch:rule>
-                            
                             <!--      Noun features-->
                             <sch:rule context="tei:f[@name eq 'Gender']">
-                                <sch:assert test="tei:symbol/@value = ('Masc', 'Fem', 'Neut')">Possible values: Masc,
-                                    Fem, Neut.</sch:assert>
-                                <sch:assert test="parent::tei:fs/tei:f[@name eq 'Number'] and parent::tei:fs/tei:f[@name eq 'Case']">Number feature is mandatory</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('Masc', 'Fem', 'Neut')"
+                                    >Possible values: Masc, Fem, Neut.</sch:assert>
+                                <sch:assert
+                                    test="parent::tei:fs/tei:f[@name eq 'Number'] and parent::tei:fs/tei:f[@name eq 'Case']"
+                                    >Number feature is mandatory</sch:assert>
                             </sch:rule>
-                            
                             <sch:rule context="tei:f[@name eq 'Case']">
-                                
-                                <sch:assert test="tei:symbol/@value = ('Abl', 'Acc', 'Dat', 'Gen', 'Loc', 'Nom', 'Voc')">Possible
-                                    values: Abl, Acc, Dat, Gen, Loc, Nom, Voc.</sch:assert>
+                                <sch:assert
+                                    test="tei:symbol/@value = ('Abl', 'Acc', 'Dat', 'Gen', 'Loc', 'Nom', 'Voc')"
+                                    >Possible values: Abl, Acc, Dat, Gen, Loc, Nom,
+                                    Voc.</sch:assert>
                             </sch:rule>
-                            
                             <!--         Other-->
                             <sch:rule context="tei:f[@name eq 'Degree']">
-                                <sch:assert test="tei:symbol/@value = ('Cmp', 'Pos', 'Sup')">Possible values: Cmp, Pos, Sup.</sch:assert>
+                                <sch:assert test="tei:symbol/@value = ('Cmp', 'Pos', 'Sup')"
+                                    >Possible values: Cmp, Pos, Sup.</sch:assert>
                             </sch:rule>
-                            
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
