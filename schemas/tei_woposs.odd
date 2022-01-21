@@ -72,8 +72,7 @@
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexWorks"
                                     value="$document//tei:TEI/descendant::tei:bibl"/>
-                                <sch:assert test="@xml:id = $indexWorks/@xml:id">ID not found in
-                                    metadata master file</sch:assert>
+                                <sch:assert test="@xml:id = 'test'">test <sch:value-of select="base-uri(current())"/></sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
