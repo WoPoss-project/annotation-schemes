@@ -47,7 +47,7 @@
                 <moduleRef n="21" key="certainty"/>
 
                 <!-- Metadata-->
-                <elementSpec ident="person" module="namesdates" mode="change">
+<!--                <elementSpec ident="person" module="namesdates" mode="change">
                     <constraintSpec ident="person_namesdates" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:person[@role eq 'author']">                                
@@ -61,7 +61,7 @@
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
-                </elementSpec>
+                </elementSpec>-->
 
                 <elementSpec ident="TEI" module="textstructure" mode="change">
                     <constraintSpec ident="TEI_textstructure" scheme="schematron">
