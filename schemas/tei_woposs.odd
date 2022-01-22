@@ -52,7 +52,7 @@
                         <constraint>
                             <sch:rule context="tei:person[@role eq 'author']">                                
                                 <sch:let name="fileName"
-                                    value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
+                                    value="concat(substring-after(replace(.), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexAuthors"
                                     value="$document//tei:TEI/descendant::tei:person"/>
@@ -63,12 +63,12 @@
                     </constraintSpec>
                 </elementSpec>
 
-                <elementSpec ident="TEI" module="textstructure" mode="change">
+                <!--<elementSpec ident="TEI" module="textstructure" mode="change">
                     <constraintSpec ident="TEI_textstructure" scheme="schematron">
                         <constraint>
                             <sch:rule context="tei:TEI">
                                 <sch:let name="fileName"
-                                    value="concat(substring-after(replace(base-uri(current()), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
+                                    value="concat(substring-after(replace(base-uri(.), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexWorks"
                                     value="$document//tei:TEI/descendant::tei:bibl"/>
@@ -76,7 +76,7 @@
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
-                </elementSpec>
+                </elementSpec>-->
 
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
