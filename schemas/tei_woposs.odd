@@ -52,7 +52,7 @@
                         <constraint>
                             <sch:rule context="tei:person[@role eq 'author']">                                
                                 <sch:let name="fileName"
-                                    value="concat(substring-after(replace(.), 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
+                                    value="concat(substring-after(replace(., 'data', 'aux'), 'aux/'), 'metadata.xml')"/>
                                 <sch:let name="document" value="doc($fileName)"/>
                                 <sch:let name="indexAuthors"
                                     value="$document//tei:TEI/descendant::tei:person"/>
