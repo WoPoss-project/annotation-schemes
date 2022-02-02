@@ -80,9 +80,10 @@
                 </elementSpec>
 
                 <elementSpec ident="w" module="analysis" mode="change">
-                    <constraintSpec scheme="schematron" ident="w_analysis">
+                    <constraintSpec scheme="schematron" ident="w_analysis" >
                         <desc/>
                         <constraint>
+                            
                             <sch:rule context="tei:w">
                                 <!-- Linguistic annotation-->
                                 <sch:assert test="
@@ -485,10 +486,10 @@
                             <sch:rule
                                 context="tei:f[@name eq 'subtype'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert
-                                    test="tei:symbol[@value = ('obligation', 'recommendation', 'permission', 'prospective', 'inevitability')]"
+                                    test="tei:symbol[@value = ('obligation', 'recommendation', 'permission', 'prospective', 'inevitability', 'none')]"
                                     > Incorrect value of @value. Possible values are: 'obligation,
                                     recommendation, permission, prospective,
-                                    inevitability'</sch:assert>
+                                    inevitability, none'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'participant_control'][parent::tei:fs[@type eq 'relation']]">
