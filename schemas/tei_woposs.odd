@@ -72,7 +72,7 @@
                                 <sch:let name="fileName" value="concat($path, 'aux/metadata.xml')"/>
                                 <sch:let name="indexWorks"
                                     value="doc($fileName)//tei:TEI/descendant::tei:bibl"/>
-                                <sch:assert test="@xml:id = $indexWorks">ID not found in
+                                <sch:assert test="@xml:id = $indexWorks/@xml:id">ID not found in
                                     metadata master file</sch:assert>
                             </sch:rule>
                         </constraint>
