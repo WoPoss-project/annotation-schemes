@@ -283,7 +283,7 @@
                                 <sch:report
                                     test="count($scope/descendant::tei:w[@function eq 'main']) gt 1"
                                     >More than one main verb annotated in current scope</sch:report>
-                                <sch:asert test="tei:f[@name eq 'participant']">Participant description is missing</sch:asert>
+                                <sch:assert test="tei:f[@name eq 'participant']">Participant description is missing</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
                                 <sch:let name="markers" value="

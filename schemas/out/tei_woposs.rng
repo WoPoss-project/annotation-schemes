@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-02-02T15:30:45Z. .
+Schema generated from ODD source 2022-02-02T15:32:20Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -15046,7 +15046,7 @@ Feature Value]</a:documentation>
                <sch:assert test="$scope">ID not referenced in text</sch:assert>
                <sch:assert test="if(tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
                <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb annotated in current scope</sch:report>
-               <sch:asert test="tei:f[@name eq 'participant']">Participant description is missing</sch:asert>
+               <sch:assert test="tei:f[@name eq 'participant']">Participant description is missing</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
