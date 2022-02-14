@@ -471,7 +471,7 @@
                                 <sch:assert
                                     test="tei:symbol[@value = ('animate', 'inanimate', 'animate_patient', 'inanimate_patient')]"
                                     > Incorrect value. Possible values are: 'animate, inanimate,
-                                    animate_patient, inanimate_patient, none'</sch:assert>
+                                    animate_patient, inanimate_patient'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'participant'][parent::tei:fs[@type eq 'scope']]">
@@ -490,10 +490,10 @@
                             <sch:rule
                                 context="tei:f[@name eq 'subtype'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert
-                                    test="tei:symbol[@value = ('obligation', 'recommendation', 'permission', 'prospective', 'inevitability', 'none')]"
+                                    test="tei:symbol[@value = ('obligation', 'recommendation', 'permission', 'prospective', 'inevitability')]"
                                     > Incorrect value of @value. Possible values are: 'obligation,
                                     recommendation, permission, prospective,
-                                    inevitability, none'</sch:assert>
+                                    inevitability'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'participant_control'][parent::tei:fs[@type eq 'relation']]">
