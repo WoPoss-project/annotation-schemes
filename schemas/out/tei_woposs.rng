@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-02-02T15:32:20Z. .
+Schema generated from ODD source 2022-02-14T11:28:44Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -14361,7 +14361,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                <sch:assert test="@function = $functions">@function attribute is
                                     mandatory with one of these values: <sch:value-of select="$functions"/>
                </sch:assert>
-               <sch:assert test="                                     if (@ana) then                                     every $x in tokenize(@ana, '\s+')                                     satisfies substring($x, 2) = //tei:fs/@xml:id                                     else                                     true()">@ana does not have a
+               <sch:assert test="                                     if (@ana) then                                     every $x in tokenize(@ana, '\s+')                                     satisfies substring($x, 2) = //tei:fs[@type eq current()/@function]/@xml:id                                     else                                     true()">@ana does not have a
                                     corresponding ID in feature structures</sch:assert>
                <sch:assert test="                                     if (@part) then @ana                                     else                                     true()">@part requires the
                                     presence of an @ana attribute</sch:assert>
@@ -15040,19 +15040,20 @@ Feature Value]</a:documentation>
                       context="tei:fs[@type eq 'scope']">
                <sch:let name="scope"
                         value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
-               <sch:assert test="tei:f[@name eq 'SoA']">SoA description
-                                    missing</sch:assert>
                <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
                <sch:assert test="$scope">ID not referenced in text</sch:assert>
                <sch:assert test="if(tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
-               <sch:report test="count($scope/descendant::tei:w[@function eq 'main']) gt 1">More than one main verb annotated in current scope</sch:report>
-               <sch:assert test="tei:f[@name eq 'participant']">Participant description is missing</sch:assert>
+               <sch:report test="count($scope/child::tei:w[@function eq 'main']) gt 1">More than one main verb annotated in current scope</sch:report>
+               <sch:report test="tei:f[@name eq 'SoA']/tei:binary/@value eq 'true'">Unnecessary description of SoA</sch:report>
+               <sch:report test="if (tei:f[@name eq 'SoA']) then tei:f[@name eq 'participant'] else false()">Unneeded description of participant</sch:report>
+               <sch:assert test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()">Description of participant is missing</sch:assert>
+               <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'marker']">
                <sch:let name="markers"
-                        value="                                     ('aequum_est', 'aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est',                                  'est_inf',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',                                 'forsitan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
+                        value="                                     ('aequum_est', 'aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est',                                  'est_inf',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'potestas_facio', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',                                 'forsitan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
                <sch:assert test="                                     some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')                                     satisfies $x = '#' || current()/@xml:id">ID not referenced in text</sch:assert>
                <sch:assert test="                                     if (tei:f[@name eq 'pertinence']/tei:binary/@value eq 'true') then                                     @xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'marker']/@fVal                                     else                                     true()">This marker is not part
                                     of a modal relation</sch:assert>

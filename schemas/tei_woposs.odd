@@ -184,7 +184,7 @@
                                 <sch:assert test="
                                     if (@ana) then
                                     every $x in tokenize(@ana, '\s+')
-                                    satisfies substring($x, 2) = //tei:fs/@xml:id
+                                    satisfies substring($x, 2) = //tei:fs[@type eq current()/@function]/@xml:id
                                     else
                                     true()">@ana does not have a
                                     corresponding ID in feature structures</sch:assert>
@@ -270,8 +270,8 @@
                             <sch:rule context="tei:fs[@type eq 'scope']">
                                 <sch:let name="scope"
                                     value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
-                                <sch:assert test="tei:f[@name eq 'SoA']">SoA description
-                                    missing</sch:assert>
+                               <!-- <sch:assert test="tei:f[@name eq 'SoA']">SoA description
+                                    missing</sch:assert>-->
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
@@ -281,16 +281,19 @@
                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()"
                                     >Main verb of scope needs to be identified</sch:assert>
                                 <sch:report
-                                    test="count($scope/descendant::tei:w[@function eq 'main']) gt 1"
+                                    test="count($scope/child::tei:w[@function eq 'main']) gt 1"
                                     >More than one main verb annotated in current scope</sch:report>
-                                <sch:assert test="tei:f[@name eq 'participant']">Participant description is missing</sch:assert>
+                                <sch:report test="tei:f[@name eq 'SoA']/tei:binary/@value eq 'true'">Unnecessary description of SoA</sch:report>
+                                <sch:report test="if (tei:f[@name eq 'SoA']) then tei:f[@name eq 'participant'] else false()">Unneeded description of participant</sch:report>                                
+                                <sch:assert test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()">Description of participant is missing</sch:assert>
+                                <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
                                 <sch:let name="markers" value="
                                     ('aequum_est', 'aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est', 
                                 'est_inf',
                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
+                                'possibilitas', 'potestas', 'potestas_facio', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
                                 'forsitan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',
                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
                                 <sch:assert test="
