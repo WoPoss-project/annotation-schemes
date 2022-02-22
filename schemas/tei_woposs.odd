@@ -55,9 +55,9 @@
                                     value="substring-before(base-uri(current()), 'data')"/>
                                 <sch:let name="fileName" value="concat($path, 'aux/metadata.xml')"/>
                                 <sch:let name="indexAuthors"
-                                    value="doc($fileName)//tei:TEI/descendant::tei:person"/>                                
-                                <sch:assert test="substring(@corresp, 2) = $indexAuthors/@xml:id">ID not found in
-                                    metadata master file</sch:assert>
+                                    value="doc($fileName)//tei:TEI/descendant::tei:person"/>
+                                <sch:assert test="substring(@corresp, 2) = $indexAuthors/@xml:id">ID
+                                    not found in metadata master file</sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -80,10 +80,9 @@
                 </elementSpec>
 
                 <elementSpec ident="w" module="analysis" mode="change">
-                    <constraintSpec scheme="schematron" ident="w_analysis" >
+                    <constraintSpec scheme="schematron" ident="w_analysis">
                         <desc/>
                         <constraint>
-                            
                             <sch:rule context="tei:w">
                                 <!-- Linguistic annotation-->
                                 <sch:assert test="
@@ -117,27 +116,34 @@
                                     else
                                     true()">Nouns must have a
                                     feature Gender</sch:assert>
-                            </sch:rule>
-                            <!-- Check whether all potential modal markers have been annotated-->
-                            <sch:rule
-                                context="tei:w[not(@function eq 'no')][not(ancestor::tei:seg[@function eq 'marker'])][not(descendant::tei:seg[@function eq 'marker'])]">
+                                <!-- Check whether all potential modal markers have been annotated-->
                                 <sch:let name="lemma_markers" value="
                                 ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
                                 'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
                                 'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
-                                <sch:report test="@lemma = $lemma_markers">Potential modal
-                                    marker</sch:report>
                                 <sch:report
-                                    test="@pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]"
-                                    >Potential modal marker</sch:report>
-                                <sch:report test="@pos eq 'ADJ' and matches(@lemma, '[ai]bilis')"
-                                    >Potential modal marker</sch:report>
+                                    test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
+                                    then @lemma = $lemma_markers else false()"
+                                    >Potential modal marker (lemma)</sch:report>
                                 <sch:report
-                                    test="@pos eq 'VERB' and matches(., '.+tur[aeiou][smeoa]?(rum)?') and @lemma[not(contains(., 'tur'))]"
-                                    >Potential modal marker</sch:report>
-                            </sch:rule></constraint>
+                                    test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])
+                                    and @pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]) then true()
+                                     else false()">Potential
+                                    modal marker (ndus)</sch:report>
+                                <sch:report
+                                    test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and
+                                    @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true
+                                    else false()">Potential
+                                    modal marker</sch:report>
+                                <sch:report
+                                    test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']) and
+                                    @pos eq 'VERB' and matches(., '.+tur[aeiou][smeoa]?(rum)?') and @lemma[not(contains(., 'tur'))]) then true() 
+                                    else false()">Potential
+                                    modal marker (turus)</sch:report>
+                            </sch:rule>
+                        </constraint>
                     </constraintSpec>
                 </elementSpec>
 
@@ -240,25 +246,24 @@
                                     else
                                     false()">@part attribute
                                     missing</sch:report>
-                                <sch:report test="
-                                    if (@synch) then
-                                    @synch = following::tei:seg/@synch
-                                    else
-                                    false()">Value of reference is
-                                    not unique</sch:report>
-                            </sch:rule>
-                            <sch:rule context="tei:seg[@function eq 'scope']">
                                 <sch:let name="explicit_participants"
                                     value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')
                                     return
-                                    $x"/>
+                                    substring($x, 2)"/>
                                 <sch:assert test="
-                                    if (//tei:fs[@xml:id eq current()/substring(@ana, 2)]/not(tei:f[@name eq 'participant']/tei:symbol eq 'implicit' or tei:f[@name eq 'SoA']/tei:binary eq 'false')) then 
-                                    $explicit_participants = current()/@ana                         
+                                    if (@function = 'scope' and //tei:fs[@xml:id = $ana]/tei:f[@name = 'participant']/tei:symbol/@value = 'explicit') then 
+                                    every $id in $ana satisfies $id = $explicit_participants                      
                                     else
                                     true()">If the participant is
                                     not explicit, the analysis of the scope must include an implicit
                                     participant</sch:assert>
+                                <!--<sch:assert test="
+                                    if (@function eq 'scope' and (//tei:fs[@xml:id = $ana]/not(tei:f[@name = 'participant']/tei:symbol/@value eq 'implicit') or //tei:fs[@xml:id = $ana]/not(tei:f[@name = 'SoA']))) then 
+                                    every $id in $ana satisfies $id = $explicit_participants                      
+                                    else
+                                    true()">If the participant is
+                                    not explicit, the analysis of the scope must include an implicit
+                                    participant</sch:assert>-->
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -270,8 +275,8 @@
                             <sch:rule context="tei:fs[@type eq 'scope']">
                                 <sch:let name="scope"
                                     value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
-                               <!-- <sch:assert test="tei:f[@name eq 'SoA']">SoA description
-                                    missing</sch:assert>-->
+                                <sch:let name="participant"
+                                    value="//tei:seg[@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
@@ -281,18 +286,40 @@
                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()"
                                     >Main verb of scope needs to be identified</sch:assert>
                                 <sch:report
-                                    test="count($scope/child::tei:w[@function eq 'main']) gt 1"
-                                    >More than one main verb annotated in current scope</sch:report>
-                                <sch:report test="tei:f[@name eq 'SoA']/tei:binary/@value eq 'true'">Unnecessary description of SoA</sch:report>
-                                <sch:report test="if (tei:f[@name eq 'SoA']) then tei:f[@name eq 'participant'] else false()">Unneeded description of participant</sch:report>                                
-                                <sch:assert test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()">Description of participant is missing</sch:assert>
-                                <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
+                                    test="count($scope/child::tei:w[@function eq 'main']) gt 1">More
+                                    than one main verb annotated in current scope</sch:report>
+                                <sch:report test="tei:f[@name eq 'SoA']/tei:binary/@value eq 'true'"
+                                    >Unnecessary description of SoA</sch:report>
+                                <sch:report
+                                    test="if (tei:f[@name eq 'SoA']) then tei:f[@name eq 'participant'] else false()"
+                                    >Unneeded description of participant</sch:report>
+                                <sch:assert
+                                    test="if ($participant) then tei:f[@name eq 'participant']/tei:symbol/@value eq 'explicit' else true()"
+                                    >This scope should have a explicit participant in its
+                                    description</sch:assert>
+                                <sch:assert
+                                    test="if ($participant) then tei:f[@name eq 'participantType']/tei:symbol/@value = $participant/@type else true()"
+                                    >The description of the participant type is
+                                    incorrect</sch:assert>
+                                <sch:assert
+                                    test="if (not($participant) and not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant']/tei:symbol/@value = ('implicit', 'none') else true()"
+                                    >The description of the participant is
+                                    incorrect</sch:assert>
+                                <sch:assert
+                                    test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()"
+                                    >Description of participant is missing</sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()"
+                                    >Participant type is missing</sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()"
+                                    >Participant type is missing</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
                                 <sch:let name="markers" value="
                                     ('aequum_est', 'aequus', 'iniquus', 'habeo_inf', 'habeo_ndum', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est', 
                                 'est_inf',
-                                'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                'dubius', 'illicitus', 'licitus', 'necessarius', 'necessarius_est', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
                                 'possibilitas', 'potestas', 'potestas_facio', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
                                 'forsitan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',
                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
@@ -402,7 +429,7 @@
                     </constraintSpec>
                 </elementSpec>
                 <elementSpec ident="f" module="iso-fs" mode="change">
-                    <constraintSpec scheme="schematron" ident="seg_analysis">
+                    <constraintSpec scheme="schematron" ident="f_analysis">
                         <desc>Constraints to check the consistency of the semantic analysis</desc>
                         <constraint>
                             <sch:rule
