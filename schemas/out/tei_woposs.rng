@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-02-22T10:10:37Z. .
+Schema generated from ODD source 2022-03-10T13:10:16Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -14380,6 +14380,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                                     missing</sch:assert>
                <sch:report test="                                     if (@ana and not(@part)) then                                     (following::tei:seg[some $x in tokenize(@ana, '\s+')                                     satisfies $x = $ana] or preceding::tei:seg[some $x in tokenize(@ana, '\s+')                                     satisfies $x = $ana])                                     else                                     false()">@part attribute
                                     missing</sch:report>
+               <sch:assert test="if (@part eq 'Y' and (ancestor::tei:w[@lemma eq 'sum'] or descendant::tei:w[@lemma eq 'sum'])) then                                      //tei:fs[@xml:id eq $ana]/tei:f[@name = 'lemma']/tei:symbol[contains(@value, '_est')] else true()                                     ">Citation form of this marker might be missing an element</sch:assert>
                <sch:let name="explicit_participants"
                         value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')                                     return                                     substring($x, 2)"/>
                <sch:assert test="                                     if (@function = 'scope' and //tei:fs[@xml:id = $ana]/tei:f[@name = 'participant']/tei:symbol/@value = 'explicit') then                                      every $id in $ana satisfies $id = $explicit_participants                                                           else                                     true()">If the participant is
@@ -14524,7 +14525,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-join-joinTargets3-constraint-assert-39">
+                  id="tei_woposs-join-joinTargets3-constraint-assert-40">
             <rule context="tei:join">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14664,7 +14665,7 @@ You must supply at least two values for @target on <name/>
             <ref name="model.standOffPart"/>
          </oneOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-standOff-nested_standOff_should_be_typed-constraint-assert-40">
+                  id="tei_woposs-standOff-nested_standOff_should_be_typed-constraint-assert-41">
             <rule context="tei:standOff">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -15053,7 +15054,7 @@ Feature Value]</a:documentation>
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'marker']">
                <sch:let name="markers"
-                        value="                                     ('aequum_est', 'aequus', 'iniquus', 'habeo_inf', 'habeo_ndum', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est',                                  'est_inf',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'necessarius_est', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'potestas_facio', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',                                 'forsitan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
+                        value="                                     ('aequum_est', 'aequus', 'iniquus', 'iniquus_est', 'habeo_inf', 'habeo_ndum', 'est_inf','aptus', 'ineptus', 'certus','certus_est', 'incertus', 'bilis', 'turus', 'ndus','turus_est', 'ndus_est','bilis_est',                                  'est_inf',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'necessarius_est', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'potestas_facio', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',                                 'forsitan', 'forsan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum', 'impossibilis_est', 'possibilis_est',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
                <sch:assert test="                                     some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')                                     satisfies $x = '#' || current()/@xml:id">ID not referenced in text</sch:assert>
                <sch:assert test="                                     if (tei:f[@name eq 'pertinence']/tei:binary/@value eq 'true') then                                     @xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'marker']/@fVal                                     else                                     true()">This marker is not part
                                     of a modal relation</sch:assert>
