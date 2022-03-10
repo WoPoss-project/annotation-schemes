@@ -247,7 +247,7 @@
                                     false()">@part attribute
                                     missing</sch:report>
                                 <sch:assert test="if (@part eq 'Y' and (ancestor::tei:w[@lemma eq 'sum'] or descendant::tei:w[@lemma eq 'sum'])) then 
-                                    //tei:fs[@xml:id eq $ana]/tei:f[@name = 'lemma']/tei:symbol[contains(@value, '_est')] else true()
+                                    //tei:fs[@xml:id = $ana]/tei:f[@name = 'lemma']/tei:symbol[contains(@value, '_est')] else true()
                                     ">Citation form of this marker might be missing an element</sch:assert>
                                 <sch:let name="explicit_participants"
                                     value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')
