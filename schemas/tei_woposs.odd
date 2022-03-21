@@ -195,7 +195,7 @@
                                     true()">@ana does not have a
                                     corresponding ID in feature structures</sch:assert>
                                 <sch:assert test="
-                                    if (@part) then @ana
+                                    if (@part eq 'Y') then @ana
                                     else
                                     true()">@part requires the
                                     presence of an @ana attribute</sch:assert>
