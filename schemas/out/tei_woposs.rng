@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-03-21T10:32:27Z. .
+Schema generated from ODD source 2022-03-24T16:04:44Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -14361,8 +14361,8 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                </sch:assert>
                <sch:assert test="                                     if (@ana) then                                     every $x in tokenize(@ana, '\s+')                                     satisfies substring($x, 2) = //tei:fs[@type eq current()/@function]/@xml:id                                     else                                     true()">@ana does not have a
                                     corresponding ID in feature structures</sch:assert>
-               <sch:assert test="                                     if (@part eq 'Y') then @ana                                     else                                     true()">@part requires the
-                                    presence of an @ana attribute</sch:assert>
+               <sch:assert test="                                     if (@part eq 'Y') then @ana or @corresp                                     else                                     true()">@part requires the
+                                    presence of an @ana or @corresp attribute</sch:assert>
                <sch:report test="tei:w/following-sibling::text()[matches(., '\S')]">Segmentation issue</sch:report>
                <sch:report test="descendant::tei:seg[@ana eq current()/@ana]">Unnecessary nested segs</sch:report>
                <sch:report test="                                     if (@function eq 'marker') then                                     descendant::tei:seg[@function eq 'marker']                                     else                                     false()">Unnecessary nested
@@ -15032,7 +15032,7 @@ Feature Value]</a:documentation>
                <sch:let name="scope"
                         value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                <sch:let name="participant"
-                        value="//tei:seg[@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+                        value="//tei:seg[not(ancestor::tei:supplied)][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
                <sch:assert test="$scope">ID not referenced in text</sch:assert>
                <sch:assert test="if(tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>

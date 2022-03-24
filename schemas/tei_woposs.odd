@@ -195,10 +195,10 @@
                                     true()">@ana does not have a
                                     corresponding ID in feature structures</sch:assert>
                                 <sch:assert test="
-                                    if (@part eq 'Y') then @ana
+                                    if (@part eq 'Y') then @ana or @corresp
                                     else
                                     true()">@part requires the
-                                    presence of an @ana attribute</sch:assert>
+                                    presence of an @ana or @corresp attribute</sch:assert>
                                 <sch:report test="tei:w/following-sibling::text()[matches(., '\S')]"
                                     >Segmentation issue</sch:report>
                                 <sch:report test="descendant::tei:seg[@ana eq current()/@ana]"
@@ -279,7 +279,7 @@
                                 <sch:let name="scope"
                                     value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                                 <sch:let name="participant"
-                                    value="//tei:seg[@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+                                    value="//tei:seg[not(ancestor::tei:supplied)][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
