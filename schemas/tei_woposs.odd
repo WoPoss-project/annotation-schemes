@@ -81,7 +81,7 @@
 
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
-                        <desc/>
+                        <desc></desc>
                         <constraint>
                             <sch:rule context="tei:w">
                                 <!-- Linguistic annotation-->
@@ -89,8 +89,8 @@
                                     if (@msd) then
                                     substring(@msd, 2) = //tei:fs/@xml:id
                                     else
-                                    true()">No corresponding ID
-                                    found in feature structures</sch:assert>
+                                    true()">Tje attribute @msd does not point to a existing ID
+                                    in the feature structures list</sch:assert>
                                 <sch:assert test="
                                     if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ')) and not(starts-with(@lemma, 'necess'))) then
                                     @msd
@@ -386,24 +386,32 @@
                                 <sch:assert test="tei:f[@name eq 'participant_control']">Missing
                                     tei:f[@name eq 'participant_control']</sch:assert>
                             </sch:rule>
+                            
                             <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'deontic']]]">
-                                <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
-                                    'type']</sch:assert>
+                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 
+                                'modality'][tei:symbol[@value eq 'deontic']]]">
+                                <sch:assert test="tei:f[@name eq 'type']">Missing 
+                                    tei:f[@name eq 'type']</sch:assert>
                                 <sch:assert
-                                    test="tei:f[@name eq 'type']/tei:symbol/@value = ('authority', 'acceptability', 'volition', 'intention')"
-                                    >Possible values of tei:f[@name eq 'type'] are 'authority'
-                                    'acceptability' 'volition' 'intention'</sch:assert>
+                                    test="tei:f[@name eq 'type']/tei:symbol/@value = 
+                                    ('authority', 'acceptability', 'volition', 
+                                    'intention')" >Possible values of tei:f[@name eq
+                                    'type'] are 'authority' 'acceptability' 'volition'
+                                    'intention'</sch:assert>
                             </sch:rule>
                             <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'authority']]]">
-                                <sch:assert test="tei:f[@name eq 'subtype']">Missing tei:f[@name eq
-                                    'subtype']</sch:assert>
+                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 
+                                'type'][tei:symbol[@value eq 'authority']]]">
+                                <sch:assert test="tei:f[@name eq 'subtype']">Missing 
+                                    tei:f[@name eq 'subtype']</sch:assert>
                                 <sch:assert
-                                    test="tei:f[@name eq 'subtype']/tei:symbol/@value = ('obligation', 'recommendation', 'permission')"
-                                    >Possible values of tei:f[@name eq 'subtype'] are 'obligation'
-                                    'recommendation' 'permission'</sch:assert>
+                                    test="tei:f[@name eq 'subtype']/tei:symbol/@value =
+                                    ('obligation', 'recommendation', 'permission')">
+                                    Possible values of tei:f[@name eq 'subtype'] are 
+                                    'obligation' 'recommendation' 'permission'
+                                </sch:assert>
                             </sch:rule>
+                            
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]]">
                                 <sch:assert test="tei:f[@name eq 'degree']">Missing tei:f[@name eq

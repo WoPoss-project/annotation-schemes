@@ -214,9 +214,11 @@
                               <symbol value="possibility"/>
                               <symbol value="necessity"/>
                            </vAlt></f>
-                        <f name="participant_control"/>
+                        <f name="participant_control">                           
+                        </f>
                      </fs>
                   </cond>
+                  
                   <cond>
                      <fs>
                         <f name="modality">
@@ -250,6 +252,8 @@
                            </vAlt></f>
                      </fs>
                   </cond>
+                  
+                  
                   <cond>
                      <fs>
                         <f name="type">
