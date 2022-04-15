@@ -1,5 +1,4 @@
-# Annotation schemas
-## Annotation scheme-related files of the WoPoss project
+# Annotation scheme-related files of the WoPoss project
 
 In this repo you can find:
 
