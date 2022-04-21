@@ -279,7 +279,7 @@
                                 <sch:let name="scope"
                                     value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                                 <sch:let name="participant"
-                                    value="//tei:seg[not(ancestor::tei:supplied)][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+                                    value="//tei:seg[not(ancestor::tei:supplied[not(@source)])][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>

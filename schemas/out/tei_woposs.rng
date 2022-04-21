@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-03-24T16:04:44Z. .
+Schema generated from ODD source 2022-04-21T16:44:49Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -9113,8 +9113,8 @@ Sample values include: 1] L (left); 2] R (right); 3] C (center)</a:documentation
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:w">
-               <sch:assert test="                                     if (@msd) then                                     substring(@msd, 2) = //tei:fs/@xml:id                                     else                                     true()">No corresponding ID
-                                    found in feature structures</sch:assert>
+               <sch:assert test="                                     if (@msd) then                                     substring(@msd, 2) = //tei:fs/@xml:id                                     else                                     true()">Tje attribute @msd does not point to a existing ID
+                                    in the feature structures list</sch:assert>
                <sch:assert test="                                     if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ')) and not(starts-with(@lemma, 'necess'))) then                                     @msd                                     else                                     true()">Morphological analysis
                                     missing</sch:assert>
                <sch:assert test="if (ancestor::tei:seg and not(ancestor::tei:supplied)) then                                     @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()">Pos tags: ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON –
@@ -15032,7 +15032,7 @@ Feature Value]</a:documentation>
                <sch:let name="scope"
                         value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                <sch:let name="participant"
-                        value="//tei:seg[not(ancestor::tei:supplied)][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+                        value="//tei:seg[not(ancestor::tei:supplied[not(@source)])][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
                <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
                <sch:assert test="$scope">ID not referenced in text</sch:assert>
                <sch:assert test="if(tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
@@ -15113,19 +15113,22 @@ Feature Value]</a:documentation>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'deontic']]]">
-               <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
-                                    'type']</sch:assert>
-               <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value = ('authority', 'acceptability', 'volition', 'intention')">Possible values of tei:f[@name eq 'type'] are 'authority'
-                                    'acceptability' 'volition' 'intention'</sch:assert>
+                      context="tei:fs[@type eq 'relation'][tei:f[@name eq                                  'modality'][tei:symbol[@value eq 'deontic']]]">
+               <sch:assert test="tei:f[@name eq 'type']">Missing 
+                                    tei:f[@name eq 'type']</sch:assert>
+               <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value =                                      ('authority', 'acceptability', 'volition',                                      'intention')">Possible values of tei:f[@name eq
+                                    'type'] are 'authority' 'acceptability' 'volition'
+                                    'intention'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'authority']]]">
-               <sch:assert test="tei:f[@name eq 'subtype']">Missing tei:f[@name eq
-                                    'subtype']</sch:assert>
-               <sch:assert test="tei:f[@name eq 'subtype']/tei:symbol/@value = ('obligation', 'recommendation', 'permission')">Possible values of tei:f[@name eq 'subtype'] are 'obligation'
-                                    'recommendation' 'permission'</sch:assert>
+                      context="tei:fs[@type eq 'relation'][tei:f[@name eq                                  'type'][tei:symbol[@value eq 'authority']]]">
+               <sch:assert test="tei:f[@name eq 'subtype']">Missing 
+                                    tei:f[@name eq 'subtype']</sch:assert>
+               <sch:assert test="tei:f[@name eq 'subtype']/tei:symbol/@value =                                     ('obligation', 'recommendation', 'permission')">
+                                    Possible values of tei:f[@name eq 'subtype'] are 
+                                    'obligation' 'recommendation' 'permission'
+                                </sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
