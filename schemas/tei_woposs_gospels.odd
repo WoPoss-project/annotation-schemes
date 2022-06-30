@@ -116,14 +116,21 @@
 
                 <elementSpec ident="s" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="s">
-                        <desc/>
+                        <desc/>                        
                         <constraint>
                             <sch:rule context="tei:s">
                                 <sch:report test="text()[matches(., '\S')]">No text nodes allowed as
                                     children of s</sch:report>
                             </sch:rule>
                         </constraint>
-                    </constraintSpec>
+                    </constraintSpec>                    
+                    <attList>
+                        <attDef ident="id" mode="add">
+                            <datatype>
+                                <dataRef key="teidata.enumerated"></dataRef>
+                            </datatype>
+                        </attDef>
+                    </attList>
                 </elementSpec>
 
                 <elementSpec ident="note" module="core" mode="change">
