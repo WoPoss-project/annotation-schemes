@@ -245,10 +245,10 @@
                                     satisfies $x = $ana])
                                     else
                                     false()">@part attribute
-                                    missing</sch:report>
+                                    missing</sch:report><!--
                                 <sch:assert test="if (@function eq 'marker' and @part eq 'Y' and (ancestor::tei:w[@lemma eq 'sum'] or descendant::tei:w[@lemma eq 'sum'])) then 
                                     //tei:fs[@xml:id = $ana]/tei:f[@name = 'lemma']/tei:symbol[contains(@value, '_est')] else true()
-                                    ">Citation form of this marker might be missing an element</sch:assert>
+                                    ">Citation form of this marker might be missing an element</sch:assert>-->
                                 <sch:let name="explicit_participants"
                                     value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')
                                     return
@@ -260,13 +260,6 @@
                                     true()">If the participant is
                                     not explicit, the analysis of the scope must include an implicit
                                     participant</sch:assert>
-                                <!--<sch:assert test="
-                                    if (@function eq 'scope' and (//tei:fs[@xml:id = $ana]/not(tei:f[@name = 'participant']/tei:symbol/@value eq 'implicit') or //tei:fs[@xml:id = $ana]/not(tei:f[@name = 'SoA']))) then 
-                                    every $id in $ana satisfies $id = $explicit_participants                      
-                                    else
-                                    true()">If the participant is
-                                    not explicit, the analysis of the scope must include an implicit
-                                    participant</sch:assert>-->
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
