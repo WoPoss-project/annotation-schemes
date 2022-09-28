@@ -316,7 +316,7 @@
                                     ('aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus',  
                                 'est_inf',
                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                'possibilitas', 'potestas', 'potestas_facio', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
+                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
                                 'forsitan', 'forsan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
                                 <sch:assert test="
