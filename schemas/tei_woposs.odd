@@ -82,13 +82,7 @@
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
                         <desc/>
-                        <constraint>                            
-                            <sch:let name="lemma_markers" value="
-                                ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
-                                'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
-                                'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
-                                'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
+                        <constraint>          
                             <!-- Words within modal passages -->
                             <sch:rule
                                 context="tei:w[(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
@@ -172,6 +166,12 @@
                                   > Possible values for Degree = Cmp, Pos,
                                     Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
+                                <sch:let name="lemma_markers" value="
+                                    ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
+                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
+                                    'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
+                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
                                     then @lemma = $lemma_markers else false()"
@@ -276,6 +276,12 @@
                                    role="WARN"> Possible values for Degree = Cmp, Pos,
                                     Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
+                                <sch:let name="lemma_markers" value="
+                                    ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
+                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
+                                    'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
+                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
                                     then @lemma = $lemma_markers else false()"
