@@ -82,13 +82,19 @@
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
                         <desc/>
-                        <constraint>
+                        <constraint>                            
+                            <sch:let name="lemma_markers" value="
+                                ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
+                                'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
+                                'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
+                                'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                             <!-- Words within modal passages -->
                             <sch:rule
                                 context="tei:w[(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
                                 <!-- Linguistic annotation-->
                                 <sch:assert test="
-                                    if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(@lemma eq 'necesse')) then
+                                    if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(starts-with(@lemma, 'necess'))) then
                                     @msd
                                     else
                                     true()">Morphological analysis
@@ -166,12 +172,6 @@
                                   > Possible values for Degree = Cmp, Pos,
                                     Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
-                                <sch:let name="lemma_markers" value="
-                                    ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
-                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
-                                    'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
-                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
                                     then @lemma = $lemma_markers else false()"
@@ -197,7 +197,7 @@
                             <sch:rule
                                 context="tei:w[not(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
                                 <!-- Linguistic annotation-->
-                                <sch:assert test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(@lemma eq'necesse')) then
+                                <sch:assert test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(starts-with(@lemma, 'necess'))) then
                                     @msd
                                     else
                                     true()" role="WARN">Morphological analysis
@@ -276,12 +276,6 @@
                                    role="WARN"> Possible values for Degree = Cmp, Pos,
                                     Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
-                                <sch:let name="lemma_markers" value="
-                                    ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
-                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
-                                    'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
-                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
                                     then @lemma = $lemma_markers else false()"
