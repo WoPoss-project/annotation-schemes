@@ -81,48 +81,97 @@
 
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
-                        <desc></desc>
+                        <desc/>
                         <constraint>
-                            <sch:rule context="tei:w">
+                            <!-- Words within modal passages -->
+                            <sch:rule
+                                context="tei:w[(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
                                 <!-- Linguistic annotation-->
                                 <sch:assert test="
-                                    if (@msd) then
-                                    substring(@msd, 2) = //tei:fs/@xml:id
-                                    else
-                                    true()">The attribute @msd does not point to a existing ID
-                                    in the feature structures list</sch:assert>
-                                <sch:assert test="
-                                    if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ')) and not(starts-with(@lemma, 'necess'))) then
+                                    if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(@lemma eq 'necesse')) then
                                     @msd
                                     else
                                     true()">Morphological analysis
                                     missing</sch:assert>
                                 <sch:assert
-                                    test="if (ancestor::tei:seg and not(ancestor::tei:supplied)) then
-                                    @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
-                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()"
-                                    >The @pos attribute must have one of these values: ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON –
-                                    PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
-                                <!--          PoS relation with FS morphological features-->
+                                    test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
+                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma"
+                                    >The @lemma is mandatory and @pos attribute must have one of these values: ADJ – ADP –
+                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
+                                    VERB – X </sch:assert>
+                                <!-- PoS relation with morphological features-->
                                 <sch:assert test="
-                                    if (@pos = 'VERB' and @msd) then
-                                    substring(@msd, 2) = //tei:fs[tei:f[@name = 'VerbForm']]/@xml:id
-                                    else
-                                    true()">Verbs must have a
-                                    feature VerbForm</sch:assert>
+                                    if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()">Verbs must have a feature
+                                    VerbForm</sch:assert>
                                 <sch:assert test="
-                                    if (@pos = ('NOUN', 'ADJ', 'PRON') and @msd) then
-                                    substring(@msd, 2) = //tei:fs[tei:f[@name = 'Gender']]/@xml:id
-                                    else
-                                    true()">Nouns must have a
+                                    if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()"
+                                  >Nouns, adjectives and pronouns must have a
                                     feature Gender</sch:assert>
+                                <!-- Morphological features dependencies-->
+                                <sch:assert
+                                    test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()"
+                                  >Aspect feature is mandatory with past
+                                    tenses</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()"
+                                  >Person, Number, Mood and Tense features are
+                                    mandatory with finite forms</sch:assert>
+                                <sch:assert
+                                    test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                                  >Case, Gender and Number features are
+                                    mandatory</sch:assert>
+                                <sch:assert
+                                    test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                                  >Case, Gender and Number features are
+                                    mandatory</sch:assert>
+                                <!-- Values of morphological features -->
+                                <sch:assert
+                                    test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"
+                                  > Possible values for Tense = Fut, Past, Pqp,
+                                    Pres </sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"
+                                  > Possible values for Aspect = Imp,
+                                    Perf</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"
+                                  > Possible values for Number = Plur,
+                                    Sing</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()"
+                                  >Possible values for VerbForm = Fin, Gdv, Ger,
+                                    Inf, Part </sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"
+                                  > Possible values for Voice = Act,
+                                    Pass</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"
+                                  > Possible values for Mood = Imp, Ind,
+                                    Sub</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"
+                                  > Possible values for Person = 1, 2,
+                                    3</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"
+                                  > Possible values for Gender = Masc, Fem,
+                                    Neut</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"
+                                  > Possible values for Case = Abl, Acc, Dat,
+                                    Gen, Loc, Nom, Voc</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"
+                                  > Possible values for Degree = Cmp, Pos,
+                                    Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
                                 <sch:let name="lemma_markers" value="
-                                ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
-                                'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
-                                'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
-                                'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
-                                'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
+                                    ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
+                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
+                                    'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
+                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
                                     then @lemma = $lemma_markers else false()"
@@ -130,7 +179,7 @@
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])
                                     and @pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]) then true()
-                                     else false()">Potential
+                                    else false()">Potential
                                     modal marker (ndus)</sch:report>
                                 <sch:report
                                     test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and
@@ -143,6 +192,118 @@
                                     else false()">Potential
                                     modal marker (turus)</sch:report>
                             </sch:rule>
+                            
+                            <!-- Wods outside modal passages -->
+                            <sch:rule
+                                context="tei:w[not(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
+                                <!-- Linguistic annotation-->
+                                <sch:assert test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(@lemma eq'necesse')) then
+                                    @msd
+                                    else
+                                    true()" role="WARN">Morphological analysis
+                                    missing</sch:assert>
+                                <sch:assert
+                                    test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
+                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma" role="WARN"
+                                    >This word does not contain a lemma attributes and/or the @pos attribute does not have one of the acceptable values (ADJ – ADP –
+                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
+                                    VERB – X )</sch:assert>
+                                <!-- PoS relation with morphological features-->
+                                <sch:assert test="
+                                    if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()"
+                                   role="WARN">Verbs must have a feature
+                                    VerbForm</sch:assert>
+                                <sch:assert test="
+                                    if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()"
+                                   role="WARN">Nouns, adjectives and pronouns must have a
+                                    feature Gender</sch:assert>
+                                <!-- Morphological features dependencies-->
+                                <sch:assert
+                                    test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()"
+                                   role="WARN">Aspect feature is mandatory with past
+                                    tenses</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()"
+                                   role="WARN">Person, Number, Mood and Tense features are
+                                    mandatory with finite forms</sch:assert>
+                                <sch:assert
+                                    test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                                   role="WARN">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+                                <sch:assert
+                                    test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                                   role="WARN">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+                                <!-- Values of morphological features -->
+                                <sch:assert
+                                    test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"
+                                   role="WARN"> Possible values for Tense = Fut, Past, Pqp,
+                                    Pres </sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"
+                                   role="WARN"> Possible values for Aspect = Imp,
+                                    Perf</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"
+                                   role="WARN"> Possible values for Number = Plur,
+                                    Sing</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()"
+                                   role="WARN">Possible values for VerbForm = Fin, Gdv, Ger,
+                                    Inf, Part </sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"
+                                   role="WARN"> Possible values for Voice = Act,
+                                    Pass</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"
+                                   role="WARN"> Possible values for Mood = Imp, Ind,
+                                    Sub</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"
+                                   role="WARN"> Possible values for Person = 1, 2,
+                                    3</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"
+                                   role="WARN"> Possible values for Gender = Masc, Fem,
+                                    Neut</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"
+                                   role="WARN"> Possible values for Case = Abl, Acc, Dat,
+                                    Gen, Loc, Nom, Voc</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"
+                                   role="WARN"> Possible values for Degree = Cmp, Pos,
+                                    Sup</sch:assert>
+                                <!-- Check whether all potential modal markers have been annotated-->
+                                <sch:let name="lemma_markers" value="
+                                    ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
+                                    'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',
+                                    'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',
+                                    'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
+                                    'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
+                                <sch:report
+                                    test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))
+                                    then @lemma = $lemma_markers else false()"
+                                    >Potential modal marker (lemma)</sch:report>
+                                <sch:report
+                                    test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])
+                                    and @pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]) then true()
+                                    else false()">Potential
+                                    modal marker (ndus)</sch:report>
+                                <sch:report
+                                    test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and
+                                    @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true
+                                    else false()">Potential
+                                    modal marker (bilis)</sch:report>
+                                <sch:report
+                                    test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']) and
+                                    @pos eq 'VERB' and matches(., '.+tur[aeiou][smeoa]?(rum)?') and @lemma[not(contains(., 'tur'))]) then true() 
+                                    else false()">Potential
+                                    modal marker (turus)</sch:report>
+                               
+                            </sch:rule>
+                          
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
@@ -200,7 +361,8 @@
                                     true()">@part requires the
                                     presence of an @ana or @corresp attribute</sch:assert>
                                 <sch:report test="tei:w/following-sibling::text()[matches(., '\S')]"
-                                    >Segmentation issue (this string should be inside a w or pc element</sch:report>
+                                    >Segmentation issue (this string should be inside a w or pc
+                                    element</sch:report>
                                 <sch:report test="descendant::tei:seg[@ana eq current()/@ana]"
                                     >Unnecessary nested segs</sch:report>
                                 <sch:report test="
@@ -245,10 +407,7 @@
                                     satisfies $x = $ana])
                                     else
                                     false()">@part attribute
-                                    missing</sch:report><!--
-                                <sch:assert test="if (@function eq 'marker' and @part eq 'Y' and (ancestor::tei:w[@lemma eq 'sum'] or descendant::tei:w[@lemma eq 'sum'])) then 
-                                    //tei:fs[@xml:id = $ana]/tei:f[@name = 'lemma']/tei:symbol[contains(@value, '_est')] else true()
-                                    ">Citation form of this marker might be missing an element</sch:assert>-->
+                                    missing</sch:report>
                                 <sch:let name="explicit_participants"
                                     value="for $x in //tei:seg[@function eq 'participant']/tokenize(@corresp, '\s+')
                                     return
@@ -299,8 +458,7 @@
                                     incorrect</sch:assert>
                                 <sch:assert
                                     test="if (not($participant) and not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant']/tei:symbol/@value = ('implicit', 'none') else true()"
-                                    >The description of the participant is
-                                    incorrect</sch:assert>
+                                    >The description of the participant is incorrect</sch:assert>
                                 <sch:assert
                                     test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()"
                                     >Description of participant is missing</sch:assert>
@@ -344,32 +502,34 @@
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'marker'][tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]]">
-                                <sch:assert test="tei:f[@name eq 'utterance']">Missing 'utterance' feature</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'polarity']">Missing 
-                                    'polarity' feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'utterance']">Missing 'utterance'
+                                    feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'polarity']">Missing 'polarity'
+                                    feature</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
                                 <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of
-                                    the following features are required: 'pertinence', 
+                                    the following features are required: 'pertinence',
                                     'modal'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'scope'][tei:f[@name eq 'dynamicity']]">
-                                <sch:assert test="tei:f[@name eq 'control']">Missing 
-                                    'control' feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'control']">Missing 'control'
+                                    feature</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'scope'][tei:f[@name eq 'control']]">
-                                <sch:assert test="tei:f[@name eq 'dynamicity']">Missing  'dynamicity' feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'dynamicity']">Missing 'dynamicity'
+                                    feature</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'scope']">
-                                <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The 
+                                <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The
                                     following features is required: 'utterance,
                                     polarity'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">
-                                <sch:assert test="tei:f[@name eq 'type']">Missing
-                                    'type' feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'type']">Missing 'type'
+                                    feature</sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'type']/tei:symbol/@value = ('possibility', 'necessity')"
                                     >Possible values of feature 'type' are 'possibility'
@@ -377,50 +537,42 @@
                                 <sch:assert test="tei:f[@name eq 'participant_control']">Missing
                                     'participant_control' feature</sch:assert>
                             </sch:rule>
-                            
-                            <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 
+                            <sch:rule context="tei:fs[@type eq 'relation'][tei:f[@name eq 
                                 'modality'][tei:symbol[@value eq 'deontic']]]">
-                                <sch:assert test="tei:f[@name eq 'type']">Missing 
-                                    tei:f[@name eq 'type']</sch:assert>
-                                <sch:assert
-                                    test="tei:f[@name eq 'type']/tei:symbol/@value = 
+                                <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
+                                    'type']</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value = 
                                     ('authority', 'acceptability', 'volition', 
-                                    'intention')" >Possible values of feature 'type' are 'authority' 'acceptability' 'volition'
+                                    'intention')">Possible values of
+                                    feature 'type' are 'authority' 'acceptability' 'volition'
                                     'intention'</sch:assert>
                             </sch:rule>
-                            <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 
+                            <sch:rule context="tei:fs[@type eq 'relation'][tei:f[@name eq 
                                 'type'][tei:symbol[@value eq 'authority']]]">
-                                <sch:assert test="tei:f[@name eq 'subtype']">Missing 
-                                    'subtype' feature</sch:assert>
-                                <sch:assert
-                                    test="tei:f[@name eq 'subtype']/tei:symbol/@value =
-                                    ('obligation', 'recommendation', 'permission')">
-                                    Possible values of feature 'subtype' are 
-                                    'obligation' 'recommendation' 'permission'
-                                </sch:assert>
+                                <sch:assert test="tei:f[@name eq 'subtype']">Missing 'subtype'
+                                    feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'subtype']/tei:symbol/@value =
+                                    ('obligation', 'recommendation', 'permission')"
+                                    > Possible values of feature 'subtype' are 'obligation'
+                                    'recommendation' 'permission' </sch:assert>
                             </sch:rule>
-                            
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]]">
-                                <sch:assert test="tei:f[@name eq 'degree']">Missing 
-                                    'degree' feature </sch:assert>
+                                <sch:assert test="tei:f[@name eq 'degree']">Missing 'degree' feature </sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_necessary', 'desirable', 'acceptable', 'undesirable', 'unacceptable')"
-                                    >Possible values of 'degree' feature are
-                                    'absolutely_necessary' 'desirable' 'acceptable' 'undesirable'
+                                    >Possible values of 'degree' feature are 'absolutely_necessary'
+                                    'desirable' 'acceptable' 'undesirable'
                                     'unacceptable'</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'epistemic']]]">
-                                <sch:assert test="tei:f[@name eq 'degree']">Missing 
-                                    'degree' feature</sch:assert>
+                                <sch:assert test="tei:f[@name eq 'degree']">Missing 'degree'
+                                    feature</sch:assert>
                                 <sch:assert
                                     test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_certain', 'probable', 'possible', 'improbable', 'impossible')"
-                                    >Possible values of 'degree' feature are
-                                    'absolutely_certain' 'probable' 'possible' 'improbable'
-                                    'impossible'</sch:assert>
+                                    >Possible values of 'degree' feature are 'absolutely_certain'
+                                    'probable' 'possible' 'improbable' 'impossible'</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation']">
                                 <sch:assert test="tei:f[@name = ('modality')]"> One of the following
@@ -435,7 +587,9 @@
                         <constraint>
                             <sch:rule
                                 context="tei:f[@name eq 'pertinence'][parent::tei:fs[@type eq 'marker']]">
-                                <sch:assert test="tei:binary">Mandatory binary feature</sch:assert>
+                                <sch:assert test="tei:binary or tei:symbol/@value = 'fragmentary' "
+                                    >Unless it is a fragmentary text, this is a binary
+                                    feature</sch:assert>
                             </sch:rule>
                             <sch:rule
                                 context="tei:f[@name eq 'modal'][parent::tei:fs[@type eq 'marker']]">
@@ -550,84 +704,6 @@
                                     > Incorrect value of @value. Possible values are:
                                     'moral/ethical_norms, religious_norms,
                                     unspecified_norms'</sch:assert>
-                            </sch:rule>
-                            <!--      Verb features-->
-                            <sch:rule context="tei:f[@name eq 'Tense']">
-                                <sch:assert
-                                    test="tei:symbol/@value = ('Fut', 'Past', 'Pqp', 'Pres')"
-                                    >Possible values: Fut, Past, Pqp, Pres</sch:assert>
-                                <sch:assert test="parent::tei:fs/tei:f[@name eq 'Voice']">Voice
-                                    feature is mandatory</sch:assert>
-                                <sch:assert test="
-                                    if (tei:symbol/@value eq 'Past') then
-                                    parent::tei:fs/tei:f[@name eq 'Aspect']
-                                    else
-                                    true()">Aspect feature is
-                                    mandatory</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'VerbForm']">
-                                <sch:assert
-                                    test="tei:symbol/@value = ('Fin', 'Gdv', 'Ger', 'Inf', 'Part')"
-                                    >Possible values: Fin, Gdv, Ger, Inf, Part.</sch:assert>
-                                <sch:assert test="
-                                    if (tei:symbol/@value = ('Inf', 'Part')) then
-                                    parent::tei:fs/tei:f[@name eq 'Tense']
-                                    else
-                                    true()">Tense feature is
-                                    mandatory</sch:assert>
-                                <sch:assert test="
-                                    if (tei:symbol/@value = 'Fin') then
-                                    parent::tei:fs/tei:f[@name eq 'Person'] and parent::tei:fs/tei:f[@name eq 'Number'] 
-                                    and parent::tei:fs/tei:f[@name eq 'Mood'] and parent::tei:fs/tei:f[@name eq 'Tense']
-                                    else
-                                    true()">Person, Number, Mood and
-                                    Tense features are mandatory</sch:assert>
-                                <sch:assert test="
-                                    if (tei:symbol/@value = ('Gdv', 'Part')) then
-                                    parent::tei:fs/tei:f[@name eq 'Case'] and
-                                    parent::tei:fs/tei:f[@name eq 'Gender'] and parent::tei:fs/tei:f[@name eq 'Number']
-                                    else
-                                    true()">Case, Gender and Number
-                                    features are mandatory</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Aspect']">
-                                <sch:assert test="tei:symbol/@value = ('Imp', 'Perf')">Possible
-                                    values: Imp, Perf.</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Number']">
-                                <sch:assert test="tei:symbol/@value = ('Plur', 'Sing')">Possible
-                                    values: Plur, Sing.</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Voice']">
-                                <sch:assert test="tei:symbol/@value = ('Act', 'Pass')">Possible
-                                    values: Act, Pass</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Mood']">
-                                <sch:assert test="tei:symbol/@value = ('Imp', 'Ind', 'Sub')"
-                                    >Possible values: Imp, Ind, Sub</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Person']">
-                                <sch:assert test="tei:symbol/@value = ('1', '2', '3')">Possible
-                                    values: 1, 2, 3.</sch:assert>
-                            </sch:rule>
-                            <!--      Noun features-->
-                            <sch:rule context="tei:f[@name eq 'Gender']">
-                                <sch:assert test="tei:symbol/@value = ('Masc', 'Fem', 'Neut')"
-                                    >Possible values: Masc, Fem, Neut.</sch:assert>
-                                <sch:assert
-                                    test="parent::tei:fs/tei:f[@name eq 'Number'] and parent::tei:fs/tei:f[@name eq 'Case']"
-                                    >Number feature is mandatory</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:f[@name eq 'Case']">
-                                <sch:assert
-                                    test="tei:symbol/@value = ('Abl', 'Acc', 'Dat', 'Gen', 'Loc', 'Nom', 'Voc')"
-                                    >Possible values: Abl, Acc, Dat, Gen, Loc, Nom,
-                                    Voc.</sch:assert>
-                            </sch:rule>
-                            <!--         Other-->
-                            <sch:rule context="tei:f[@name eq 'Degree']">
-                                <sch:assert test="tei:symbol/@value = ('Cmp', 'Pos', 'Sup')"
-                                    >Possible values: Cmp, Pos, Sup.</sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>

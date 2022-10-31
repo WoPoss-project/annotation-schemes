@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-09-28T07:51:03Z. .
+Schema generated from ODD source 2022-10-31T14:20:07Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -9112,21 +9112,116 @@ Sample values include: 1] L (left); 2] R (right); 3] C (center)</a:documentation
                   id="tei_woposs-w-w_analysis-constraint-rule-15">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:w">
-               <sch:assert test="                                     if (@msd) then                                     substring(@msd, 2) = //tei:fs/@xml:id                                     else                                     true()">The attribute @msd does not point to a existing ID
-                                    in the feature structures list</sch:assert>
-               <sch:assert test="                                     if ((ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied) and not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ')) and not(starts-with(@lemma, 'necess'))) then                                     @msd                                     else                                     true()">Morphological analysis
+                      context="tei:w[(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
+               <sch:assert test="                                     if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(@lemma eq 'necesse')) then                                     @msd                                     else                                     true()">Morphological analysis
                                     missing</sch:assert>
-               <sch:assert test="if (ancestor::tei:seg and not(ancestor::tei:supplied)) then                                     @pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma else true()">The @pos attribute must have one of these values: ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON –
-                                    PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
-               <sch:assert test="                                     if (@pos = 'VERB' and @msd) then                                     substring(@msd, 2) = //tei:fs[tei:f[@name = 'VerbForm']]/@xml:id                                     else                                     true()">Verbs must have a
-                                    feature VerbForm</sch:assert>
-               <sch:assert test="                                     if (@pos = ('NOUN', 'ADJ', 'PRON') and @msd) then                                     substring(@msd, 2) = //tei:fs[tei:f[@name = 'Gender']]/@xml:id                                     else                                     true()">Nouns must have a
+               <sch:assert test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma">The @lemma is mandatory and @pos attribute must have one of these values: ADJ – ADP –
+                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
+                                    VERB – X </sch:assert>
+               <sch:assert test="                                     if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()">Verbs must have a feature
+                                    VerbForm</sch:assert>
+               <sch:assert test="                                     if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()">Nouns, adjectives and pronouns must have a
                                     feature Gender</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()">Aspect feature is mandatory with past
+                                    tenses</sch:assert>
+               <sch:assert test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()">Person, Number, Mood and Tense features are
+                                    mandatory with finite forms</sch:assert>
+               <sch:assert test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+               <sch:assert test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"> Possible values for Tense = Fut, Past, Pqp,
+                                    Pres </sch:assert>
+               <sch:assert test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"> Possible values for Aspect = Imp,
+                                    Perf</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"> Possible values for Number = Plur,
+                                    Sing</sch:assert>
+               <sch:assert test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()">Possible values for VerbForm = Fin, Gdv, Ger,
+                                    Inf, Part </sch:assert>
+               <sch:assert test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"> Possible values for Voice = Act,
+                                    Pass</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"> Possible values for Mood = Imp, Ind,
+                                    Sub</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"> Possible values for Person = 1, 2,
+                                    3</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"> Possible values for Gender = Masc, Fem,
+                                    Neut</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"> Possible values for Case = Abl, Acc, Dat,
+                                    Gen, Loc, Nom, Voc</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"> Possible values for Degree = Cmp, Pos,
+                                    Sup</sch:assert>
                <sch:let name="lemma_markers"
-                        value="                                 ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',                                 'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
+                        value="                                     ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',                                     'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                     'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',                                     'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',                                     'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
                <sch:report test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))                                     then @lemma = $lemma_markers else false()">Potential modal marker (lemma)</sch:report>
-               <sch:report test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])                                     and @pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]) then true()                                      else false()">Potential
+               <sch:report test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])                                     and @pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]) then true()                                     else false()">Potential
+                                    modal marker (ndus)</sch:report>
+               <sch:report test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and                                     @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true                                     else false()">Potential
+                                    modal marker (bilis)</sch:report>
+               <sch:report test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']) and                                     @pos eq 'VERB' and matches(., '.+tur[aeiou][smeoa]?(rum)?') and @lemma[not(contains(., 'tur'))]) then true()                                      else false()">Potential
+                                    modal marker (turus)</sch:report>
+            </sch:rule>
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                      context="tei:w[not(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
+               <sch:assert test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(@lemma eq'necesse')) then                                     @msd                                     else                                     true()"
+                           role="WARN">Morphological analysis
+                                    missing</sch:assert>
+               <sch:assert test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma"
+                           role="WARN">This word does not contain a lemma attributes and/or the @pos attribute does not have one of the acceptable values (ADJ – ADP –
+                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
+                                    VERB – X )</sch:assert>
+               <sch:assert test="                                     if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()"
+                           role="WARN">Verbs must have a feature
+                                    VerbForm</sch:assert>
+               <sch:assert test="                                     if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()"
+                           role="WARN">Nouns, adjectives and pronouns must have a
+                                    feature Gender</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()"
+                           role="WARN">Aspect feature is mandatory with past
+                                    tenses</sch:assert>
+               <sch:assert test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()"
+                           role="WARN">Person, Number, Mood and Tense features are
+                                    mandatory with finite forms</sch:assert>
+               <sch:assert test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                           role="WARN">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+               <sch:assert test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                           role="WARN">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"
+                           role="WARN"> Possible values for Tense = Fut, Past, Pqp,
+                                    Pres </sch:assert>
+               <sch:assert test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"
+                           role="WARN"> Possible values for Aspect = Imp,
+                                    Perf</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"
+                           role="WARN"> Possible values for Number = Plur,
+                                    Sing</sch:assert>
+               <sch:assert test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()"
+                           role="WARN">Possible values for VerbForm = Fin, Gdv, Ger,
+                                    Inf, Part </sch:assert>
+               <sch:assert test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"
+                           role="WARN"> Possible values for Voice = Act,
+                                    Pass</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"
+                           role="WARN"> Possible values for Mood = Imp, Ind,
+                                    Sub</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"
+                           role="WARN"> Possible values for Person = 1, 2,
+                                    3</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"
+                           role="WARN"> Possible values for Gender = Masc, Fem,
+                                    Neut</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"
+                           role="WARN"> Possible values for Case = Abl, Acc, Dat,
+                                    Gen, Loc, Nom, Voc</sch:assert>
+               <sch:assert test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"
+                           role="WARN"> Possible values for Degree = Cmp, Pos,
+                                    Sup</sch:assert>
+               <sch:let name="lemma_markers"
+                        value="                                     ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',                                     'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                     'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'forsitan',                                     'forstan', 'fortasse', 'indubitate', 'indubitanter', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',                                     'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse', 'ius')"/>
+               <sch:report test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']))                                     then @lemma = $lemma_markers else false()">Potential modal marker (lemma)</sch:report>
+               <sch:report test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])                                     and @pos eq 'VERB' and matches(., '[ae]nd[aeiou][smeoa]?(rum)?$') and @lemma[not(contains(., 'nd'))]) then true()                                     else false()">Potential
                                     modal marker (ndus)</sch:report>
                <sch:report test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and                                     @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true                                     else false()">Potential
                                     modal marker (bilis)</sch:report>
@@ -9232,7 +9327,7 @@ Sample values include: 1] L (left); 2] R (right); 3] C (center)</a:documentation
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">associates an interpretative annotation directly with a span of text. [17.3. Spans and Interpretations]</a:documentation>
          <ref name="macro.phraseSeq.limited"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-span-targetfrom-constraint-report-22">
+                  id="tei_woposs-span-targetfrom-constraint-report-26">
             <rule context="tei:span">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="@from and @target">
 Only one of the attributes @target and @from may be supplied on <name/>
@@ -9240,7 +9335,7 @@ Only one of the attributes @target and @from may be supplied on <name/>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-span-targetto-constraint-report-23">
+                  id="tei_woposs-span-targetto-constraint-report-27">
             <rule context="tei:span">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="@to and @target">
 Only one of the attributes @target and @to may be supplied on <name/>
@@ -9248,14 +9343,14 @@ Only one of the attributes @target and @to may be supplied on <name/>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-span-tonotfrom-constraint-report-24">
+                  id="tei_woposs-span-tonotfrom-constraint-report-28">
             <rule context="tei:span">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="@to and not(@from)">
 If @to is supplied on <name/>, @from must be supplied as well</report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-span-tofrom-constraint-report-25">
+                  id="tei_woposs-span-tofrom-constraint-report-29">
             <rule context="tei:span">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')">
@@ -9410,7 +9505,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes the system used to ensure correct ordering of the quires or similar making up a codex, incunable, or other object typically by means of annotations at the foot of the page. [10.3.7. Catchwords, Signatures, Secundo Folio]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-catchwords-catchword_in_msDesc-constraint-assert-16">
+                  id="tei_woposs-catchwords-catchword_in_msDesc-constraint-assert-47">
             <rule context="tei:catchwords">
                <sch:assert xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
@@ -9432,7 +9527,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-dimensions-duplicateDim-constraint-report-26">
+                  id="tei_woposs-dimensions-duplicateDim-constraint-report-30">
             <rule context="tei:dimensions">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="count(tei:width)&gt; 1">
 The element <name/> may appear once only
@@ -9614,7 +9709,7 @@ The element <name/> may appear once only
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(second folio) marks the word or words taken from a fixed point in a codex (typically the beginning of the second leaf) in order to provide a unique identifier for it.  [10.3.7. Catchwords, Signatures, Secundo Folio]</a:documentation>
          <ref name="macro.phraseSeq"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-secFol-secFol_in_msDesc-constraint-assert-17">
+                  id="tei_woposs-secFol-secFol_in_msDesc-constraint-assert-48">
             <rule context="tei:secFol">
                <sch:assert xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
@@ -9631,7 +9726,7 @@ The element <name/> may appear once only
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains discussion of the leaf or quire signatures found within a codex or similar object. [10.3.7. Catchwords, Signatures, Secundo Folio]</a:documentation>
          <ref name="macro.specialPara"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-signatures-signatures_in_msDesc-constraint-assert-18">
+                  id="tei_woposs-signatures-signatures_in_msDesc-constraint-assert-49">
             <rule context="tei:signatures">
                <sch:assert xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
@@ -9709,7 +9804,7 @@ The element <name/> may appear once only
             </zeroOrMore>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-msIdentifier-msId_minimal-constraint-report-29">
+                  id="tei_woposs-msIdentifier-msId_minimal-constraint-report-33">
             <rule context="tei:msIdentifier">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        test="not(parent::tei:msPart) and (local-name(*[1])='idno' or local-name(*[1])='altIdentifier' or normalize-space(.)='')">An msIdentifier must contain either a repository or location.</report>
@@ -10941,7 +11036,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines any line passing through two or more points within a <code xmlns="http://www.w3.org/1999/xhtml">&lt;surface&gt;</code> element. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-path-pathmustnotbeclosed-constraint-rule-16">
+                  id="tei_woposs-path-pathmustnotbeclosed-constraint-rule-17">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
@@ -10993,7 +11088,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(added span of text) marks the beginning of a longer sequence of text added by an author, scribe, annotator or corrector (see also <code xmlns="http://www.w3.org/1999/xhtml">&lt;add&gt;</code>). [11.3.1.4. Additions and Deletions]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-addSpan-spanTo-constraint-assert-19">
+                  id="tei_woposs-addSpan-spanTo-constraint-assert-50">
             <rule context="tei:addSpan">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11003,7 +11098,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-addSpan-spanTo_fr-constraint-assert-20">
+                  id="tei_woposs-addSpan-spanTo_fr-constraint-assert-51">
             <rule context="tei:addSpan">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11036,7 +11131,7 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(damaged span of text) marks the beginning of a longer sequence of text which is damaged in some way but still legible. [11.3.3.1. Damage, Illegibility, and Supplied Text]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-damageSpan-spanTo-constraint-assert-21">
+                  id="tei_woposs-damageSpan-spanTo-constraint-assert-52">
             <rule context="tei:damageSpan">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11046,7 +11141,7 @@ The @spanTo attribute of <name/> is required.</assert>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-damageSpan-spanTo_fr-constraint-assert-22">
+                  id="tei_woposs-damageSpan-spanTo_fr-constraint-assert-53">
             <rule context="tei:damageSpan">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11066,7 +11161,7 @@ The @spanTo attribute of <name/> is required.</assert>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deleted span of text) marks the beginning of a longer sequence of text deleted, marked as deleted, or otherwise signaled as superfluous or spurious by an author, scribe, annotator, or corrector. [11.3.1.4. Additions and Deletions]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-delSpan-spanTo-constraint-assert-23">
+                  id="tei_woposs-delSpan-spanTo-constraint-assert-54">
             <rule context="tei:delSpan">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11075,7 +11170,7 @@ The @spanTo attribute of <name/> is required.</assert>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-delSpan-spanTo_fr-constraint-assert-24">
+                  id="tei_woposs-delSpan-spanTo_fr-constraint-assert-55">
             <rule context="tei:delSpan">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11240,7 +11335,7 @@ The @spanTo attribute of <name/> is required.</assert>
             </choice>
          </oneOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-subst-substContents1-constraint-assert-25">
+                  id="tei_woposs-subst-substContents1-constraint-assert-56">
             <rule context="tei:subst">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -11739,7 +11834,7 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
             </zeroOrMore>
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-rdgGrp-only1lem-constraint-assert-26">
+                  id="tei_woposs-rdgGrp-only1lem-constraint-assert-57">
             <rule context="tei:rdgGrp">
                <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -11895,7 +11990,7 @@ Sample values include: 1] homeoteleuton; 2] homeoarchy; 3] paleographicConfusion
             </choice>
          </attribute>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-variantEncoding-location-variantEncodingLocation-constraint-rule-17">
+                  id="tei_woposs-variantEncoding-location-variantEncodingLocation-constraint-rule-18">
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -12985,7 +13080,7 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             </zeroOrMore>
          </choice>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-person-person_namesdates-constraint-rule-18">
+                  id="tei_woposs-person-person_namesdates-constraint-rule-19">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:person[@role eq 'author']">
@@ -13237,20 +13332,20 @@ Sample values include: 1] primary; 2] other; 3] paid; 4] unpaid</a:documentation
             <ref name="desc"/>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-relation-reforkeyorname-constraint-assert-29">
+                  id="tei_woposs-relation-reforkeyorname-constraint-assert-60">
             <rule context="tei:relation">
                <assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-relation-activemutual-constraint-report-31">
+                  id="tei_woposs-relation-activemutual-constraint-report-35">
             <rule context="tei:relation">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-relation-activepassive-constraint-report-32">
+                  id="tei_woposs-relation-activepassive-constraint-report-36">
             <rule context="tei:relation">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                        test="@passive and not(@active)">the attribute 'passive' may be supplied only if the attribute 'active' is supplied</report>
@@ -13619,7 +13714,7 @@ Sample values include: 1] atBirth; 2] atDeath; 3] dependent; 4] inherited; 5] in
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-objectIdentifier-objectIdentifier_minimal-constraint-report-33">
+                  id="tei_woposs-objectIdentifier-objectIdentifier_minimal-constraint-report-37">
             <rule context="tei:objectIdentifier">
                <report xmlns:sch="http://purl.oclc.org/dsdl/schematron" test="not(count(*) gt 0)">An objectIdentifier must contain at minimum a single piece of locating or identifying information.</report>
             </rule>
@@ -14266,7 +14361,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements. [16.1. Links]</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-link-linkTargets3-constraint-assert-30">
+                  id="tei_woposs-link-linkTargets3-constraint-assert-61">
             <rule context="tei:link">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14301,7 +14396,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. Blocks, Segments, and Anchors]</a:documentation>
          <ref name="macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-ab-abstractModel-structure-ab-constraint-report-34">
+                  id="tei_woposs-ab-abstractModel-structure-ab-constraint-report-38">
             <rule context="tei:ab">
                <report xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14312,7 +14407,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-ab-abstractModel-structure-l-constraint-report-35">
+                  id="tei_woposs-ab-abstractModel-structure-l-constraint-report-39">
             <rule context="tei:ab">
                <report xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14344,7 +14439,7 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(arbitrary segment) represents any segmentation of text below the chunk level. [16.3. Blocks, Segments, and Anchors 6.2. Components of the Verse Line 7.2.5. Speech Contents]</a:documentation>
          <ref name="macro.paraContent"/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-seg-seg_analysis-constraint-rule-19">
+                  id="tei_woposs-seg-seg_analysis-constraint-rule-20">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
@@ -14363,7 +14458,8 @@ Suggested values include: 1] self; 2] single; 3] many; 4] group; 5] world</a:doc
                                     corresponding ID in feature structures</sch:assert>
                <sch:assert test="                                     if (@part eq 'Y') then @ana or @corresp                                     else                                     true()">@part requires the
                                     presence of an @ana or @corresp attribute</sch:assert>
-               <sch:report test="tei:w/following-sibling::text()[matches(., '\S')]">Segmentation issue (this string should be inside a w or pc element</sch:report>
+               <sch:report test="tei:w/following-sibling::text()[matches(., '\S')]">Segmentation issue (this string should be inside a w or pc
+                                    element</sch:report>
                <sch:report test="descendant::tei:seg[@ana eq current()/@ana]">Unnecessary nested segs</sch:report>
                <sch:report test="                                     if (@function eq 'marker') then                                     descendant::tei:seg[@function eq 'marker']                                     else                                     false()">Unnecessary nested
                                     segs</sch:report>
@@ -14524,7 +14620,7 @@ Suggested values include: 1] d (days); 2] h (hours); 3] min (minutes); 4] s (sec
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-join-joinTargets3-constraint-assert-39">
+                  id="tei_woposs-join-joinTargets3-constraint-assert-70">
             <rule context="tei:join">
                <assert xmlns:xi="http://www.w3.org/2001/XInclude"
                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14664,7 +14760,7 @@ You must supply at least two values for @target on <name/>
             <ref name="model.standOffPart"/>
          </oneOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-standOff-nested_standOff_should_be_typed-constraint-assert-40">
+                  id="tei_woposs-standOff-nested_standOff_should_be_typed-constraint-assert-71">
             <rule context="tei:standOff">
                <sch:assert xmlns:xi="http://www.w3.org/2001/XInclude"
                            xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -15024,7 +15120,7 @@ Feature Value]</a:documentation>
             <ref name="f"/>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-fs-seg_analysis-constraint-rule-20">
+                  id="tei_woposs-fs-seg_analysis-constraint-rule-21">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'scope']">
@@ -15043,8 +15139,7 @@ Feature Value]</a:documentation>
                                     description</sch:assert>
                <sch:assert test="if ($participant) then tei:f[@name eq 'participantType']/tei:symbol/@value = $participant/@type else true()">The description of the participant type is
                                     incorrect</sch:assert>
-               <sch:assert test="if (not($participant) and not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant']/tei:symbol/@value = ('implicit', 'none') else true()">The description of the participant is
-                                    incorrect</sch:assert>
+               <sch:assert test="if (not($participant) and not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant']/tei:symbol/@value = ('implicit', 'none') else true()">The description of the participant is incorrect</sch:assert>
                <sch:assert test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()">Description of participant is missing</sch:assert>
                <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
                <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
@@ -15069,40 +15164,42 @@ Feature Value]</a:documentation>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'marker'][tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]]">
-               <sch:assert test="tei:f[@name eq 'utterance']">Missing 'utterance' feature</sch:assert>
-               <sch:assert test="tei:f[@name eq 'polarity']">Missing 
-                                    'polarity' feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'utterance']">Missing 'utterance'
+                                    feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'polarity']">Missing 'polarity'
+                                    feature</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'marker']">
                <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of
-                                    the following features are required: 'pertinence', 
+                                    the following features are required: 'pertinence',
                                     'modal'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'scope'][tei:f[@name eq 'dynamicity']]">
-               <sch:assert test="tei:f[@name eq 'control']">Missing 
-                                    'control' feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'control']">Missing 'control'
+                                    feature</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'scope'][tei:f[@name eq 'control']]">
-               <sch:assert test="tei:f[@name eq 'dynamicity']">Missing  'dynamicity' feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'dynamicity']">Missing 'dynamicity'
+                                    feature</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'scope']">
-               <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The 
+               <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The
                                     following features is required: 'utterance,
                                     polarity'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">
-               <sch:assert test="tei:f[@name eq 'type']">Missing
-                                    'type' feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'type']">Missing 'type'
+                                    feature</sch:assert>
                <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value = ('possibility', 'necessity')">Possible values of feature 'type' are 'possibility'
                                     'necessity'</sch:assert>
                <sch:assert test="tei:f[@name eq 'participant_control']">Missing
@@ -15111,38 +15208,35 @@ Feature Value]</a:documentation>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation'][tei:f[@name eq                                  'modality'][tei:symbol[@value eq 'deontic']]]">
-               <sch:assert test="tei:f[@name eq 'type']">Missing 
-                                    tei:f[@name eq 'type']</sch:assert>
-               <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value =                                      ('authority', 'acceptability', 'volition',                                      'intention')">Possible values of feature 'type' are 'authority' 'acceptability' 'volition'
+               <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
+                                    'type']</sch:assert>
+               <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value =                                      ('authority', 'acceptability', 'volition',                                      'intention')">Possible values of
+                                    feature 'type' are 'authority' 'acceptability' 'volition'
                                     'intention'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation'][tei:f[@name eq                                  'type'][tei:symbol[@value eq 'authority']]]">
-               <sch:assert test="tei:f[@name eq 'subtype']">Missing 
-                                    'subtype' feature</sch:assert>
-               <sch:assert test="tei:f[@name eq 'subtype']/tei:symbol/@value =                                     ('obligation', 'recommendation', 'permission')">
-                                    Possible values of feature 'subtype' are 
-                                    'obligation' 'recommendation' 'permission'
-                                </sch:assert>
+               <sch:assert test="tei:f[@name eq 'subtype']">Missing 'subtype'
+                                    feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'subtype']/tei:symbol/@value =                                     ('obligation', 'recommendation', 'permission')"> Possible values of feature 'subtype' are 'obligation'
+                                    'recommendation' 'permission' </sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]]">
-               <sch:assert test="tei:f[@name eq 'degree']">Missing 
-                                    'degree' feature </sch:assert>
-               <sch:assert test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_necessary', 'desirable', 'acceptable', 'undesirable', 'unacceptable')">Possible values of 'degree' feature are
-                                    'absolutely_necessary' 'desirable' 'acceptable' 'undesirable'
+               <sch:assert test="tei:f[@name eq 'degree']">Missing 'degree' feature </sch:assert>
+               <sch:assert test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_necessary', 'desirable', 'acceptable', 'undesirable', 'unacceptable')">Possible values of 'degree' feature are 'absolutely_necessary'
+                                    'desirable' 'acceptable' 'undesirable'
                                     'unacceptable'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'epistemic']]]">
-               <sch:assert test="tei:f[@name eq 'degree']">Missing 
-                                    'degree' feature</sch:assert>
-               <sch:assert test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_certain', 'probable', 'possible', 'improbable', 'impossible')">Possible values of 'degree' feature are
-                                    'absolutely_certain' 'probable' 'possible' 'improbable'
-                                    'impossible'</sch:assert>
+               <sch:assert test="tei:f[@name eq 'degree']">Missing 'degree'
+                                    feature</sch:assert>
+               <sch:assert test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_certain', 'probable', 'possible', 'improbable', 'impossible')">Possible values of 'degree' feature are 'absolutely_certain'
+                                    'probable' 'possible' 'improbable' 'impossible'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -15183,12 +15277,13 @@ Feature Value]</a:documentation>
             <ref name="model.featureVal"/>
          </choice>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-f-f_analysis-constraint-rule-34">
+                  id="tei_woposs-f-f_analysis-constraint-rule-35">
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:f[@name eq 'pertinence'][parent::tei:fs[@type eq 'marker']]">
-               <sch:assert test="tei:binary">Mandatory binary feature</sch:assert>
+               <sch:assert test="tei:binary or tei:symbol/@value = 'fragmentary' ">Unless it is a fragmentary text, this is a binary
+                                    feature</sch:assert>
             </sch:rule>
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
@@ -15320,82 +15415,6 @@ Feature Value]</a:documentation>
                <sch:assert test="tei:symbol[@value = ('moral/ethical_norms', 'religious_norms', 'unspecified_norms')]"> Incorrect value of @value. Possible values are:
                                     'moral/ethical_norms, religious_norms,
                                     unspecified_norms'</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Tense']">
-               <sch:assert test="tei:symbol/@value = ('Fut', 'Past', 'Pqp', 'Pres')">Possible values: Fut, Past, Pqp, Pres</sch:assert>
-               <sch:assert test="parent::tei:fs/tei:f[@name eq 'Voice']">Voice
-                                    feature is mandatory</sch:assert>
-               <sch:assert test="                                     if (tei:symbol/@value eq 'Past') then                                     parent::tei:fs/tei:f[@name eq 'Aspect']                                     else                                     true()">Aspect feature is
-                                    mandatory</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'VerbForm']">
-               <sch:assert test="tei:symbol/@value = ('Fin', 'Gdv', 'Ger', 'Inf', 'Part')">Possible values: Fin, Gdv, Ger, Inf, Part.</sch:assert>
-               <sch:assert test="                                     if (tei:symbol/@value = ('Inf', 'Part')) then                                     parent::tei:fs/tei:f[@name eq 'Tense']                                     else                                     true()">Tense feature is
-                                    mandatory</sch:assert>
-               <sch:assert test="                                     if (tei:symbol/@value = 'Fin') then                                     parent::tei:fs/tei:f[@name eq 'Person'] and parent::tei:fs/tei:f[@name eq 'Number']                                      and parent::tei:fs/tei:f[@name eq 'Mood'] and parent::tei:fs/tei:f[@name eq 'Tense']                                     else                                     true()">Person, Number, Mood and
-                                    Tense features are mandatory</sch:assert>
-               <sch:assert test="                                     if (tei:symbol/@value = ('Gdv', 'Part')) then                                     parent::tei:fs/tei:f[@name eq 'Case'] and                                     parent::tei:fs/tei:f[@name eq 'Gender'] and parent::tei:fs/tei:f[@name eq 'Number']                                     else                                     true()">Case, Gender and Number
-                                    features are mandatory</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Aspect']">
-               <sch:assert test="tei:symbol/@value = ('Imp', 'Perf')">Possible
-                                    values: Imp, Perf.</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Number']">
-               <sch:assert test="tei:symbol/@value = ('Plur', 'Sing')">Possible
-                                    values: Plur, Sing.</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Voice']">
-               <sch:assert test="tei:symbol/@value = ('Act', 'Pass')">Possible
-                                    values: Act, Pass</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Mood']">
-               <sch:assert test="tei:symbol/@value = ('Imp', 'Ind', 'Sub')">Possible values: Imp, Ind, Sub</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Person']">
-               <sch:assert test="tei:symbol/@value = ('1', '2', '3')">Possible
-                                    values: 1, 2, 3.</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Gender']">
-               <sch:assert test="tei:symbol/@value = ('Masc', 'Fem', 'Neut')">Possible values: Masc, Fem, Neut.</sch:assert>
-               <sch:assert test="parent::tei:fs/tei:f[@name eq 'Number'] and parent::tei:fs/tei:f[@name eq 'Case']">Number feature is mandatory</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Case']">
-               <sch:assert test="tei:symbol/@value = ('Abl', 'Acc', 'Dat', 'Gen', 'Loc', 'Nom', 'Voc')">Possible values: Abl, Acc, Dat, Gen, Loc, Nom,
-                                    Voc.</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:f[@name eq 'Degree']">
-               <sch:assert test="tei:symbol/@value = ('Cmp', 'Pos', 'Sup')">Possible values: Cmp, Pos, Sup.</sch:assert>
             </sch:rule>
          </pattern>
          <ref name="att.global.attributes"/>
