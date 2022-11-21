@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>TEI WoPoss</title>
+                <author>Helena Bermúdez Sabel</author>
+                <principal>WoPoss Project</principal>
+            </titleStmt>
+            <publicationStmt>
+                <authority>Swiss National Science Foundation</authority>
+                <availability status="free">
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative
+                        Commons BY-NC</licence>
+                </availability>
+            </publicationStmt>
+            <notesStmt>
+                <note type="ns">https://woposs.unine.ch/</note>
+            </notesStmt>
+            <sourceDesc>
+                <p>Written from scratch.</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <head>TEI WoPoss</head>
+            <p>TEI schema for a linguistically annotated corpus.</p>
+            <schemaSpec ident="tei_woposs" start="TEI teiCorpus">
+                <moduleRef n="01" key="tei"/>
+                <moduleRef n="02" key="header"/>
+                <moduleRef n="03" key="core"/>
+                <moduleRef n="04" key="textstructure"/>
+                <moduleRef n="06" key="verse"/>
+                <moduleRef n="07" key="drama"/>
+                <moduleRef n="17" key="analysis"/>
+                <moduleRef n="10" key="msdescription"/>
+                <moduleRef n="11" key="transcr"/>
+                <moduleRef n="12" key="textcrit"/>
+                <moduleRef n="13" key="namesdates"/>
+                <moduleRef n="14" key="figures"/>
+                <moduleRef n="15" key="corpus"/>
+                <moduleRef n="16" key="linking"/>
+                <moduleRef n="18" key="iso-fs"/>
+                <moduleRef n="19" key="nets"/>
+                <moduleRef n="21" key="certainty"/>
+
+                <elementSpec ident="w" module="analysis" mode="change">
+                    <constraintSpec scheme="schematron" ident="w_analysis">
+                        <desc/>
+                        <constraint>          
+                            
+                            <!-- Wods outside modal passages -->
+                            <sch:rule
+                                context="tei:w[not(ancestor::tei:supplied)]">
+                                <!-- Linguistic annotation-->
+                                <sch:assert test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(starts-with(@lemma, 'necess'))) then
+                                    @msd
+                                    else
+                                    true()" role="WARN">Morphological analysis
+                                    missing</sch:assert>
+                                <sch:assert
+                                    test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
+                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma" role="WARN"
+                                    >This word does not contain a lemma attributes and/or the @pos attribute does not have one of the acceptable values (ADJ – ADP –
+                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
+                                    VERB – X )</sch:assert>
+                                <!-- PoS relation with morphological features-->
+                                <sch:assert test="
+                                    if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()"
+                                   role="WARN">Verbs must have a feature
+                                    VerbForm</sch:assert>
+                                <sch:assert test="
+                                    if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()"
+                                   role="WARN">Nouns, adjectives and pronouns must have a
+                                    feature Gender</sch:assert>
+                                <!-- Morphological features dependencies-->
+                                <sch:assert
+                                    test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()"
+                                   role="WARN">Aspect feature is mandatory with past
+                                    tenses</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()"
+                                   role="WARN">Person, Number, Mood and Tense features are
+                                    mandatory with finite forms</sch:assert>
+                                <sch:assert
+                                    test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                                   role="WARN">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+                                <sch:assert
+                                    test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
+                                   role="WARN">Case, Gender and Number features are
+                                    mandatory</sch:assert>
+                                <!-- Values of morphological features -->
+                                <sch:assert
+                                    test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"
+                                   role="WARN"> Possible values for Tense = Fut, Past, Pqp,
+                                    Pres </sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"
+                                   role="WARN"> Possible values for Aspect = Imp,
+                                    Perf</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"
+                                   role="WARN"> Possible values for Number = Plur,
+                                    Sing</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()"
+                                   role="WARN">Possible values for VerbForm = Fin, Gdv, Ger,
+                                    Inf, Part </sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"
+                                   role="WARN"> Possible values for Voice = Act,
+                                    Pass</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"
+                                   role="WARN"> Possible values for Mood = Imp, Ind,
+                                    Sub</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"
+                                   role="WARN"> Possible values for Person = 1, 2,
+                                    3</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"
+                                   role="WARN"> Possible values for Gender = Masc, Fem,
+                                    Neut</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"
+                                   role="WARN"> Possible values for Case = Abl, Acc, Dat,
+                                    Gen, Loc, Nom, Voc</sch:assert>
+                                <sch:assert
+                                    test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"
+                                   role="WARN"> Possible values for Degree = Cmp, Pos,
+                                    Sup</sch:assert>
+                               
+                               
+                            </sch:rule>
+                          
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>
+
+                <elementSpec ident="s" module="analysis" mode="change">
+                    <constraintSpec scheme="schematron" ident="s">
+                        <desc/>
+                        <constraint>
+                            <sch:rule context="tei:s">
+                                <sch:report test="text()[matches(., '\S')]">No text nodes allowed as
+                                    children of s</sch:report>
+                            </sch:rule>
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>
+
+                <elementSpec ident="note" module="core" mode="change">
+                    <constraintSpec scheme="schematron" ident="note_consistency">
+                        <desc/>
+                        <constraint>
+                            <sch:rule context="tei:note">
+                                <sch:report test="string-length(.) eq 0">Empty note</sch:report>
+                            </sch:rule>
+                        </constraint>
+                    </constraintSpec>
+                </elementSpec>
+
+             
+            </schemaSpec>
+        </body>
+    </text>
+</TEI>
