@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2022-01-21T16:25:00Z. .
+Schema generated from ODD source 2022-11-22T15:32:09Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -3970,7 +3970,7 @@ Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] for
                   id="tei_woposs-term-term_core-constraint-rule-11">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:term">
+                      context="tei:term[not(@ref)]">
                <sch:assert test="substring(@cRef, 2) = ancestor::tei:TEI/descendant::tei:taxonomy[@xml:id eq current()/parent::tei:index/@indexName]/tei:category/@xml:id">URI does not correspond to a 
                                 category in the declared taxonomy</sch:assert>
             </sch:rule>

@@ -54,7 +54,7 @@
                 <elementSpec ident="term" module="core" mode="change">
                     <constraintSpec scheme="schematron" ident="term_core">
                         <constraint>
-                            <sch:rule context="tei:term">
+                            <sch:rule context="tei:term[not(@ref)]">
                                 <sch:assert test="substring(@cRef, 2) = ancestor::tei:TEI/descendant::tei:taxonomy[@xml:id eq current()/parent::tei:index/@indexName]/tei:category/@xml:id">URI does not correspond to a 
                                 category in the declared taxonomy</sch:assert>
                             </sch:rule>

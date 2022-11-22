@@ -46,7 +46,7 @@
                 <moduleRef n="19" key="nets"/>
                 <moduleRef n="21" key="certainty"/>
 
-                <!-- Metadata
+                <!-- Metadata--> 
                 <elementSpec ident="person" module="namesdates" mode="change">
                     <constraintSpec ident="person_namesdates" scheme="schematron">
                         <constraint>
@@ -77,7 +77,7 @@
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
-                </elementSpec> -->
+                </elementSpec> 
 
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
