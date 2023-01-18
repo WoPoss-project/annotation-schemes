@@ -4,16 +4,18 @@
     <teiHeader>
         <fileDesc>
             <titleStmt>
-                <title>TEI WoPoss</title>
+                <title>TEI WoPoss: corpus schema</title>
                 <author>Helena Bermúdez Sabel</author>
-                <principal>WoPoss Project</principal>
+                <principal>Francesca Dell’Oro</principal>
+                <funder>Swiss National Science Foundation</funder>
             </titleStmt>
             <publicationStmt>
-                <authority>Swiss National Science Foundation</authority>
+                <distributor>Institut des sciences du langage (University of Neuchâtel)</distributor>
                 <availability status="free">
-                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative
-                        Commons BY-NC</licence>
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
+                        BY-NC</licence>
                 </availability>
+                <date>2022</date>
             </publicationStmt>
             <notesStmt>
                 <note type="ns">https://woposs.unine.ch/</note>
@@ -43,7 +45,6 @@
                 <moduleRef n="15" key="corpus"/>
                 <moduleRef n="16" key="linking"/>
                 <moduleRef n="18" key="iso-fs"/>
-                <moduleRef n="19" key="nets"/>
                 <moduleRef n="21" key="certainty"/>
 
                 <!-- Metadata--> 

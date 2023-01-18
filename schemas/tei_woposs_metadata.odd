@@ -6,14 +6,16 @@
             <titleStmt>
                 <title>TEI WoPoss: schema for corpus metadata</title>
                 <author>Helena Bermúdez Sabel</author>
-                <principal>WoPoss Project</principal>
+                <principal>Francesca Dell’Oro</principal>
+                <funder>Swiss National Science Foundation</funder>
             </titleStmt>
             <publicationStmt>
-                <authority>Swiss National Science Foundation</authority>
+                <distributor>Institut des sciences du langage (University of Neuchâtel)</distributor>
                 <availability status="free">
-                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative
-                        Commons BY-NC</licence>
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
+                        BY-NC</licence>
                 </availability>
+                <date>2022</date>
             </publicationStmt>
             <notesStmt>
                 <note type="ns">https://woposs.unine.ch/</note>
@@ -26,17 +28,15 @@
     <text>
         <body>
             <head>TEI WoPoss</head>
-            <p>TEI schema for a linguistically annotated corpus.</p>
+            <p>TEI schema for validating a file that contains the annotated list of works with metadata about their authors.</p>
             <schemaSpec ident="tei_woposs" start="TEI teiCorpus">
                 <moduleRef n="01" key="tei"/>
                 <moduleRef n="02" key="header"/>
                 <moduleRef n="03" key="core"/>
                 <moduleRef n="04" key="textstructure"/>
                 <moduleRef n="17" key="analysis"/>
-                <moduleRef n="10" key="msdescription"/>
                 <moduleRef n="13" key="namesdates"/>
                 <moduleRef n="16" key="linking"/>
-                <moduleRef n="18" key="iso-fs"/>
                 <moduleRef n="21" key="certainty"/>              
                 
                 <elementSpec ident="bibl" module="core" mode="change">
