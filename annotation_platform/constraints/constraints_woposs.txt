@@ -17,6 +17,7 @@ Unit {
 	Typeofmodalunit="(potential) marker" -> Pertinence="pertinent" | Pertinence="not pertinent -  modal" | Pertinence="not pertinent - not modal";
 	Pertinence="not pertinent - not modal" -> Diachrony="post-modal" | Diachrony="pre-modal";
 	Pertinence="pertinent" -> Typeofutterance="interrogative" | Typeofutterance="non-interrogative" | Polarity="affirmative" | Polarity="negative";
-	Typeofmodalunit="scope unit" -> Typeofutterance="interrogative" | Typeofutterance="non-interrogative" | Polarity="affirmative" | Polarity="negative" | SoAcontrol="+ control" | SoAcontrol="- control" | SoAcontrol="+/- control" | SoAcontrol="no SoA" |  SoAdynamicity ="+ dynamic" |  SoAdynamicity ="- dynamic" |  SoAdynamicity ="+/- dynamic" | SoAdynamicity ="no SoA";
+Pertinence="fragmentary text" -> Typeofutterance="interrogative" | Typeofutterance="non-interrogative" | Polarity="affirmative" | Polarity="negative";
+	Typeofmodalunit="scope unit" -> Typeofutterance="interrogative" | Typeofutterance="non-interrogative" | Polarity="affirmative" | Polarity="negative" | SoAcontrol="+ control" | SoAcontrol="- control" | SoAcontrol="+/- control" | SoAcontrol="no SoA" |  SoAdynamicity ="+ dynamic" |  SoAdynamicity ="- dynamic" |  SoAdynamicity ="+/- dynamic" | SoAdynamicity ="no SoA"|  Typeofparticipantimplicit="animate" | Typeofparticipantimplicit="inanimate" | Typeofparticipantimplicit="animate (patient)" | Typeofparticipantimplicit="inanimate (patient)" ;
 	
 }

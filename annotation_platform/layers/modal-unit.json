@@ -18,7 +18,8 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   }, {
     "name" : "Isnegative",
     "tag_set" : null,
@@ -37,7 +38,8 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   }, {
     "name" : "Tokenisnotmodal",
     "tag_set" : null,
@@ -56,7 +58,8 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   }, {
     "name" : "Tokenisnotpertinent",
     "tag_set" : null,
@@ -75,58 +78,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : null
-  }, {
-    "name" : "Typeofparticipantimplicit",
-    "tag_set" : {
-      "name" : "Participant types",
-      "typeUiName" : null,
-      "description" : null,
-      "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
-      "tags" : [ {
-        "tag_name" : "animate",
-        "tag_description" : null
-      }, {
-        "tag_name" : "animate (patient)",
-        "tag_description" : null
-      }, {
-        "tag_name" : "inanimate",
-        "tag_description" : null
-      }, {
-        "tag_name" : "inanimate (patient)",
-        "tag_description" : null
-      } ],
-      "create_tag" : false
-    },
-    "uiName" : "Type of participant (implicit)",
-    "type" : "uima.cas.String",
-    "enabled" : false,
-    "visible" : true,
-    "include_in_hover" : false,
-    "required" : false,
-    "remember" : false,
-    "hideUnconstraintFeature" : true,
-    "description" : null,
-    "project_name" : "WoPoss",
-    "multi_value_mode" : "NONE",
-    "link_mode" : "NONE",
-    "link_type_name" : null,
-    "link_type_role_feature_name" : null,
-    "link_type_target_feature_name" : null,
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   }, {
     "name" : "Typeofmodalunit",
     "tag_set" : {
       "name" : "Type of unit",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "(potential) marker",
         "tag_description" : null
@@ -151,18 +110,18 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Pertinence",
     "tag_set" : {
       "name" : "Pertinence values",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
+        "tag_name" : "fragmentary text",
+        "tag_description" : null
+      }, {
         "tag_name" : "not pertinent -  modal",
         "tag_description" : null
       }, {
@@ -189,17 +148,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Typeofutterance",
     "tag_set" : {
       "name" : "Utterance types",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "interrogative",
         "tag_description" : null
@@ -224,17 +180,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Diachrony",
     "tag_set" : {
       "name" : "Diachronic assessment",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "post-modal",
         "tag_description" : null
@@ -259,17 +212,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Polarity",
     "tag_set" : {
       "name" : "Polarity values",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "affirmative",
         "tag_description" : null
@@ -294,17 +244,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "SoAcontrol",
     "tag_set" : {
       "name" : "Control",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "+ control",
         "tag_description" : null
@@ -335,17 +282,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "SoAdynamicity",
     "tag_set" : {
       "name" : "Dynamicity",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "+ dynamic",
         "tag_description" : null
@@ -376,7 +320,49 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
+  }, {
+    "name" : "Typeofparticipantimplicit",
+    "tag_set" : {
+      "name" : "Participant types",
+      "description" : null,
+      "language" : null,
+      "tags" : [ {
+        "tag_name" : "animate",
+        "tag_description" : null
+      }, {
+        "tag_name" : "animate (patient)",
+        "tag_description" : null
+      }, {
+        "tag_name" : "inanimate",
+        "tag_description" : null
+      }, {
+        "tag_name" : "inanimate (patient)",
+        "tag_description" : null
+      }, {
+        "tag_name" : "no participant",
+        "tag_description" : null
+      } ],
+      "create_tag" : false
+    },
+    "uiName" : "e) Type of participant (implicit)",
+    "type" : "uima.cas.String",
+    "enabled" : true,
+    "visible" : true,
+    "include_in_hover" : false,
+    "required" : false,
+    "remember" : false,
+    "hideUnconstraintFeature" : true,
+    "description" : null,
+    "project_name" : "WoPoss",
+    "multi_value_mode" : "NONE",
+    "link_mode" : "NONE",
+    "link_type_name" : null,
+    "link_type_role_feature_name" : null,
+    "link_type_target_feature_name" : null,
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Locus",
     "tag_set" : null,
@@ -395,7 +381,8 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Note",
     "tag_set" : null,
@@ -414,7 +401,8 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"dynamicSize\":false,\"collapsedRows\":1,\"expandedRows\":1,\"editorType\":\"AUTO\",\"keyBindings\":[]}",
+    "curatable" : true
   } ],
   "uiName" : "Modal unit",
   "type" : "span",
@@ -434,5 +422,6 @@
   "multiple_tokens" : false,
   "project_name" : "WoPoss",
   "linked_list_behavior" : false,
-  "on_click_javascript_action" : null
+  "on_click_javascript_action" : null,
+  "traits" : null
 } ]

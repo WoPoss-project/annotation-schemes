@@ -18,7 +18,8 @@
     "link_type_name" : "webanno.custom.ParticipantIsparticipantofLink",
     "link_type_role_feature_name" : "role",
     "link_type_target_feature_name" : "target",
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   }, {
     "name" : "Note",
     "tag_set" : null,
@@ -37,17 +38,14 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}"
+    "traits" : "{\"multipleRows\":false,\"collapsedRows\":1,\"expandedRows\":1,\"keyBindings\":[]}",
+    "curatable" : true
   }, {
     "name" : "Typeofparticipant",
     "tag_set" : {
       "name" : "Participant types",
-      "typeUiName" : null,
       "description" : null,
       "language" : null,
-      "type" : null,
-      "type_name" : null,
-      "type_description" : null,
       "tags" : [ {
         "tag_name" : "animate",
         "tag_description" : null
@@ -59,6 +57,9 @@
         "tag_description" : null
       }, {
         "tag_name" : "inanimate (patient)",
+        "tag_description" : null
+      }, {
+        "tag_name" : "no participant",
         "tag_description" : null
       } ],
       "create_tag" : false
@@ -78,7 +79,8 @@
     "link_type_name" : null,
     "link_type_role_feature_name" : null,
     "link_type_target_feature_name" : null,
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   } ],
   "uiName" : "Participant",
   "type" : "span",
@@ -98,5 +100,6 @@
   "multiple_tokens" : false,
   "project_name" : "WoPoss",
   "linked_list_behavior" : false,
-  "on_click_javascript_action" : null
+  "on_click_javascript_action" : null,
+  "traits" : null
 } ]

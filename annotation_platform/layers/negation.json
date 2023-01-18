@@ -18,7 +18,8 @@
     "link_type_name" : "webanno.custom.NegationmarkerIsnegationofLink",
     "link_type_role_feature_name" : "role",
     "link_type_target_feature_name" : "target",
-    "traits" : null
+    "traits" : null,
+    "curatable" : true
   } ],
   "uiName" : "Negation",
   "type" : "span",
@@ -38,5 +39,6 @@
   "multiple_tokens" : false,
   "project_name" : "WoPoss",
   "linked_list_behavior" : false,
-  "on_click_javascript_action" : null
+  "on_click_javascript_action" : null,
+  "traits" : null
 } ]
