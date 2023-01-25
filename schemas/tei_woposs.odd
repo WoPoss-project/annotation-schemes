@@ -323,10 +323,8 @@
                 
                 <elementSpec ident="ex" module="transcr" mode="change">
                     <desc>This element is also part of model.segLike</desc>
-                    <classes>
+                    <classes mode="change">                        
                         <memberOf key="model.segLike"/>
-                        <memberOf key="model.choicePart"/>                        
-                        <memberOf key="model.model.pPart.editorial"/>                        
                     </classes>
                 </elementSpec>
 
