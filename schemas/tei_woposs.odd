@@ -320,6 +320,15 @@
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
+                
+                <elementSpec ident="ex" module="transcr" mode="change">
+                    <desc>This element is also part of model.segLike</desc>
+                    <classes>
+                        <memberOf key="model.segLike"/>
+                        <memberOf key="model.choicePart"/>                        
+                        <memberOf key="model.model.pPart.editorial"/>                        
+                    </classes>
+                </elementSpec>
 
                 <elementSpec ident="note" module="core" mode="change">
                     <constraintSpec scheme="schematron" ident="note_consistency">
