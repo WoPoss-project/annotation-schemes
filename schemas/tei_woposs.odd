@@ -10,10 +10,11 @@
                 <funder>Swiss National Science Foundation</funder>
             </titleStmt>
             <publicationStmt>
-                <distributor>Institut des sciences du langage (University of Neuchâtel)</distributor>
+                <distributor>Institut des sciences du langage (University of
+                    Neuchâtel)</distributor>
                 <availability status="free">
-                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons
-                        BY-NC</licence>
+                    <licence target="http://creativecommons.org/licenses/by-nc/4.0/">Creative
+                        Commons BY-NC</licence>
                 </availability>
                 <date>2022</date>
             </publicationStmt>
@@ -47,7 +48,7 @@
                 <moduleRef n="18" key="iso-fs"/>
                 <moduleRef n="21" key="certainty"/>
 
-                <!-- Metadata--> 
+                <!-- Metadata-->
                 <elementSpec ident="person" module="namesdates" mode="change">
                     <constraintSpec ident="person_namesdates" scheme="schematron">
                         <constraint>
@@ -78,12 +79,12 @@
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
-                </elementSpec> 
+                </elementSpec>
 
                 <elementSpec ident="w" module="analysis" mode="change">
                     <constraintSpec scheme="schematron" ident="w_analysis">
                         <desc/>
-                        <constraint>          
+                        <constraint>
                             <!-- Words within modal passages -->
                             <sch:rule
                                 context="tei:w[(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
@@ -97,75 +98,63 @@
                                 <sch:assert
                                     test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
                                     'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma"
-                                    >The @lemma is mandatory and @pos attribute must have one of these values: ADJ – ADP –
-                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
-                                    VERB – X </sch:assert>
+                                    >The @lemma is mandatory and @pos attribute must have one of
+                                    these values: ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON
+                                    – PROPN – PUNCT – SCONJ – VERB – X </sch:assert>
                                 <!-- PoS relation with morphological features-->
                                 <sch:assert test="
-                                    if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()">Verbs must have a feature
-                                    VerbForm</sch:assert>
+                                    if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()"
+                                    >Verbs must have a feature VerbForm</sch:assert>
                                 <sch:assert test="
                                     if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()"
-                                  >Nouns, adjectives and pronouns must have a
-                                    feature Gender</sch:assert>
+                                    >Nouns, adjectives and pronouns must have a feature
+                                    Gender</sch:assert>
                                 <!-- Morphological features dependencies-->
                                 <sch:assert
                                     test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()"
-                                  >Aspect feature is mandatory with past
-                                    tenses</sch:assert>
+                                    >Aspect feature is mandatory with past tenses</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()"
-                                  >Person, Number, Mood and Tense features are
-                                    mandatory with finite forms</sch:assert>
+                                    >Person, Number, Mood and Tense features are mandatory with
+                                    finite forms</sch:assert>
                                 <sch:assert
                                     test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
-                                  >Case, Gender and Number features are
-                                    mandatory</sch:assert>
+                                    >Case, Gender and Number features are mandatory</sch:assert>
                                 <sch:assert
                                     test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
-                                  >Case, Gender and Number features are
-                                    mandatory</sch:assert>
+                                    >Case, Gender and Number features are mandatory</sch:assert>
                                 <!-- Values of morphological features -->
                                 <sch:assert
                                     test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"
-                                  > Possible values for Tense = Fut, Past, Pqp,
-                                    Pres </sch:assert>
+                                    > Possible values for Tense = Fut, Past, Pqp, Pres </sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"
-                                  > Possible values for Aspect = Imp,
-                                    Perf</sch:assert>
+                                    > Possible values for Aspect = Imp, Perf</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"
-                                  > Possible values for Number = Plur,
-                                    Sing</sch:assert>
+                                    > Possible values for Number = Plur, Sing</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()"
-                                  >Possible values for VerbForm = Fin, Gdv, Ger,
-                                    Inf, Part </sch:assert>
+                                    >Possible values for VerbForm = Fin, Gdv, Ger, Inf, Part </sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"
-                                  > Possible values for Voice = Act,
-                                    Pass</sch:assert>
+                                    > Possible values for Voice = Act, Pass</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"
-                                  > Possible values for Mood = Imp, Ind,
-                                    Sub</sch:assert>
+                                    > Possible values for Mood = Imp, Ind, Sub</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"
-                                  > Possible values for Person = 1, 2,
-                                    3</sch:assert>
+                                    > Possible values for Person = 1, 2, 3</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"
-                                  > Possible values for Gender = Masc, Fem,
-                                    Neut</sch:assert>
+                                    > Possible values for Gender = Masc, Fem, Neut</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"
-                                  > Possible values for Case = Abl, Acc, Dat,
-                                    Gen, Loc, Nom, Voc</sch:assert>
+                                    > Possible values for Case = Abl, Acc, Dat, Gen, Loc, Nom,
+                                    Voc</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"
-                                  > Possible values for Degree = Cmp, Pos,
-                                    Sup</sch:assert>
+                                    > Possible values for Degree = Cmp, Pos, Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
                                 <sch:let name="lemma_markers" value="
                                     ('aequus', 'iniquus', 'aptus', 'ineptus', 'certus', 'incertus',
@@ -193,88 +182,84 @@
                                     else false()">Potential
                                     modal marker (turus)</sch:report>
                             </sch:rule>
-                            
                             <!-- Wods outside modal passages -->
                             <sch:rule
                                 context="tei:w[not(ancestor::tei:seg or descendant::tei:seg) and not(ancestor::tei:supplied)]">
                                 <!-- Linguistic annotation-->
-                                <sch:assert test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(starts-with(@lemma, 'necess'))) then
+                                <sch:assert
+                                    test="if (not(@pos = ('ADV', 'ADP', 'INTJ', 'NUM', 'CCONJ', 'SCONJ', 'X')) and not(starts-with(@lemma, 'necess'))) then
                                     @msd
                                     else
-                                    true()" role="WARN">Morphological analysis
-                                    missing</sch:assert>
+                                    true()" role="WARN"
+                                    >Morphological analysis missing</sch:assert>
                                 <sch:assert
                                     test="@pos = ('ADJ', 'ADP', 'ADV', 'CCONJ', 'INTJ', 'NOUN', 'NUM',
-                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma" role="WARN"
-                                    >This word does not contain a lemma attributes and/or the @pos attribute does not have one of the acceptable values (ADJ – ADP –
-                                    ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN – PUNCT – SCONJ –
-                                    VERB – X )</sch:assert>
+                                    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'VERB', 'X') and @lemma"
+                                    role="WARN">This word does not contain a lemma attributes and/or
+                                    the @pos attribute does not have one of the acceptable values
+                                    (ADJ – ADP – ADV – CCONJ – INTJ – NOUN – NUM – PRON – PROPN –
+                                    PUNCT – SCONJ – VERB – X )</sch:assert>
                                 <!-- PoS relation with morphological features-->
                                 <sch:assert test="
                                     if (@pos = 'VERB') then contains(@msd, 'VerbForm') else true()"
-                                   role="WARN">Verbs must have a feature
-                                    VerbForm</sch:assert>
+                                    role="WARN">Verbs must have a feature VerbForm</sch:assert>
                                 <sch:assert test="
                                     if (@pos = ('NOUN', 'ADJ', 'PRON') and not(starts-with(@lemma, 'necess'))) then contains(@msd, 'Gender') else true()"
-                                   role="WARN">Nouns, adjectives and pronouns must have a
-                                    feature Gender</sch:assert>
+                                    role="WARN">Nouns, adjectives and pronouns must have a feature
+                                    Gender</sch:assert>
                                 <!-- Morphological features dependencies-->
                                 <sch:assert
                                     test="if (contains(@msd, 'Tense=Past')) then matches(@msd, 'Aspect') else true()"
-                                   role="WARN">Aspect feature is mandatory with past
+                                    role="WARN">Aspect feature is mandatory with past
                                     tenses</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'VerbForm=Fin')) then contains(@msd, 'Person') and contains(@msd, 'Number') and contains(@msd, 'Mood') and contains(@msd, 'Tense') else true()"
-                                   role="WARN">Person, Number, Mood and Tense features are
+                                    role="WARN">Person, Number, Mood and Tense features are
                                     mandatory with finite forms</sch:assert>
                                 <sch:assert
                                     test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
-                                   role="WARN">Case, Gender and Number features are
+                                    role="WARN">Case, Gender and Number features are
                                     mandatory</sch:assert>
                                 <sch:assert
                                     test="if (matches(@msd, 'VerbForm=(Gdv|Part)')) then contains(@msd, 'Case') and contains(@msd, 'Gender') and contains(@msd, 'Number') else true()"
-                                   role="WARN">Case, Gender and Number features are
+                                    role="WARN">Case, Gender and Number features are
                                     mandatory</sch:assert>
                                 <!-- Values of morphological features -->
                                 <sch:assert
                                     test="if (contains(@msd, 'Tense')) then matches(@msd, 'Tense=(Fut|Past|Pqp|Pres)\||$') else true()"
-                                   role="WARN"> Possible values for Tense = Fut, Past, Pqp,
-                                    Pres </sch:assert>
+                                    role="WARN"> Possible values for Tense = Fut, Past, Pqp, Pres </sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Aspect')) then matches(@msd, 'Aspect=(Imp|Perf)\||$') else true()"
-                                   role="WARN"> Possible values for Aspect = Imp,
-                                    Perf</sch:assert>
+                                    role="WARN"> Possible values for Aspect = Imp, Perf</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Number')) then matches(@msd, 'Number=(Plur|Sing)\||$') else true()"
-                                   role="WARN"> Possible values for Number = Plur,
+                                    role="WARN"> Possible values for Number = Plur,
                                     Sing</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'VerbForm')) then matches(@msd, 'Tense=(Fin|Gdv|Ger|Inf|Part)\||$') else true()"
-                                   role="WARN">Possible values for VerbForm = Fin, Gdv, Ger,
-                                    Inf, Part </sch:assert>
+                                    role="WARN">Possible values for VerbForm = Fin, Gdv, Ger, Inf,
+                                    Part </sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Voice')) then matches(@msd, 'Voice=(Act|Pass)\||$') else true()"
-                                   role="WARN"> Possible values for Voice = Act,
-                                    Pass</sch:assert>
+                                    role="WARN"> Possible values for Voice = Act, Pass</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Mood')) then matches(@msd, 'Mood=(Imp|Ind|Sub)\||$') else true()"
-                                   role="WARN"> Possible values for Mood = Imp, Ind,
+                                    role="WARN"> Possible values for Mood = Imp, Ind,
                                     Sub</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Person')) then matches(@msd, 'Person=(1|2|3)\||$') else true()"
-                                   role="WARN"> Possible values for Person = 1, 2,
-                                    3</sch:assert>
+                                    role="WARN"> Possible values for Person = 1, 2, 3</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Gender')) then matches(@msd, 'Gender=(Masc|Fem|Neut)\||$') else true()"
-                                   role="WARN"> Possible values for Gender = Masc, Fem,
+                                    role="WARN"> Possible values for Gender = Masc, Fem,
                                     Neut</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Case')) then matches(@msd, 'Case=(Abl|Acc|Dat|Gen|Loc|Nom|Voc)\||$') else true()"
-                                   role="WARN"> Possible values for Case = Abl, Acc, Dat,
-                                    Gen, Loc, Nom, Voc</sch:assert>
+                                    role="WARN"> Possible values for Case = Abl, Acc, Dat, Gen, Loc,
+                                    Nom, Voc</sch:assert>
                                 <sch:assert
                                     test="if (contains(@msd, 'Degree')) then matches(@msd, 'Degree=(Cmp|Pos|Sup)\||$') else true()"
-                                   role="WARN"> Possible values for Degree = Cmp, Pos,
+                                    role="WARN"> Possible values for Degree = Cmp, Pos,
                                     Sup</sch:assert>
                                 <!-- Check whether all potential modal markers have been annotated-->
                                 <sch:let name="lemma_markers" value="
@@ -301,10 +286,7 @@
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']) and
                                     @pos eq 'VERB' and matches(., '.+tur[aeiou][smeoa]?(rum)?') and @lemma[not(contains(., 'tur'))]) then true() 
                                     else false()">Potential
-                                    modal marker (turus)</sch:report>
-                               
-                            </sch:rule>
-                          
+                                    modal marker (turus)</sch:report> </sch:rule>
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
@@ -320,10 +302,10 @@
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
-                
+
                 <elementSpec ident="ex" module="transcr" mode="change">
                     <desc>This element is also part of model.segLike</desc>
-                    <classes mode="change">                        
+                    <classes mode="change">
                         <memberOf key="model.segLike"/>
                     </classes>
                 </elementSpec>
@@ -715,6 +697,14 @@
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
+                </elementSpec>
+                
+<!--                editorial criteria -->
+                <elementSpec ident="ex" module="transcr" mode="add">
+                    <content>
+                        <elementRef key="seg"/>
+                        <elementRef key="w"/>
+                    </content>
                 </elementSpec>
             </schemaSpec>
         </body>
