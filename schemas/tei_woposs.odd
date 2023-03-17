@@ -700,10 +700,9 @@
                 </elementSpec>
                 
 <!--                editorial criteria -->
-                <elementSpec ident="ex" module="transcr" mode="add">
+                <elementSpec ident="ex" module="transcr" mode="change">
                     <content>
-                        <elementRef key="seg"/>
-                        <elementRef key="w"/>
+                        <macroRef key="macro.paraContent"/>
                     </content>
                 </elementSpec>
             </schemaSpec>
