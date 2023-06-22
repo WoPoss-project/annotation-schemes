@@ -433,15 +433,16 @@
                                     feature</sch:assert>
                             </sch:rule>
                             <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">
-                                <sch:assert test="tei:f[@name eq 'type']">Missing 'type'
-                                    feature</sch:assert>
+                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">                                
                                 <sch:assert
-                                    test="tei:f[@name eq 'type']/tei:symbol/@value = ('possibility', 'necessity')"
+                                    test="tei:f[@name eq 'meaning']/tei:symbol/@value = ('possibility', 'necessity')"
                                     >Possible values of feature 'type' are 'possibility'
                                     'necessity'</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'participant_control']">Missing
-                                    'participant_control' feature</sch:assert>
+                                <sch:assert
+                                    test="tei:f[@name eq 'type']/tei:symbol[@value = ('participant-imposed', 'participant-inherent', 'situational')]"
+                                    > Incorrect value of @value within feature “type”. Possible values are:
+                                    'participant-imposed, participant-inherent,
+                                    situational'</sch:assert>
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'relation'][tei:f[@name eq 
                                 'type'][tei:symbol[@value eq 'authority']]]">
@@ -662,14 +663,7 @@
                                     recommendation, permission, prospective,
                                     inevitability'</sch:assert>
                             </sch:rule>
-                            <sch:rule
-                                context="tei:f[@name eq 'participant_control'][parent::tei:fs[@type eq 'relation']]">
-                                <sch:assert
-                                    test="tei:symbol[@value = ('participant-imposed', 'participant-inherent', 'situational')]"
-                                    > Incorrect value of @value. Possible values are:
-                                    'participant-imposed, participant-inherent,
-                                    situational'</sch:assert>
-                            </sch:rule>
+                          
                             <sch:rule
                                 context="tei:f[@name eq 'function'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert test="tei:symbol[@value = ('rhetoric', 'pragmatic')]">
