@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.tei-c.org/ns/1.0"><!--
-Schema generated from ODD source 2023-03-17T15:38:29Z. .
+Schema generated from ODD source 2023-06-22T09:19:07Z. .
 TEI Edition: Version 4.1.0. Last updated on
 	19th August 2020, revision b414ba550
 TEI Edition Location: https://www.tei-c.org/Vault/P5/Version 4.1.0/
@@ -15096,58 +15096,9 @@ Feature Value]</a:documentation>
                   id="tei_woposs-fs-seg_analysis-constraint-rule-21">
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'scope']">
-               <sch:let name="scope"
-                        value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
-               <sch:let name="participant"
-                        value="//tei:seg[not(ancestor::tei:supplied[not(@evidence)])][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
-               <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
-               <sch:assert test="$scope">ID not referenced in text</sch:assert>
-               <sch:assert test="if(tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
-               <sch:report test="count($scope/child::tei:w[@function eq 'main']) gt 1">More
-                                    than one main verb annotated in current scope</sch:report>
-               <sch:report test="tei:f[@name eq 'SoA']/tei:binary/@value eq 'true'">Unnecessary description of SoA</sch:report>
-               <sch:report test="if (tei:f[@name eq 'SoA']) then tei:f[@name eq 'participant'] else false()">Unneeded description of participant</sch:report>
-               <sch:assert test="if ($participant) then tei:f[@name eq 'participant']/tei:symbol/@value eq 'explicit' else true()">This scope should have a explicit participant in its
-                                    description</sch:assert>
-               <sch:assert test="if ($participant) then tei:f[@name eq 'participantType']/tei:symbol/@value = $participant/@type else true()">The description of the participant type is
-                                    incorrect</sch:assert>
-               <sch:assert test="if (not($participant) and not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant']/tei:symbol/@value = ('implicit', 'none') else true()">The description of the participant is incorrect</sch:assert>
-               <sch:assert test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()">Description of participant is missing</sch:assert>
-               <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
-               <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'marker']">
-               <sch:let name="markers"
-                        value="                                     ('aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus',                                   'est_inf',                                 'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                 'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',                                 'forsitan', 'forsan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',                                 'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
-               <sch:assert test="                                     some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')                                     satisfies $x = '#' || current()/@xml:id">ID not referenced in text</sch:assert>
-               <sch:assert test="                                     if (tei:f[@name eq 'pertinence']/tei:binary/@value eq 'true') then                                     @xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'marker']/@fVal                                     else                                     true()">This marker is not part
-                                    of a modal relation</sch:assert>
-               <sch:assert test="tei:f[@name eq 'lemma']/tei:symbol[@value = $markers]">Either the citation form of the marker is missing or its value
-                                    is not correct</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'relation']">
-               <sch:assert test="tei:f[@name eq 'marker']/@fVal = //tei:fs[@type eq 'marker']/@xml:id">Marker ID not available in FS</sch:assert>
-               <sch:assert test="tei:f[@name eq 'scope']/@fVal = //tei:fs[@type eq 'scope']/@xml:id">Scope ID not available in FS</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'marker'][tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]]">
-               <sch:assert test="tei:f[@name eq 'utterance']">Missing 'utterance'
-                                    feature</sch:assert>
                <sch:assert test="tei:f[@name eq 'polarity']">Missing 'polarity'
                                     feature</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'marker']">
-               <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of
-                                    the following features are required: 'pertinence',
-                                    'modal'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -15163,13 +15114,6 @@ Feature Value]</a:documentation>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'scope']">
-               <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The
-                                    following features is required: 'utterance,
-                                    polarity'</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">
                <sch:assert test="tei:f[@name eq 'type']">Missing 'type'
                                     feature</sch:assert>
@@ -15177,15 +15121,6 @@ Feature Value]</a:documentation>
                                     'necessity'</sch:assert>
                <sch:assert test="tei:f[@name eq 'participant_control']">Missing
                                     'participant_control' feature</sch:assert>
-            </sch:rule>
-            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      context="tei:fs[@type eq 'relation'][tei:f[@name eq                                  'modality'][tei:symbol[@value eq 'deontic']]]">
-               <sch:assert test="tei:f[@name eq 'type']">Missing tei:f[@name eq
-                                    'type']</sch:assert>
-               <sch:assert test="tei:f[@name eq 'type']/tei:symbol/@value =                                      ('authority', 'acceptability', 'volition',                                      'intention')">Possible values of
-                                    feature 'type' are 'authority' 'acceptability' 'volition'
-                                    'intention'</sch:assert>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -15213,9 +15148,58 @@ Feature Value]</a:documentation>
             </sch:rule>
             <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                      context="tei:fs[@type eq 'scope']">
+               <sch:let name="scope"
+                        value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+               <sch:let name="participant"
+                        value="//tei:seg[not(ancestor::tei:supplied[not(@evidence)])][@function eq 'participant'][some $x in tokenize(@corresp, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
+               <sch:assert test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal">This scope is not part of a modal relation</sch:assert>
+               <sch:assert test="$scope">ID not referenced in text</sch:assert>
+               <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The
+                                    following features is required: 'utterance,
+                                    polarity'</sch:assert>
+               <sch:assert test="if (tei:f[@name eq 'SoA']/tei:binary eq 'true' and not($scope/ancestor::tei:supplied) and not($scope/descendant::tei:supplied) and not($scope/parent::tei:w/tei:seg[@function eq 'marker'])) then $scope/descendant::tei:w[@function eq 'main']                                     or $scope/ancestor::tei:w[@function eq 'main'] else true()">Main verb of scope needs to be identified</sch:assert>
+               <sch:report test="count($scope/child::tei:w[@function eq 'main']) gt 1">More
+                                    than one main verb annotated in current scope</sch:report>
+               <sch:report test="tei:f[@name eq 'SoA']/tei:binary/@value eq 'true'">Unnecessary description of SoA</sch:report>
+               <sch:report test="if (tei:f[@name eq 'SoA']) then tei:f[@name eq 'participant'] else false()">Unneeded description of participant</sch:report>
+               <sch:assert test="if ($participant) then tei:f[@name eq 'participant']/tei:symbol/@value eq 'explicit' else true()">This scope should have a explicit participant in its
+                                    description</sch:assert>
+               <sch:assert test="if ($participant) then tei:f[@name eq 'participantType']/tei:symbol/@value = $participant/@type else true()">The description of the participant type is
+                                    incorrect</sch:assert>
+               <sch:assert test="if (not($participant) and not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant']/tei:symbol/@value = ('implicit', 'none') else true()">The description of the participant is incorrect</sch:assert>
+               <sch:assert test="if (not(tei:f[@name eq 'SoA'])) then tei:f[@name eq 'participant'] else true()">Description of participant is missing</sch:assert>
+               <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
+               <sch:assert test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()">Participant type is missing</sch:assert>
+            </sch:rule>
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                      context="tei:fs[@type eq 'marker']">
+               <sch:let name="markers"
+                        value="                                     ('aequus', 'iniquus', 'habeo_inf', 'est_inf','aptus', 'ineptus', 'certus', 'incertus', 'bilis', 'turus', 'ndus',                                       'est_inf',                                     'dubius', 'illicitus', 'licitus', 'necessarius', 'certo', 'dubium', 'necessarium', 'necessario', 'facultas',                                     'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',                                     'forsitan', 'forsan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',                                     'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
+               <sch:assert test="                                     some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')                                     satisfies $x = '#' || current()/@xml:id">ID not referenced in text</sch:assert>
+               <sch:assert test="                                     if (tei:f[@name eq 'pertinence']/tei:binary/@value eq 'true') then                                     @xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'marker']/@fVal                                     else                                     true()">This marker is not part
+                                    of a modal relation</sch:assert>
+               <sch:assert test="tei:f[@name eq 'lemma']/tei:symbol[@value = $markers]">Either the citation form of the marker is missing or its value
+                                    is not correct</sch:assert>
+               <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of
+                                    the following features are required: 'pertinence',
+                                    'modal'</sch:assert>
+               <sch:assert test="if (tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]) then tei:f[@name eq 'utterance'] else true()">Missing 'utterance'
+                                    feature</sch:assert>
+            </sch:rule>
+            <sch:rule xmlns="http://www.tei-c.org/ns/1.0"
+                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                       context="tei:fs[@type eq 'relation']">
                <sch:assert test="tei:f[@name = ('modality')]"> One of the following
                                     features is required: 'modality'</sch:assert>
+               <sch:assert test="tei:f[@name eq 'marker']/@fVal = //tei:fs[@type eq 'marker']/@xml:id">Marker ID not available in FS</sch:assert>
+               <sch:assert test="tei:f[@name eq 'scope']/@fVal = //tei:fs[@type eq 'scope']/@xml:id">Scope ID not available in FS</sch:assert>
+               <sch:assert test="if (tei:f[@name eq                                      'modality'][tei:symbol[@value eq 'deontic']]) then tei:f[@name eq 'type'] else true()">Missing tei:f[@name eq
+                                    'type']</sch:assert>
+               <sch:assert test="if (tei:f[@name eq                                      'modality'][tei:symbol[@value eq 'deontic']]) then tei:f[@name eq 'type']/tei:symbol[@value =                                      ('authority', 'acceptability', 'volition',                                      'intention')] else true()">Possible values of
+                                    feature 'type' are 'authority' 'acceptability' 'volition'
+                                    'intention'</sch:assert>
             </sch:rule>
          </pattern>
          <ref name="att.global.attributes"/>
@@ -15250,7 +15234,7 @@ Feature Value]</a:documentation>
             <ref name="model.featureVal"/>
          </choice>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="tei_woposs-f-f_analysis-constraint-rule-35">
+                  id="tei_woposs-f-f_analysis-constraint-rule-31">
             <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
