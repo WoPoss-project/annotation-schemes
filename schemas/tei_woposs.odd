@@ -173,7 +173,7 @@
                                     modal marker (ndus)</sch:report>
                                 <sch:report
                                     test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and
-                                    @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true
+                                    @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true()
                                     else false()">Potential
                                     modal marker (bilis)</sch:report>
                                 <sch:report
@@ -279,14 +279,15 @@
                                     modal marker (ndus)</sch:report>
                                 <sch:report
                                     test="if (tei:w[not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker'])] and
-                                    @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true
+                                    @pos eq 'ADJ' and matches(@lemma, '[ai]bilis')) then true()
                                     else false()">Potential
                                     modal marker (bilis)</sch:report>
                                 <sch:report
                                     test="if (not(@function) and not(ancestor::tei:seg[@function eq 'marker']) and not(descendant::tei:seg[@function eq 'marker']) and
                                     @pos eq 'VERB' and matches(., '.+tur[aeiou][smeoa]?(rum)?') and @lemma[not(contains(., 'tur'))]) then true() 
                                     else false()">Potential
-                                    modal marker (turus)</sch:report> </sch:rule>
+                                    modal marker (turus)</sch:report>
+                            </sch:rule>
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
@@ -414,64 +415,9 @@
                     </constraintSpec>
                 </elementSpec>
                 <elementSpec ident="fs" module="iso-fs" mode="change">
-                    <constraintSpec scheme="schematron" ident="seg_analysis">
+                    <constraintSpec scheme="schematron" ident="fs_analysis">
                         <desc>Constraints to check the consistency of the semantic analysis</desc>
                         <constraint>
-                            <sch:rule
-                                context="tei:fs[@type eq 'marker'][tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]]">
-                               
-                                <sch:assert test="tei:f[@name eq 'polarity']">Missing 'polarity'
-                                    feature</sch:assert>
-                            </sch:rule>
-                            <sch:rule
-                                context="tei:fs[@type eq 'scope'][tei:f[@name eq 'dynamicity']]">
-                                <sch:assert test="tei:f[@name eq 'control']">Missing 'control'
-                                    feature</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:fs[@type eq 'scope'][tei:f[@name eq 'control']]">
-                                <sch:assert test="tei:f[@name eq 'dynamicity']">Missing 'dynamicity'
-                                    feature</sch:assert>
-                            </sch:rule>
-                            <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]]">                                
-                                <sch:assert
-                                    test="tei:f[@name eq 'meaning']/tei:symbol/@value = ('possibility', 'necessity')"
-                                    >Possible values of feature 'type' are 'possibility'
-                                    'necessity'</sch:assert>
-                                <sch:assert
-                                    test="tei:f[@name eq 'type']/tei:symbol[@value = ('participant-imposed', 'participant-inherent', 'situational')]"
-                                    > Incorrect value of @value within feature “type”. Possible values are:
-                                    'participant-imposed, participant-inherent,
-                                    situational'</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:fs[@type eq 'relation'][tei:f[@name eq 
-                                'type'][tei:symbol[@value eq 'authority']]]">
-                                <sch:assert test="tei:f[@name eq 'subtype']">Missing 'subtype'
-                                    feature</sch:assert>
-                                <sch:assert test="tei:f[@name eq 'subtype']/tei:symbol/@value =
-                                    ('obligation', 'recommendation', 'permission')"
-                                    > Possible values of feature 'subtype' are 'obligation'
-                                    'recommendation' 'permission' </sch:assert>
-                            </sch:rule>
-                            <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]]">
-                                <sch:assert test="tei:f[@name eq 'degree']">Missing 'degree' feature </sch:assert>
-                                <sch:assert
-                                    test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_necessary', 'desirable', 'acceptable', 'undesirable', 'unacceptable')"
-                                    >Possible values of 'degree' feature are 'absolutely_necessary'
-                                    'desirable' 'acceptable' 'undesirable'
-                                    'unacceptable'</sch:assert>
-                            </sch:rule>
-                            <sch:rule
-                                context="tei:fs[@type eq 'relation'][tei:f[@name eq 'modality'][tei:symbol[@value eq 'epistemic']]]">
-                                <sch:assert test="tei:f[@name eq 'degree']">Missing 'degree'
-                                    feature</sch:assert>
-                                <sch:assert
-                                    test="tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_certain', 'probable', 'possible', 'improbable', 'impossible')"
-                                    >Possible values of 'degree' feature are 'absolutely_certain'
-                                    'probable' 'possible' 'improbable' 'impossible'</sch:assert>
-                            </sch:rule>
-                            
                             <sch:rule context="tei:fs[@type eq 'scope']">
                                 <sch:let name="scope"
                                     value="//tei:seg[some $x in tokenize(@ana, '\s+') satisfies $x = '#' || current()/@xml:id]"/>
@@ -480,7 +426,7 @@
                                 <sch:assert
                                     test="@xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'scope']/@fVal"
                                     >This scope is not part of a modal relation</sch:assert>
-                                <sch:assert test="$scope">ID not referenced in text</sch:assert>                                
+                                <sch:assert test="$scope">ID not referenced in text</sch:assert>
                                 <sch:assert test="tei:f[@name = ('utterance', 'polarity')]"> The
                                     following features is required: 'utterance,
                                     polarity'</sch:assert>
@@ -516,6 +462,11 @@
                                 <sch:assert
                                     test="if (tei:f[@name eq 'participant'] and tei:f[@name eq 'participant']/tei:symbol/@value ne 'none') then tei:f[@name eq 'participantType'] else true()"
                                     >Participant type is missing</sch:assert>
+                                <sch:assert test="if (tei:f[@name eq 'dynamicity']) then tei:f[@name eq 'control'] else true()">Missing 'control'
+                                    feature</sch:assert>
+                                <sch:assert test="if (tei:f[@name eq 'control']) then tei:f[@name eq 'dynamicity'] else ()">Missing 'dynamicity'
+                                    feature</sch:assert>
+                                
                             </sch:rule>
                             <sch:rule context="tei:fs[@type eq 'marker']">
                                 <sch:let name="markers" value="
@@ -525,10 +476,10 @@
                                     'possibilitas', 'potestas', 'necessitas', 'necessitudo', 'probabilitas', 'voluntas', 'certe', 'dubie', 'opus_est','opus_habeo', 'usus_est', 'impossibilis', 'possibilis',
                                     'forsitan', 'forsan', 'fortasse', 'forte', 'indubitate', 'necessarie', 'possibiliter', 'probabiliter', 'debeo', 'possum',
                                     'nequeo', 'queo', 'malo', 'volo', 'nolo', 'licet', 'decet', 'oportet', 'valeo', 'valet', 'necesse_est', 'necesse_habeo', 'ius_est', 'meum_est')"/>
-                                <sch:assert test="
-                                    some $x in //tei:body//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+')
-                                    satisfies $x = '#' || current()/@xml:id"
-                                    >ID not referenced in text</sch:assert>
+                                <sch:let name="segs"
+                                    value="for $x in current()/ancestor::tei:text//tei:seg[@function eq 'marker']/tokenize(@ana, '\s+') return substring($x, 2)"/>
+                                <sch:report test="index-of($segs, @xml:id) = ()">ID not referenced
+                                    in text</sch:report>
                                 <sch:assert test="
                                     if (tei:f[@name eq 'pertinence']/tei:binary/@value eq 'true') then
                                     @xml:id = //tei:fs[@type eq 'relation']/tei:f[@name eq 'marker']/@fVal
@@ -542,10 +493,13 @@
                                 <sch:assert test="tei:f[@name = ('pertinence', 'modal')]"> One of
                                     the following features are required: 'pertinence',
                                     'modal'</sch:assert>
-                                <sch:assert test="if (tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]) then tei:f[@name eq 'utterance'] else true()">Missing 'utterance'
-                                    feature</sch:assert>
-                            </sch:rule>
-                            <sch:rule context="tei:fs[@type eq 'relation']">                                
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]) then tei:f[@name eq 'utterance'] else true()"
+                                    >Missing 'utterance' feature</sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'pertinence'][tei:binary[@value eq 'true']]) then tei:f[@name eq 'polarity'] else true()"
+                                    >Missing 'polarity' feature</sch:assert> </sch:rule>
+                            <sch:rule context="tei:fs[@type eq 'relation']">
                                 <sch:assert test="tei:f[@name = ('modality')]"> One of the following
                                     features is required: 'modality'</sch:assert>
                                 <sch:assert
@@ -555,14 +509,43 @@
                                     test="tei:f[@name eq 'scope']/@fVal = //tei:fs[@type eq 'scope']/@xml:id"
                                     >Scope ID not available in FS</sch:assert>
                                 <sch:assert test="if (tei:f[@name eq 
-                                    'modality'][tei:symbol[@value eq 'deontic']]) then tei:f[@name eq 'type'] else true()">Missing tei:f[@name eq
-                                    'type']</sch:assert>
+                                    'modality'][tei:symbol[@value eq 'deontic']]) then tei:f[@name eq 'type'] else true()"
+                                    >Missing tei:f[@name eq 'type']</sch:assert>
                                 <sch:assert test="if (tei:f[@name eq 
                                     'modality'][tei:symbol[@value eq 'deontic']]) then tei:f[@name eq 'type']/tei:symbol[@value = 
                                     ('authority', 'acceptability', 'volition', 
-                                    'intention')] else true()">Possible values of
-                                    feature 'type' are 'authority' 'acceptability' 'volition'
-                                    'intention'</sch:assert>                                
+                                    'intention')] else true()"
+                                    >Possible values of feature 'type' are 'authority'
+                                    'acceptability' 'volition' 'intention'</sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]) then tei:f[@name eq 'meaning']/tei:symbol/@value = ('possibility', 'necessity') else true()"
+                                    >Possible values of feature 'type' are 'possibility'
+                                    'necessity'</sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'modality'][tei:symbol[@value eq 'dynamic']]) then tei:f[@name eq 'type']/tei:symbol[@value = ('participant-imposed', 'participant-inherent', 'situational')] else true()"
+                                    > Incorrect value of @value within feature “type”. Possible
+                                    values are: 'participant-imposed, participant-inherent,
+                                    situational'</sch:assert>                                
+                                <sch:assert test="if (tei:f[@name eq 
+                                    'type'][tei:symbol[@value eq 'authority']]) then tei:f[@name eq 'subtype'] else true()">Missing 'subtype'
+                                    feature</sch:assert>
+                                <sch:assert test="if (tei:f[@name eq 
+                                    'type'][tei:symbol[@value eq 'authority']]) then tei:f[@name eq 'subtype']/tei:symbol/@value =
+                                    ('obligation', 'recommendation', 'permission') else true()"
+                                    > Possible values of feature 'subtype' are 'obligation'
+                                    'recommendation' 'permission' </sch:assert>                                
+                                <sch:assert test="if (tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]) then tei:f[@name eq 'degree'] else true()">Missing 'degree' feature </sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'type'][tei:symbol[@value eq 'acceptability']]) then tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_necessary', 'desirable', 'acceptable', 'undesirable', 'unacceptable') else true()"
+                                    >Possible values of 'degree' feature are 'absolutely_necessary'
+                                    'desirable' 'acceptable' 'undesirable'
+                                    'unacceptable'</sch:assert>
+                                <sch:assert test="if (tei:f[@name eq 'modality'][tei:symbol[@value eq 'epistemic']]) then tei:f[@name eq 'degree'] else true()">Missing 'degree'
+                                    feature</sch:assert>
+                                <sch:assert
+                                    test="if (tei:f[@name eq 'modality'][tei:symbol[@value eq 'epistemic']]) then tei:f[@name eq 'degree']/tei:symbol/@value = ('absolutely_certain', 'probable', 'possible', 'improbable', 'impossible') else true()"
+                                    >Possible values of 'degree' feature are 'absolutely_certain'
+                                    'probable' 'possible' 'improbable' 'impossible'</sch:assert>
                             </sch:rule>
                         </constraint>
                     </constraintSpec>
@@ -663,7 +646,6 @@
                                     recommendation, permission, prospective,
                                     inevitability'</sch:assert>
                             </sch:rule>
-                          
                             <sch:rule
                                 context="tei:f[@name eq 'function'][parent::tei:fs[@type eq 'relation']]">
                                 <sch:assert test="tei:symbol[@value = ('rhetoric', 'pragmatic')]">
@@ -687,8 +669,8 @@
                         </constraint>
                     </constraintSpec>
                 </elementSpec>
-                
-<!--                editorial criteria -->
+
+                <!--                editorial criteria -->
                 <elementSpec ident="ex" module="transcr" mode="change">
                     <content>
                         <macroRef key="macro.paraContent"/>
