@@ -464,7 +464,7 @@
                                     >Participant type is missing</sch:assert>
                                 <sch:assert test="if (tei:f[@name eq 'dynamicity']) then tei:f[@name eq 'control'] else true()">Missing 'control'
                                     feature</sch:assert>
-                                <sch:assert test="if (tei:f[@name eq 'control']) then tei:f[@name eq 'dynamicity'] else ()">Missing 'dynamicity'
+                                <sch:assert test="if (tei:f[@name eq 'control']) then tei:f[@name eq 'dynamicity'] else true()">Missing 'dynamicity'
                                     feature</sch:assert>
                                 
                             </sch:rule>
